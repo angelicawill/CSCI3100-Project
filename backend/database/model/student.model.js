@@ -9,9 +9,9 @@ const studentSchema = mongoose.Schema({
   grade:Number, //primary1 -> 1, secondary6 -> 12, year4 -> 16
   subjectsNeedHelp: [String],
   freeTime: [Mixed], //e.g. set to monday 10am - 3:30pm , this will be store as {1,[10,15.5]}
-  preferredFee: [Number], //should be a range of value
+  preferredFee: [Number], //should be a range of value, assume the fee is not depend on subject
   preferredTeachingMode: [String], //should be either 'single', 'multi', or both
-
+  tutorRequest: [Number], //the request tutor's id
   cases: [Number]  //case id that the student involved, there will be case id stored if the case is in process
 })
 

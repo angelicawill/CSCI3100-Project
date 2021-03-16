@@ -7,7 +7,8 @@ const tutorSchema = mongoose.Schema({
   preferredLocation: [String],
   isGroupTeachingAllowed: Boolean,
   isMultiCaseAllowed: Boolean,
-
+  tutorRating: Number,
+  receiveStudentRequest: [Number], 
   cases: [Number]
 })
 
