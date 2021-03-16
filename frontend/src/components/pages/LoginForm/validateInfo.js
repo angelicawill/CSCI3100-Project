@@ -7,10 +7,6 @@ export default function validateInfo(values) {
     // else if (!/^[A-Za-z]+/.test(values.name.trim())) {
     //   errors.name = 'Enter a valid name';
     // }
-
-    if (!values.phonenumber) {
-      errors.phonenumber = 'Phone Number is required';
-    } 
   
     if (!values.email) {
       errors.email = 'Email required';
@@ -18,7 +14,7 @@ export default function validateInfo(values) {
       errors.email = 'Email address is invalid';
     }
     if (!values.password) {
-      errors.password = 'Password required';
+      errors.password = 'Password is required';
     } else if (values.password.length < 6) {
       errors.password = 'Password needs to be 6 characters or more';
     }
@@ -26,6 +22,5 @@ export default function validateInfo(values) {
     if (!values.phonenumber) {
       errors.phonenumber = 'Phone Number is required';
     }
-
     return errors;
   }

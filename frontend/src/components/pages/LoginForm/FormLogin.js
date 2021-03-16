@@ -3,7 +3,7 @@ import validate from './validateInfo';
 import useForm from './useForm';
 import './Form.css';
 
-const FormSignUp = ({ submitForm }) => {
+const FormLogin = ({ submitForm }) => {
   const { handleChange, handleSubmit, values, errors } = useForm(
     submitForm,
     validate
@@ -12,21 +12,11 @@ const FormSignUp = ({ submitForm }) => {
   return (
     <div className='form-content-right'>
       <form onSubmit={handleSubmit} className='form' noValidate>
-        <h1>Register</h1>
+        <h1>Welcome Back!</h1>
         <h2>
-          Create a new student / tutor account for free
-        </h2>      
-            <div id="accountTypeContainer" name="accountTypeContainer" class="accountType">
-
-                <div id="studentAcc" class="floatBlock">
-                    <label for="studentAccount"> <input id="studentAccount" name="accountType" type="radio" value="STUDENT" /><b>  I'm a Student  </b></label>
-                </div>
-
-                <div id="tutorAcc" class="floatBlock">
-                    <label for="tutorAccount"> <input id="tutorAccount" name="accountType" type="radio" value="TUTOR" /><b> I'm a Tutor </b></label>
-                </div>
-            </div>
-            <div className='form-inputs'>
+          Please fill in your login details to proceed
+        </h2>                  
+        <div className='form-inputs'>
           <label className='form-label'>Email</label>
           <input
             className='form-input'
@@ -60,7 +50,7 @@ const FormSignUp = ({ submitForm }) => {
             value={values.phonenumber}
             onChange={handleChange}
           />
-          {errors.phonenumber && <p>{errors.phonenumber}</p>}
+          {errors.password2 && <p>{errors.password2}</p>}
         </div>    
         <div className='form-inputs'>
           <label className='form-label'>Password</label>
@@ -85,4 +75,4 @@ const FormSignUp = ({ submitForm }) => {
   );
 };
 
-export default FormSignUp;
+export default FormLogin;

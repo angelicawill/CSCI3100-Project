@@ -2,6 +2,8 @@ import React from 'react';
 import './HeroSection.css';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
+import image from './image-landing-page.png';
+
 
 function HeroSection({
   lightBg,
@@ -52,7 +54,7 @@ function HeroSection({
             </div>
             <div className='col'>
               <div className='home__hero-img-wrapper'>
-                <img src={img} alt={alt} className='home__hero-img' />
+                <img src={image} alt={alt} className='home__hero-img' />
               </div>
             </div>
           </div>
