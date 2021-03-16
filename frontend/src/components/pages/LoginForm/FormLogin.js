@@ -27,31 +27,8 @@ const FormLogin = ({ submitForm }) => {
             onChange={handleChange}
           />
           {errors.email && <p>{errors.email}</p>}
-        </div>
-        <div className='form-inputs'>
-          <label className='form-label'>Username</label>
-          <input
-            className='form-input'
-            type='text'
-            name='username'
-            placeholder='Enter your username'
-            value={values.username}
-            onChange={handleChange}
-          />
-          {errors.username && <p>{errors.username}</p>}
-        </div>    
-        <div className='form-inputs'>
-          <label className='form-label'>Phone Number</label>
-          <input
-            className='form-input'
-            type='tel'
-            name='phonenumber'
-            placeholder='Enter your phone number'
-            value={values.phonenumber}
-            onChange={handleChange}
-          />
-          {errors.password2 && <p>{errors.password2}</p>}
-        </div>    
+        </div>       
+         
         <div className='form-inputs'>
           <label className='form-label'>Password</label>
           <input
@@ -65,10 +42,10 @@ const FormLogin = ({ submitForm }) => {
           {errors.password && <p>{errors.password}</p>}
         </div>        
         <button className='form-input-btn' type='submit'>
-          Register
+          Log In
         </button>
         <span className='form-input-login'>
-          Already a member?  <a href='./../login'>Login</a>
+          Don't have an account?  <a href='./../sign-up'>Register</a>
         </span>
       </form>
     </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import HeroSection from '../../HeroSection';
-import image from './image-landing-page.png';
 
 
 const homeObjOne = {
@@ -12,7 +11,7 @@ const homeObjOne = {
     'We will help you connect and arrange meetings with the best tutors in Hong Kong to learn a variety of different subjects and skills. ',
   buttonLabel: 'Get Started',
   imgStart: '',
-  img: {image},
+  img: '',
   alt: 'Teacher'
 };
 
