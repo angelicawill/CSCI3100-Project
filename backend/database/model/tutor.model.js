@@ -7,9 +7,11 @@ const tutorSchema = mongoose.Schema({
   preferredLocation: [String],
   isGroupTeachingAllowed: Boolean,
   isMultiCaseAllowed: Boolean,
-  tutorRating: Number,
-  receiveStudentRequest: [Number], 
-  cases: [Number]
+  totalTutorScore: Number,  // the sum of score of all the rating
+  numberCaseFinished: {type:Number, default:0},
+  tutorRating: Number, // calculate by totalTutorScore / numberCaseFinished
+  receivedStudentRequest: [Number], 
+  cases: [Number]  //size should be restrited to 1 is isMultiCaseAllowed is False
 })
 
 module.exports = mongoose.model("Student",tutorSchema)

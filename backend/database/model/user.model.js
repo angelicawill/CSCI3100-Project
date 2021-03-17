@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   phonenumber: { type: Number, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  role: String, //indicate the user is a student or tutor
+  role: String, //indicate the user is a 'student' or 'tutor'
   isVerified: Boolean,
   password: { type: String, required: true} //should be salted
 
