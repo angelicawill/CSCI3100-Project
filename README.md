@@ -1,4 +1,4 @@
-## CSCI3100-Project
+# CSCI3100-Project
 CSCI3100 Group C7 
 
 <h1 align="center">
@@ -10,7 +10,7 @@ CSCI3100 Group C7
   
  <p align = "center"> FindTutor is a platform that matches students with private tutors based on their needs. FindTutor aims to make private tutoring matching more efficient and hassle-free. 🙌 </p>
  
- # Technology Used
+ ## Technology Used
  <ul>
   <li>React.js</li>
   <li>Node.js</li>
