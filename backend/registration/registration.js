@@ -17,8 +17,8 @@ router.post('/register', (req, res, next) => {
   const userInfo = {
 	name: registerInfo.name,
 	phoneNum: registerInfo.phoneNum,
-    username: registerInfo.username,
-    password: authUtils.hashPassword(registerInfo.password),
+    	username: registerInfo.username,
+    	password: authUtils.hashPassword(registerInfo.password),
   };
 
   users.insertOne(userInfo, (err) => {
