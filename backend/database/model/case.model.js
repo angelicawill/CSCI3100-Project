@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 
 const caseSchema = mongoose.Schema({
   caseid : Number,
-  studentid : [Number],
+  studentid : {type:[Number],default:[]},
   tutorid: Number,
   createAt: {type:Date, default:new Date()},
   isClosed: {type:Boolean, default:false}
