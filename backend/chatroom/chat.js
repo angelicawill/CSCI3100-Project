@@ -120,8 +120,8 @@ function initializeChatRoom(server, sessionMiddleware) {
                 /***********   send message   ***********/
                 // used on client: e.g. 
                 // socket.emit('send message', {
-                //     roomId: 23457890756,
-                //     value: input.value
+                //     roomId: 11,
+                //     value: "hi"
                 // });
                 socket.on('send message', ({
                     roomId, // 
@@ -176,7 +176,7 @@ function initializeChatRoom(server, sessionMiddleware) {
                 // })
                 socket.on('get rooms', ({
                     roomIndexes = null, // array e.g. [0, 5], specify an array of rooms with indexes 0 to 5 within user's data, newer first
-                    id = null, // string e.g. room1, maybe change according to database's change
+                    id = null, // number e.g. 11
                     messagesIndex, // array e.g. [0, 5], specify an array of messages with indexes 0 to 5 within room, newer first
                 }) => {
                     let returnObject = {
