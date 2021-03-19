@@ -12,6 +12,7 @@ const studentSchema = mongoose.Schema({
   preferredFee: [Number], //should be a range of value, e.g. [100,150], assume the fee is not depend on subject
   preferredTeachingMode: [String], //should be either 'single', 'multi', or both
   tutorRequest: [Number], //the request tutor's id
+  receivedTutorRequest: [Number],
   cases: [Number]  //case id that the student involved, there will be case id stored if the case is in process
 })
 
