@@ -1,0 +1,110 @@
+:root {
+    color: black;
+}
+
+.img-wrapper {
+    max-width: 200px;
+    max-height: 100px;
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.math {
+    position: absolute;
+    top: 310px;
+    left: 300px;
+}
+
+.math-title {
+    font-size: 14px;
+    color: #828282;
+    font-weight: lighter;
+    position: absolute;
+    top: 421px;
+    left: 325px;
+}
+
+.phy {
+    position: absolute;
+    top: 310px;
+    left: 450px;
+}
+
+.phy-title {
+    font-size: 14px;
+    color: #828282;
+    font-weight: lighter;
+    position: absolute;
+    top: 421px;
+    left: 490px;
+}
+
+.chem {
+    position: absolute;
+    top: 310px;
+    left: 600px;
+}
+
+.chem-title {
+    font-size: 14px;
+    color: #828282;
+    position: absolute;
+    top: 421px;
+    left: 634px;
+    font-weight: lighter;
+}
+
+.bio {
+    position: absolute;
+    top: 310px;
+    left: 750px;
+}
+
+.bio-title {
+    font-size: 14px;
+    color: #828282;
+    position: absolute;
+    top: 421px;
+    left: 793px;
+    font-weight: lighter;
+}
+
+.eng {
+    position: absolute;
+    top: 310px;
+    left: 900px;
+}
+
+.eng-title {
+    font-size: 14px;
+    color: #828282;
+    position: absolute;
+    top: 421px;
+    left: 943px;
+    font-weight: lighter;
+}
+
+.chin {
+    position: absolute;
+    top: 310px;
+    left: 1050px;
+}
+
+.chin-title {
+    font-size: 14px;
+    color: #828282;
+    position: absolute;
+    top: 421px;
+    left: 1090px;
+    font-weight: lighter;
+}
+
+.img {
+    max-width: 70%;
+    alignment: center;
+    padding-right: 0;
+}
+
