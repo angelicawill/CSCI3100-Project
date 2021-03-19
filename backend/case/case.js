@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-
+// data for testing
 let cases = [
     {
         caseid: 111,
@@ -56,7 +56,7 @@ router.post('/invitetocase', (req, res) => {
     if (user.role == "tutor") {
         console.log(req.body);
         if (body.studentList && body.caseid && user.userid) {
-            // inviteToCase(body.);
+            // inviteToCase(body.studentList, user.userid);
             returnObject.case = {
                 caseid: 111,
                 studentid: body.studentList,
@@ -90,7 +90,7 @@ router.post('/finishcase', (req, res) => {
     let user = req.user;
     if (user.role == "tutor") {
         if (body.caseid && user.userid) {
-            // inviteToCase(body.);
+            // finishCase(user.userid, body.caseid);
             returnObject.case = {
                 caseid: 111,
                 studentid: [],
