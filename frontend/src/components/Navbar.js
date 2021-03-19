@@ -6,6 +6,8 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
 import {ReactComponent as Logo} from './logo.svg';
 
+/*Navbar component should be cleaned up and refactored*/
+
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);

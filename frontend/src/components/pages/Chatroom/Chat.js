@@ -3,6 +3,8 @@ import "./Chat.css";
 import { Avatar,IconButton } from "@material-ui/core";
 // import axios from "./axios";
 
+/*This is for chat component, on the right side of the chatroom page*/
+
 function Chat({ messages }){
 
     // const [input, setInput] = useState("");
@@ -22,11 +24,12 @@ function Chat({ messages }){
     return(
         <div className="chat">
             <div className="chat__header">
-                <Avatar />
+                <Avatar /> {/*This will contain tutor's profile pic (using src={})*/}
 
+                {/*This must be refactored later to fetch data from db*/}
                 <div className="chat__headerInfo">
-                    <h3>Room name</h3>
-                    <p>Last seen at...</p>
+                    <h3>Jessica</h3>
+                    <p>Mathematics Tutor</p> 
                 </div>
 
                 <div className="chat__headerRight">
@@ -44,16 +47,28 @@ function Chat({ messages }){
                 ))} */}
                
 
-                <p className="chat__message  chat__receiver">
-                    <span className="chat__name">Sonny</span>
-                    This is a message
-                    <span className="chat__timestamp">{new Date().toUTCString()}</span>
+                <p className="chat__message  chat__receiver"> {/*My message (add chat__receiver)*/}
+                    <span className="chat__name">Me</span>
+                    I send this message to tutor
+                    <p className="chat__timestamp">{new Date().toUTCString()}</p>
                 </p>
-                <p className="chat__message">
-                    <span className="chat__name">Sonny</span>
-                    This is a message
-                    <span className="chat__timestamp">{new Date().toUTCString()}</span>
+                <p className="chat__message"> {/*Tutor's message (without chat__receiver)*/}
+                    <span className="chat__name">Tutor</span> 
+                    This is tutor's message. scroll down to see more. this is a very long message hello
+                    <p className="chat__timestamp">{new Date().toUTCString()}</p>
                 </p>
+                <p className="chat__message"> {/*Tutor's message*/}
+                    <span className="chat__name">Tutor</span> 
+                    This is tutor's message.
+                    <p className="chat__timestamp">{new Date().toUTCString()}</p>
+                </p>
+                <p className="chat__message"> {/*Tutor's message*/}
+                    <span className="chat__name">Tutor</span> 
+                    This is tutor's message. Hello there.
+                    <p className="chat__timestamp">{new Date().toUTCString()}</p>
+                </p>
+                
+                
             </div>
 
             <div className="chat__footer">

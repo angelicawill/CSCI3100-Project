@@ -3,6 +3,8 @@ import  "./Sidebar.css";
 import { SearchOutlined } from "@material-ui/icons";
 import SidebarChat from './SidebarChat';
 
+/*This is for sidebar component, on the left side of the chatroom page*/
+
 function Sidebar(){
     return(
         <div className='sidebar'>

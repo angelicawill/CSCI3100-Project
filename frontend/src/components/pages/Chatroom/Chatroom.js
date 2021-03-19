@@ -6,6 +6,8 @@ import Chat from './Chat';
 // import Pusher from 'pusher-js';
 // import axios from "./axios";
 
+/*This is the main component for chatroom*/
+
 function Chatroom() {
 //   const [messages, setMessages] = useState([]);
 //   useEffect(() => {
