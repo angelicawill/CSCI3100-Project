@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import LandingPage from './components/pages/LandingPage/LandingPage';
 import SignUpForm from './components/pages/SignUpForm/Form';
 import LoginForm from './components/pages/LoginForm/Form';
+import Chatroom from './components/pages/Chatroom/Chatroom';
+
 
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
       <Route path='/' exact component={LandingPage} />    
       <Route path='/sign-up' exact component={SignUpForm} />    
       <Route path='/login' exact component={LoginForm} />     
+      <Route path='/chat' exact component={Chatroom} />     
       </Switch>      
     </Router>
   );

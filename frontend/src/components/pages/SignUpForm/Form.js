@@ -11,7 +11,7 @@ const Form = () => {
     setIsSubmitted(true);
   }
   return (
-    <>
+    <div className='app'>
       <div className='form-container'>
         <div className='form-content-left'>
           {/* <img className='form-img' src={image} alt='study' /> */}
@@ -22,7 +22,7 @@ const Form = () => {
           <FormSuccess />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
