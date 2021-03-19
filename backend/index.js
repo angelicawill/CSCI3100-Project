@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 5000;
 
-router.get('/', function(req, res, next) {
-  const users = req.app.locals.users;
-
-  users.find().limit(3).toArray((err, recent) => {
-    res.render('index', { recent } );
-  });
+app.get('/', (req, res) => {
+    res.send("wow");
 });
 
-module.exports = router;
+app.listen(port, () => {
+    console.log("server running on port: " + port);
+});
