@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { FaBars, FaTimes } from 'react-icons/fa';
+// import { FaBars, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
 import {ReactComponent as Logo} from './logo.svg';
+
+/*Navbar component should be cleaned up and refactored*/
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -38,9 +40,9 @@ function Navbar() {
             <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
               <Logo className='navbar-icon' />           
             </Link>
-            <div className='menu-icon' onClick={handleClick}>
+            {/* <div className='menu-icon' onClick={handleClick}>
               {click ? <FaTimes /> : <FaBars />}
-            </div>
+            </div> */}
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>              
               {/* <li className='nav-item'>
                 <Link

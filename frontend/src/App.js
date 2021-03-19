@@ -7,6 +7,8 @@ import SignUpForm from './components/pages/SignUpForm/Form';
 import LoginForm from './components/pages/LoginForm/Form';
 import Header from './components/Header/Header';
 import FindTutorPage from "./components/pages/FindTutorPage/FindTutorPage";
+import Chatroom from './components/pages/Chatroom/Chatroom';
+
 
 
 function App() {
@@ -18,7 +20,8 @@ function App() {
       <Route path='/sign-up' exact component={SignUpForm} />    
       <Route path='/login' exact component={LoginForm} /> 
       <Route path='/header' exact component={Header} />   
-      <Route path='/find-tutor' exact component={FindTutorPage} />
+      <Route path='/find-tutor' exact component={FindTutorPage} />    
+      <Route path='/chat' exact component={Chatroom} />     
       </Switch>      
     </Router>
   );
