@@ -6,3 +6,7 @@ backend/node_modules
 backend/.env
 
 backend/database/dbCreate.js
+
+#all
+*node_modules
+*.env
