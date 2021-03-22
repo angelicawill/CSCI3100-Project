@@ -20,7 +20,7 @@ users = [
             username: "name2",
             phonenumber: 87654321,
             email: "name2@gmail.com",
-            role: "teacher", //indicate the user is a student or tutor
+            role: "tutor", //indicate the user is a student or tutor
             isVerified: true,
             password: "name2",//should be salted
             roomids: [11]
@@ -31,7 +31,7 @@ users = [
             username: "name3",
             phonenumber: 2345789,
             email: "name3@gmail.com",
-            role: "teacher", //indicate the user is a student or tutor
+            role: "tutor", //indicate the user is a student or tutor
             isVerified: true,
             password: "name3",//should be salted
             roomids: []
