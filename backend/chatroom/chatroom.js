@@ -1,6 +1,46 @@
 const util = require('util')
 const passport = require('passport');
-let {users, chats} = require('../test/testdata');
+// let {users, chats} = require('../test/testdata');
+const chats = [
+    {
+        id: 11,
+        users: [
+            {
+                userid: 1,
+                readedIndex: 0
+            },
+            {
+                userid: 2,
+                readedIndex: -1
+            }
+        ],
+        msg: [
+            {
+                sender: 1,
+                readedUserIds: [1],
+                value: "hi",
+                time: 43857248453
+            }
+        ]
+    },
+    {
+        id: 12,
+        users: [
+            {
+                userid: 1,
+                readedIndex: 0
+            },
+        ],
+        msg: [
+            {
+                sender: 1,
+                readedUserIds: [1],
+                value: "bye",
+                time: 43857248453
+            }
+        ]
+    }
+]
 // Used by client:
 // socket = io('/chatroom');
 // Receive error on client side: 
@@ -130,7 +170,9 @@ function initializeChatRoom(io, sessionMiddleware) {
             socket,
             currentUser,
             useridSocket,
-            io
+            io,
+            users,
+            chats
         }
 
         require('./addToRoom')(reference);

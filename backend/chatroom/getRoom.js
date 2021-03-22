@@ -1,4 +1,3 @@
-let { users, chats } = require('../test/testdata');
 const util = require('util')
 
 module.exports = ({

@@ -1,11 +1,12 @@
-let { users, chats } = require('../test/testdata');
 const util = require('util')
 
 module.exports = ({
     socket,
     currentUser,
     useridSocket,
-    io
+    io,
+    users,
+    chats
 }) => {
     let roomname = 'read message';
     socket.on(roomname, ({
