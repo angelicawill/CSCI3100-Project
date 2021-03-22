@@ -4,7 +4,9 @@ module.exports = ({
     socket,
     currentUser,
     useridSocket,
-    io
+    io,
+    users,
+    chats
 }) => {
     let roomname = 'get rooms';
     socket.on(roomname, ({
