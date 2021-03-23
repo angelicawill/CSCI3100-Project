@@ -14,9 +14,7 @@ module.exports = ({
         value
     }) => {
         let returnObject = {
-            roomid: null,
-            messageIndex: null,
-            msg: null,
+            room: null,
             success: false,
             roomIdValid: false,
             valueValid: false,
@@ -92,9 +90,7 @@ module.exports = ({
 
                     })
 
-                    returnObject.roomid = room.id;
-                    returnObject.msg = newMessage;
-                    returnObject.messageIndex = room.msg.length - 1;
+                    returnObject.room = room
                     returnObject.success = successUpdate;
                 }
             }

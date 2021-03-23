@@ -53,25 +53,25 @@ const chats = [
 // /***********   add to room   ***********/
 // used on client: e.g. 
 // socket.emit('add to rom', {
-//     "roomid": 12,
-//     "userids": [2],
+//     "roomid": 12, // (The ID of the room want to add to)
+//     "userids": [2],  // (A list of user IDs that want to add to the room)
 // });
 // return {
-//     room: null,
+//     room: null, // (return the room object which the users are added to)
 //     success: false,
 //     roomIdValid: false,
 //     useridsValid: false,
 //     canFindRoom: false,
 //     canFindUsers: false,
-//     userIsInRoom: false
+//     userIsInRoom: false // (Check the user sending request is in the room)
 // }
 // /***********   create room   ***********/
 // used on client: e.g. 
 // socket.emit('create room', {
-//     "userids": [2, 3]
+//     "userids": [2, 3] // (A list of user IDs that want to include in the new room)
 // });
 // return {
-//     room: null,
+//     room: null, // (return the room object which the users are added to)
 //     success: false,
 //     useridsValid: false,
 //     canFindUsers: false
@@ -79,46 +79,45 @@ const chats = [
 // /***********   send message   ***********/
 // used on client: e.g. 
 // socket.emit('send message', {
-//     "roomid": 11,
-//     "value": "hi"
+//     "roomid": 11, // (The ID of the room that want to send message to)
+//     "value": "hi" // (The value of the message that want to send)
 // });
 // return {
-//     roomid: null,
-//     messageIndex: null,
-//     msg: null,
+//     room: // (Return the room that have added new message)
 //     success: false,
 //     roomIdValid: false,
 //     valueValid: false,
 //     canFindRoom: false,
-//     userIsInRoom: false
+//     userIsInRoom: false, // (Check the user sending request is in the room)
+//     serverError: true, 
 // }
 // /***********   get rooms   ***********/
 // socket.emit('get rooms', ({
-//     "roomIndexes":[1,4] or "roomid":11
+//     "roomIndexes":[1,4] or "roomid":11 // (Get the room objects, roomIndexes will get the array of room objects according to the room IDs stored in the user database, roomid will get the array containing one room object)
 // })
 // return {
-//     rooms: [],
+//     rooms: [], // (return a array of room objects that want to get)
 //     success: false,
 //     roomIndexesValid: false,
 //     roomidValid: false,
 //     canFindRooms: false,
-//     userIsInRoom: false,
+//     userIsInRoom: false, // (Check the user sending request is in the room)
 //     serverError: true,
 // }
 // /***********   read message   ***********/
 // socket.emit('read message', ({
-//     "roomid":11,
-//     "messageIndex": 0
+//     "roomid":11, // (The ID of the room that want to change message status to readed)
+//     "messageIndex": 0 // (The index of the newest message that have been readed, all older messages will also be changed to readed)
 // })
 // return {
-//     roomid: null,
-//     msg: null,
+//     roomid: null, // (The ID of the room that want to change message status to readed)
+//     room: null, // (The room that have changed message status)
 //     success: false,
 //     roomIdValid: false,
 //     messageIndexValid: false,
 //     canFindRoom: false,
-//     userIsInRoom: false,
-//     messageIndexExist: false,
+//     userIsInRoom: false, // (Check the user sending request is in the room)
+//     messageIndexExist: false, 
 //     serverError: true,
 // }
 function initializeChatRoom(io, sessionMiddleware) {
