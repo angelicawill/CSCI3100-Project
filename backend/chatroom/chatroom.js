@@ -2,46 +2,7 @@ const util = require('util')
 const passport = require('passport');
 // test files in dixon-chatroom branch
 // let {users, chats} = require('../test/testdata');
-const chats = [
-    {
-        id: 11,
-        users: [
-            {
-                userid: 1,
-                readedIndex: 0
-            },
-            {
-                userid: 2,
-                readedIndex: -1
-            }
-        ],
-        msg: [
-            {
-                sender: 1,
-                readedUserIds: [1],
-                value: "hi",
-                time: 43857248453
-            }
-        ]
-    },
-    {
-        id: 12,
-        users: [
-            {
-                userid: 1,
-                readedIndex: 0
-            },
-        ],
-        msg: [
-            {
-                sender: 1,
-                readedUserIds: [1],
-                value: "bye",
-                time: 43857248453
-            }
-        ]
-    }
-]
+
 // Used by client:
 // socket = io('/chatroom');
 // Receive error on client side: 
@@ -120,7 +81,51 @@ const chats = [
 //     messageIndexExist: false, 
 //     serverError: true,
 // }
-function initializeChatRoom(io, sessionMiddleware) {
+function initializeChatRoom({io, sessionMiddleware, app}) {
+    app.locals.dixontest ? "" : app.locals.dixontest = {};
+    app.locals.dixontest.chats = [
+        {
+            id: 11,
+            users: [
+                {
+                    userid: 1,
+                    readedIndex: 0
+                },
+                {
+                    userid: 2,
+                    readedIndex: -1
+                }
+            ],
+            msg: [
+                {
+                    sender: 1,
+                    readedUserIds: [1],
+                    value: "hi",
+                    time: 43857248453
+                }
+            ]
+        },
+        {
+            id: 12,
+            users: [
+                {
+                    userid: 1,
+                    readedIndex: 0
+                },
+            ],
+            msg: [
+                {
+                    sender: 1,
+                    readedUserIds: [1],
+                    value: "bye",
+                    time: 43857248453
+                }
+            ]
+        }
+    ]
+    const {chats, users} = app.locals.dixontest;
+    console.log("in chat room");
+    console.log(users);
 
     let namespace = "/chatroom";
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
@@ -194,7 +199,7 @@ function initializeChatRoom(io, sessionMiddleware) {
 // const session = require('express-session');
 // const sessionMiddleware = session({ secret: "changeit", resave: false, saveUninitialized: false });
 // const io = socketio(server);
-// initializeChatRoom(io, sessionMiddleware);
+// initializeChatRoom({io, sessionMiddleware, app});
 // server.listen(port, () => {
 //     console.log("server running on port: " + port);
 // });
