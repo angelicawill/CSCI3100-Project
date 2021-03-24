@@ -1,7 +1,6 @@
 const util = require('util')
 const passport = require('passport');
-// test files in dixon-chatroom branch
-// let {users, chats} = require('../test/testdata');
+const { users, chats, cases } = global.dixontest;
 
 // Used by client:
 // socket = io('/chatroom');
@@ -18,13 +17,14 @@ const passport = require('passport');
 //     "userids": [2],  // (A list of user IDs that want to add to the room)
 // });
 // return {
-//     room: null, // (return the room object which the users are added to)
-//     success: false,
 //     roomIdValid: false,
 //     useridsValid: false,
 //     canFindRoom: false,
 //     canFindUsers: false,
-//     userIsInRoom: false // (Check the user sending request is in the room)
+//     userIsInRoom: false, // (Check the user sending request is in the room)
+//     room: null, // (return the room object which the users are added to)
+//     success: false,
+//     serverError: true
 // }
 // /***********   create room   ***********/
 // used on client: e.g. 
@@ -32,10 +32,11 @@ const passport = require('passport');
 //     "userids": [2, 3] // (A list of user IDs that want to include in the new room)
 // });
 // return {
+//     useridsValid: false,
+//     canFindUsers: false,
 //     room: null, // (return the room object which the users are added to)
 //     success: false,
-//     useridsValid: false,
-//     canFindUsers: false
+//     serverError: true
 // };
 // /***********   send message   ***********/
 // used on client: e.g. 
@@ -44,12 +45,12 @@ const passport = require('passport');
 //     "value": "hi" // (The value of the message that want to send)
 // });
 // return {
-//     room: // (Return the room that have added new message)
-//     success: false,
 //     roomIdValid: false,
 //     valueValid: false,
 //     canFindRoom: false,
 //     userIsInRoom: false, // (Check the user sending request is in the room)
+//     room: null // (Return the room that have added new message)
+//     success: false,
 //     serverError: true, 
 // }
 // /***********   get rooms   ***********/
@@ -57,13 +58,13 @@ const passport = require('passport');
 //     "roomIndexes":[1,4] or "roomid":11 // (Get the room objects, roomIndexes will get the array of room objects according to the room IDs stored in the user database, roomid will get the array containing one room object)
 // })
 // return {
-//     rooms: [], // (return a array of room objects that want to get)
-//     success: false,
 //     roomIndexesValid: false,
 //     roomidValid: false,
 //     canFindRooms: false,
 //     userIsInRoom: false, // (Check the user sending request is in the room)
-//     serverError: true,
+//     rooms: [], // (return a array of room objects that want to get)
+//     success: false,
+//     serverError: true
 // }
 // /***********   read message   ***********/
 // socket.emit('read message', ({
@@ -72,61 +73,16 @@ const passport = require('passport');
 // })
 // return {
 //     roomid: null, // (The ID of the room that want to change message status to readed)
-//     room: null, // (The room that have changed message status)
-//     success: false,
 //     roomIdValid: false,
 //     messageIndexValid: false,
 //     canFindRoom: false,
 //     userIsInRoom: false, // (Check the user sending request is in the room)
 //     messageIndexExist: false, 
-//     serverError: true,
+//     room: null, // (The room that have changed message status)
+//     success: false,
+//     serverError: true
 // }
-function initializeChatRoom({io, sessionMiddleware, app}) {
-    app.locals.dixontest ? "" : app.locals.dixontest = {};
-    app.locals.dixontest.chats = [
-        {
-            id: 11,
-            users: [
-                {
-                    userid: 1,
-                    readedIndex: 0
-                },
-                {
-                    userid: 2,
-                    readedIndex: -1
-                }
-            ],
-            msg: [
-                {
-                    sender: 1,
-                    readedUserIds: [1],
-                    value: "hi",
-                    time: 43857248453
-                }
-            ]
-        },
-        {
-            id: 12,
-            users: [
-                {
-                    userid: 1,
-                    readedIndex: 0
-                },
-            ],
-            msg: [
-                {
-                    sender: 1,
-                    readedUserIds: [1],
-                    value: "bye",
-                    time: 43857248453
-                }
-            ]
-        }
-    ]
-    const {chats, users} = app.locals.dixontest;
-    console.log("in chat room");
-    console.log(users);
-
+function initializeChatRoom({io, sessionMiddleware}) {
     let namespace = "/chatroom";
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
     io.of(namespace).use(wrap(sessionMiddleware));
@@ -188,7 +144,7 @@ function initializeChatRoom({io, sessionMiddleware, app}) {
 
         socket.on("disconnect", (reason) => {
             console.log("client disconnected from chatroom");
-            useridSocket.splice(useridSocket.findIndex((idsocket) => idsocket.userid == currentUser.userid), 1);
+            useridSocket.splice(useridSocket.findIndex((idsocket) => idsocket.userid === currentUser.userid), 1);
             console.log(useridSocket);
         });
     })

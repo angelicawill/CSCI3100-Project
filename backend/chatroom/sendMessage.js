@@ -14,49 +14,54 @@ module.exports = ({
         value
     }) => {
         let returnObject = {
-            room: null,
-            success: false,
             roomIdValid: false,
             valueValid: false,
             canFindRoom: false,
             userIsInRoom: false,
+            room: null,
+            success: false,
             serverError: true,
         }
 
-        let valid = true;
         try {
-            if (typeof roomid == "number" && Number.isInteger(roomid)) {
-                returnObject.roomIdValid = true;
-            } else {
-                valid = false;
-            }
-
-            if (typeof value == "string") {
-                returnObject.valueValid = true;
-            } else {
-                valid = false;
-            }
-
-            if (valid) {
-                let dataExist = true;
-
-                // Find corresponding room in database
-                let room = chats.find((room) => room.id == roomid);
-                if (room) {
-                    returnObject.canFindRoom = true;
+            (() => {
+                if (!currentUser) {
+                    return;
                 } else {
-                    dataExist = false
+                    /***********   Check syntax valid   ***********/
+                    if (typeof roomid === "number" && Number.isInteger(roomid)) {
+                        returnObject.roomIdValid = true;
+                    }
+
+                    if (typeof value === "string") {
+                        returnObject.valueValid = true;
+                    }
                 }
 
-                // Check user is in room
-                console.log(room);
-                if (room?.users.find((user) => user.userid == currentUser.userid)) {
-                    returnObject.userIsInRoom = true;
+
+                if (!returnObject.roomIdValid || !returnObject.valueValid) {
+                    return;
                 } else {
-                    dataExist = false;
+                    /***********   Check data exist   ***********/
+
+                    let room = chats.find((room) => room.id === roomid);
+                    if (room) {
+                        returnObject.canFindRoom = true;
+                    }
+
+                    // Check user is in room
+                    console.log(room);
+                    if (room?.users.find((user) => user.userid === currentUser.userid)) {
+                        returnObject.userIsInRoom = true;
+                    }
                 }
 
-                if (dataExist) {
+
+                if (!returnObject.canFindRoom || !returnObject.userIsInRoom) {
+                    return;
+                } else {
+                    /***********   Send message   ***********/
+
                     let successUpdate = true;
 
                     // Create new message
@@ -71,7 +76,7 @@ module.exports = ({
                     room.msg.push(newMessage);
 
                     // Read previous messages
-                    let oldReadedIndex = room.users[room.users.findIndex((user) => user.userid == currentUser.userid)].readedIndex;
+                    let oldReadedIndex = room.users[room.users.findIndex((user) => user.userid === currentUser.userid)].readedIndex;
                     console.log(oldReadedIndex)
                     for (let i = oldReadedIndex + 1; i < room.msg.length; i++) {
                         room.msg[i].readedUserIds.push(currentUser.userid);
@@ -79,12 +84,12 @@ module.exports = ({
 
 
                     room.users.forEach((ruser, index) => {
-                        if (ruser.userid == currentUser.userid) {
+                        if (ruser.userid === currentUser.userid) {
                             room.users[index].readedIndex = room.msg.length - 1;
                         }
 
-                        let duser = users.find(duser => duser.userid == ruser.userid);
-                        let roomIdIndex = duser.roomids.findIndex(roomid => roomid == room.id);
+                        let duser = users.find(duser => duser.userid === ruser.userid);
+                        let roomIdIndex = duser.roomids.findIndex(roomid => roomid === room.id);
 
                         duser.roomids.unshift(duser.roomids.splice(roomIdIndex, 1)[0]);
 
@@ -93,10 +98,12 @@ module.exports = ({
                     returnObject.room = room
                     returnObject.success = successUpdate;
                 }
-            }
+            })()
+
             returnObject.serverError = false;
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            returnObject.serverError = true;
         } finally {
             socket.emit(roomname, returnObject);
             if (returnObject.success) {

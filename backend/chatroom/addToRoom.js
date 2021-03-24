@@ -14,70 +14,72 @@ module.exports = ({
         userids
     }) => {
         let returnObject = {
-            room: null,
-            success: false,
             roomIdValid: false,
             useridsValid: false,
             canFindRoom: false,
             canFindUsers: false,
             userIsInRoom: false,
-            serverError: true,
+            room: null,
+            success: false,
+            serverError: true
         }
-        let valid = true;
 
         try {
-            // Check roomid valid
-            if (typeof roomid == "number" && Number.isInteger(roomid)) {
-                returnObject.roomIdValid = true;
-            } else {
-                valid = false;
-            }
+            (() => {
+                let room;
 
-            // Check userids valid
-            if (Array.isArray(userids) && userids.length && userids.every(id => typeof id == "number" && Number.isInteger(id))) {
-                returnObject.useridsValid = true;
-            } else {
-                valid = false;
-            }
-
-            if (valid) {
-                let dataExist = true;
-
-                // Find corresponding room in database
-                let room = chats.find((room) => room.id == roomid);
-                if (room) {
-                    returnObject.canFindRoom = true;
+                if (!currentUser) {
+                    return;
                 } else {
-                    dataExist = false
-                }
+                    /***********   Check syntax valid   ***********/
 
-                // Check user is in room
-                if (room?.users.find((user) => user.userid == currentUser.userid)) {
-                    returnObject.userIsInRoom = true;
-                } else {
-                    dataExist = false;
-                }
-
-                // Find corresponding users in database
-                let canFindUsers = true
-
-                userids.forEach(id => {
-                    if (!users.find((user => user.userid == id))) {
-                        canFindUsers = false;
+                    if (typeof roomid === "number" && Number.isInteger(roomid)) {
+                        returnObject.roomIdValid = true;
                     }
-                })
-                if (canFindUsers) {
-                    returnObject.canFindUsers = true;
-                } else {
-                    dataExist = false;
+
+                    if (Array.isArray(userids) && userids.length && userids.every(id => typeof id === "number" && Number.isInteger(id))) {
+                        returnObject.useridsValid = true;
+                    }
                 }
 
 
-                // Update corresponding users and room
-                if (dataExist) {
+                if (!returnObject.roomIdValid || !returnObject.useridsValid) {
+                    return;
+                } else {
+                    /***********   Check data exist   ***********/
+
+                    // Find corresponding room in database
+                    room = chats.find((room) => room.id === roomid);
+                    if (room) {
+                        returnObject.canFindRoom = true;
+                    }
+
+                    // Check user is in room
+                    if (room?.users.find((user) => user.userid === currentUser.userid)) {
+                        returnObject.userIsInRoom = true;
+                    }
+
+                    // Find corresponding users in database
+                    let canFindUsers = true
+                    userids.forEach(id => {
+                        if (!users.find((user => user.userid === id))) {
+                            canFindUsers = false;
+                        }
+                    })
+                    if (canFindUsers) {
+                        returnObject.canFindUsers = true;
+                    }
+                }
+
+
+                if (!returnObject.canFindRoom || !returnObject.userIsInRoom || !returnObject.canFindUsers) {
+                    return;
+                } else {
+                    /***********   Add to room   ***********/
+
                     let successUpdate = true;
                     userids.forEach((id) => {
-                        if (!room.users.find((user) => user.userid == id)) {
+                        if (!room.users.find((user) => user.userid === id)) {
                             // Update room
                             room.users.push({
                                 userid: id,
@@ -85,20 +87,21 @@ module.exports = ({
                             })
 
                             // Update users 
-                            useridSocket.find((obj => obj.userid == id))?.userSocket.join(roomid);
+                            useridSocket.find((obj => obj.userid === id))?.userSocket.join(roomid);
 
-                            users.find((user => user.userid == id)).roomids.unshift(roomid);
+                            users.find((user => user.userid === id)).roomids.unshift(roomid);
                         }
                     })
 
                     returnObject.room = room;
                     returnObject.success = successUpdate;
                 }
-            }
+            })()
 
             returnObject.serverError = false;
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            returnObject.serverError = true;
         } finally {
             socket.emit(roomname, returnObject);
             if (returnObject.success) {
