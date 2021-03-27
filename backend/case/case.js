@@ -168,6 +168,45 @@ exports.__esModule = true;
 //     success: false,
 //     serverError: true,
 //   }
+//     /***********   /case/admin/createcase   ***********/
+// required data: {
+//     caseid // ID of the case want to invite students to
+// }
+// return {
+//     case: null,
+//     userRoleMatch: false,
+//     success: false,
+//     serverError: true,
+//   }
+//     /***********   /case/admin/deletecase   ***********/
+// required data: {
+//     caseid // ID of the case want to invite students to
+// }
+// return {
+//     caseidValid: false,
+//     caseExist: false,
+//     userRoleMatch: false,
+//     success: false,
+//     serverError: true,
+//   }
+//     /***********   /case/admin/updatecase   ***********/
+// required data: {
+//     caseid: Number,// ID of the case want to invite students to
+//     studentids?: Number[],
+//     invitingStudentid?: Number[],
+//     tutorid?: Number,
+//     createAt?: Number,
+//     isClosed?: Boolean
+// }
+// return {
+//     caseidValid: false,
+//     dataValid: false,
+//     caseExist: false,
+//     userRoleMatch: false,
+//     case: null,
+//     success: false,
+//     serverError: true,
+//   }
 var express = require('express');
 var router = express.Router();
 router.use('/tutor', require('./tutor/tutor')["default"]);
