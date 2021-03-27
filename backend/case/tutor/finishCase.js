@@ -1,108 +1,101 @@
-let { users, chats, cases } = global.dixontest;
-
-module.exports = (req, res) => {
-    let returnObject = {
+"use strict";
+exports.__esModule = true;
+var globalObject = global;
+var _a = globalObject.dixontest, users = _a.users, chats = _a.chats, cases = _a.cases;
+exports["default"] = (function (req, res) {
+    var returnObject = {
         caseidValid: false,
         caseExist: false,
         userRoleMatch: false,
         userInCase: false,
         success: false,
         serverError: true
-    }
-    let status = 500;
-
-    let { caseid } = req.body;
-    let user = req.user;
-
+    };
+    var status = 500;
+    var caseid = req.body.caseid;
+    var user = req.user;
     try {
-        let dataSyntaxValid = false;
-        let dataExist = false;
-        let haveAccessRight = false;
-
-        (() => {
+        var dataSyntaxValid_1 = false;
+        var dataExist_1 = false;
+        var haveAccessRight_1 = false;
+        (function () {
+            var casee;
             if (!user) {
                 return;
-            } else {
+            }
+            else {
                 /***********   Check syntax valid   ***********/
-                if (typeof caseid === 'number' && Number.isInteger(caseid)) {
+                if (typeof caseid === "number" && Number.isInteger(caseid)) {
                     returnObject.caseidValid = true;
                 }
             }
-
-
-
             if (!returnObject.caseidValid) {
                 return;
-            } else {
-                dataSyntaxValid = true;
+            }
+            else {
+                dataSyntaxValid_1 = true;
                 /***********   Check data exist   ***********/
-
                 // Find case
-                if (cases.find(casee => casee.caseid === caseid)) {
+                if (cases.find(function (casee) { return casee.caseid === caseid; })) {
                     returnObject.caseExist = true;
                 }
             }
-
-
             if (!returnObject.caseExist) {
                 return;
-            } else {
-                dataExist = true;
+            }
+            else {
+                dataExist_1 = true;
                 /***********   Check have access right   ***********/
-
                 // check user's role is tutor
                 if (user.role === "tutor") {
                     returnObject.userRoleMatch = true;
                 }
-
                 // check user is in the case
-                let casee = cases.find(casee => casee.caseid === caseid);
+                casee = cases.find(function (casee) { return casee.caseid === caseid; });
                 if (casee.tutorid === user.userid) {
                     returnObject.userInCase = true;
                 }
             }
-
-
             if (!returnObject.userInCase || !returnObject.userRoleMatch) {
                 return;
-            } else {
-                haveAccessRight = true;
-                /***********   Invite student to case   ***********/
-
-                let caseIndex = cases.findIndex(casee => casee.caseid === caseid);
-                cases.splice(caseIndex, 1);
-
+            }
+            else {
+                haveAccessRight_1 = true;
+                /***********   finish case   ***********/
+                casee.isClosed = true;
                 // change in student and tutor database too
-
                 returnObject.success = true;
             }
-        })()
-
-
-        if (!dataSyntaxValid) {
+        })();
+        if (!dataSyntaxValid_1) {
             status = 400;
-        } else if (!haveAccessRight) {
+        }
+        else if (!haveAccessRight_1) {
             // returnObject = {
             //     ...returnObject,
             //     caseExist: false
             // }
             status = 403;
-        } else if (!dataExist) {
+        }
+        else if (!dataExist_1) {
             status = 404;
-        } else if (returnObject.success) {
+        }
+        else if (returnObject.success) {
             status = 200;
-        } else {
+        }
+        else {
             status = 500;
         }
-
         if (status !== 500) {
             returnObject.serverError = false;
         }
-    } catch (e) {
+    }
+    catch (e) {
         console.log(e);
         status = 500;
         returnObject.serverError = true;
-    } finally {
+    }
+    finally {
         res.status(status).send(returnObject);
     }
-}
+});

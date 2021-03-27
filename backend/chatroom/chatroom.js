@@ -1,7 +1,9 @@
-const util = require('util')
-const passport = require('passport');
-const { users, chats, cases } = global.dixontest;
-
+"use strict";
+exports.__esModule = true;
+// import util from 'util'
+var passport = require('passport');
+var globalObject = global;
+var _a = globalObject.dixontest, users = _a.users, chats = _a.chats, cases = _a.cases;
 // Used by client:
 // socket = io('/chatroom');
 // Receive error on client side: 
@@ -82,75 +84,66 @@ const { users, chats, cases } = global.dixontest;
 //     success: false,
 //     serverError: true
 // }
-function initializeChatRoom({io, sessionMiddleware}) {
-    let namespace = "/chatroom";
-    const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+function initializeChatRoom(_a) {
+    var io = _a.io, sessionMiddleware = _a.sessionMiddleware;
+    var namespace = "/chatroom";
+    var wrap = function (middleware) { return function (socket, next) { return middleware(socket.request, {}, next); }; };
     io.of(namespace).use(wrap(sessionMiddleware));
     io.of(namespace).use(wrap(passport.initialize()));
     io.of(namespace).use(wrap(passport.session()));
-
     // Check user have logged in
-    io.of(namespace).use((socket, next) => {
+    io.of(namespace).use(function (socket, next) {
         if (socket.request.isAuthenticated()) {
             next();
-        } else {
-            const err = new Error("not authorized");
+        }
+        else {
+            var err = new Error("not authorized");
             err.data = { content: "not authorized" };
             next(err);
-
         }
     });
-
     // Check user have verified
-    io.of(namespace).use((socket, next) => {
+    io.of(namespace).use(function (socket, next) {
         if (socket.request.user.isVerified) {
             next();
-        } else {
-            const err = new Error("not verified");
+        }
+        else {
+            var err = new Error("not verified");
             err.data = { content: "not verified" };
             next(err);
-
         }
     });
-
-    let useridSocket = [];
-
-    io.of(namespace).on('connection', (socket) => {
-        let currentUser = socket.request.user;
-
-        currentUser.roomids.forEach((id) => {
+    var useridSocket = [];
+    io.of(namespace).on('connection', function (socket) {
+        var currentUser = socket.request.user;
+        currentUser.roomids.forEach(function (id) {
             socket.join(id);
         });
         console.log(currentUser.userid);
         useridSocket.push({
             userid: currentUser.userid,
             userSocket: socket
-        })
-
-        let reference = {
-            socket,
-            currentUser,
-            useridSocket,
-            io,
-            users,
-            chats
-        }
-
-        require('./addToRoom')(reference);
-        require('./creatRoom')(reference);
-        require('./sendMessage')(reference);
-        require('./getRoom')(reference);
-        require('./readMessage')(reference);
-
-        socket.on("disconnect", (reason) => {
+        });
+        var reference = {
+            socket: socket,
+            currentUser: currentUser,
+            useridSocket: useridSocket,
+            io: io,
+            users: users,
+            chats: chats
+        };
+        require('./addToRoom')["default"](reference);
+        require('./creatRoom')["default"](reference);
+        require('./sendMessage')["default"](reference);
+        require('./getRoom')["default"](reference);
+        require('./readMessage')["default"](reference);
+        socket.on("disconnect", function (reason) {
             console.log("client disconnected from chatroom");
-            useridSocket.splice(useridSocket.findIndex((idsocket) => idsocket.userid === currentUser.userid), 1);
+            useridSocket.splice(useridSocket.findIndex(function (idsocket) { return idsocket.userid === currentUser.userid; }), 1);
             console.log(useridSocket);
         });
-    })
-
+    });
 }
-
 // Initialize:
 // const session = require('express-session');
 // const sessionMiddleware = session({ secret: "changeit", resave: false, saveUninitialized: false });
@@ -159,4 +152,4 @@ function initializeChatRoom({io, sessionMiddleware}) {
 // server.listen(port, () => {
 //     console.log("server running on port: " + port);
 // });
-module.exports = initializeChatRoom;
+exports.initializeChatRoom = initializeChatRoom;

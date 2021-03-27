@@ -1,98 +1,82 @@
-
-const util = require('util')
-
-module.exports = ({
-    socket,
-    currentUser,
-    useridSocket,
-    io,
-    users,
-    chats
-}) => {
-    let roomname = 'create room';
-    socket.on(roomname, ({
-        userids,
-    }) => {
+"use strict";
+// import util from 'util'
+exports.__esModule = true;
+exports["default"] = (function (_a) {
+    var socket = _a.socket, currentUser = _a.currentUser, useridSocket = _a.useridSocket, io = _a.io, users = _a.users, chats = _a.chats;
+    var roomname = 'create room';
+    socket.on(roomname, function (_a) {
+        var userids = _a.userids;
         console.log("yeah");
-        let returnObject = {
+        var returnObject = {
             useridsValid: false,
             canFindUsers: false,
             room: null,
             success: false,
             serverError: true
         };
-
         try {
-            (() => {
+            (function () {
                 if (!currentUser) {
                     return;
-                } else {
+                }
+                else {
                     /***********   Check syntax valid   ***********/
-
-                    if (Array.isArray(userids) && userids.length && userids.every(id => typeof id === "number" && Number.isInteger(id))) {
+                    if (Array.isArray(userids) && userids.length && userids.every(function (id) { return typeof id === "number" && Number.isInteger(id); })) {
                         returnObject.useridsValid = true;
                     }
                 }
-
-
                 if (!returnObject.useridsValid) {
                     return;
-                } else {
+                }
+                else {
                     /***********   Check data exist   ***********/
-
                     // Find corresponding users in database
-                    let canFindUsers = true
-                    userids.forEach(id => {
-                        if (!users.find((user => user.userid === id))) {
-                            canFindUsers = false;
+                    var canFindUsers_1 = true;
+                    userids.forEach(function (id) {
+                        if (!users.find((function (user) { return user.userid === id; }))) {
+                            canFindUsers_1 = false;
                         }
-                    })
-
-                    if (canFindUsers) {
+                    });
+                    if (canFindUsers_1) {
                         returnObject.canFindUsers = true;
                     }
                 }
-
-
                 if (!returnObject.canFindUsers) {
                     return;
-                } else {
+                }
+                else {
                     /***********   Create room   ***********/
-
-                    let successUpdate = true;
-
-                    if (!userids.find(id => id === currentUser.userid)) {
-                        userids.push(currentUser.userid)
+                    var successUpdate = true;
+                    if (!userids.find(function (id) { return id === currentUser.userid; })) {
+                        userids.push(currentUser.userid);
                     }
-
-
-                    let newRoom = {
+                    var newRoom_1 = {
                         id: Date.now(),
-                        users: userids.map((id) => {
+                        users: userids.map(function (id) {
                             return {
                                 userid: id,
                                 readedIndex: -1
-                            }
+                            };
                         }),
                         msg: []
-                    }
-
-                    chats.push(newRoom)
-                    userids.forEach((id) => {
-                        useridSocket.find((obj => obj.userid === id))?.userSocket.join(newRoom.id);
-
-                        users.find((user => user.userid === id)).roomids.unshift(newRoom.id);
-                    })
-                    returnObject.room = newRoom;
+                    };
+                    chats.push(newRoom_1);
+                    userids.forEach(function (id) {
+                        var _a;
+                        (_a = useridSocket.find((function (obj) { return obj.userid === id; }))) === null || _a === void 0 ? void 0 : _a.userSocket.join(newRoom_1.id);
+                        users.find((function (user) { return user.userid === id; })).roomids.unshift(newRoom_1.id);
+                    });
+                    returnObject.room = newRoom_1;
                     returnObject.success = successUpdate;
                 }
-            })()
-
+            })();
             returnObject.serverError = false;
-        } catch (error) {
+        }
+        catch (error) {
             console.log(error);
             returnObject.serverError = true;
-        } finally {
+        }
+        finally {
             socket.emit(roomname, returnObject);
             if (returnObject.success) {
                 socket.broadcast.to(returnObject.room.id).emit(roomname, returnObject);
@@ -100,5 +84,5 @@ module.exports = ({
         }
         // console.log(util.inspect(users, { showHidden: false, depth: null }))
         // console.log(util.inspect(chats, { showHidden: false, depth: null }))
-    })
-}
+    });
+});
