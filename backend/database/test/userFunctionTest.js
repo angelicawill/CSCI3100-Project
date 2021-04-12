@@ -14,10 +14,6 @@ const expect = require("chai").expect
 
 //function to test
 const user = require("../user")
-const student = require("../student")
-const tutor = require("../tutor")
-
-const fakeData = require("./test_data/fakeuser_new.json")
 
 
 describe("Testing get user names function",()=>{
@@ -112,20 +108,28 @@ describe("Testing altering user collections",()=>{
   await deleteAllDoc()
   })
 
-  describe("test changeUserInfo()",async()=>{
+  describe("test setUserInfo()",async()=>{
     it("should change with valid input",async()=>{
-      await user.changeUserInfo(2,{phonenumber:12345678})
+      await user.setUserInfo(2,{phonenumber:12345678})
       assert.equal((await user.getUserBasicInfo({userid:2}))["phonenumber"],12345678)
     })
     it("should not change with invalid input",async()=>{
-      await user.changeUserInfo(2,{phonenumber:"fdsfsd"})
+      await user.setUserInfo(2,{phonenumber:"fdsfsd"})
       assert.equal((await user.getUserBasicInfo({userid:2}))["phonenumber"],53042531)
     })
     it("should return false with invalid input",async()=>{
-      assert.equal(await user.changeUserInfo(2,{phonenumber:"fdsfsd"}),false)
+      assert.equal(await user.setUserInfo(2,{phonenumber:"fdsfsd"}),false)
     })
-    it("should raise error in invalid parameter",async()=>{
-      await expect(user.changeUserInfo(2,{notExistField:"not existing value"})).to.eventually.be.rejectedWith(Error);
+    it("should raise error if not existuser",async()=>{
+      assert.equal(await user.setUserInfo(200,{phonenumber:12345678}),false)
+      //await user.setUserInfo(200,{phonenumber:12345678})
+    })
+  })
+
+  describe("test setVerified()",()=>{
+    it("should be verfied with valid input",async()=>{
+      await user.setVerified({userid:2})
+      assert.equal((await user.getUserBasicInfo({userid:2}))["isVerified"],true)
     })
   })
 
