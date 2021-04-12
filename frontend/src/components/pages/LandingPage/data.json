@@ -1,0 +1,40 @@
+
+
+{
+    "About": {
+        "paragraph": "FindTutor is an online matching platform for students and tutors. We aim to cater to every student's unique needs and harness the excitement of learning. With our caring and passionate tutors, we believe everyone can unlock their full potential and succeed. Whether it's to gain confidence in class, to ace upcoming tests, or an extra push of motivation to learn, we got your back."
+        
+        ,
+        "Why": [
+            "Flexible scheduling",
+            "High quality tutors",
+            "No hassle",
+            "Guaranteed safety"
+        ]
+    },
+    "Contact": {
+        "github": "https://github.com/angelicawill/CSCI3100-Project"
+        
+    },
+    "Features": [{
+            "icon": "fa fa-search",
+            "title": "Search",
+            "text": "Fill a form in our search feature to let us know what you're looking for. We'll show you our list of qualified tutors that match your input. "
+        },
+        {
+            "icon": "fa fa-list-alt",
+            "title": "Explore",
+            "text": "Browse through our extensive list of tutors and identify the one that suits you best."
+        },
+        {
+            "icon": "fas fa-comments",
+            "title": "Chat",
+            "text": "Talk to our tutors about their subject of expertise and teaching style before making any commitment."
+        },
+        {
+            "icon": "fa fa-users",
+            "title": "Meet",
+            "text": "When you're ready, schedule a meeting with our tutors."
+        }
+    ]
+}
