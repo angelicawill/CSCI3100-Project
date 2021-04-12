@@ -1,5 +1,10 @@
 const getAvailableHours = (studentTimeSlot,tutorTimeSlot) => {
-  //find overlapping free hours
+  //find overlapping free hours between 2 timeslot
+  //example studentTimeSlot = [[12,18],[20,22]]
+  //        tutortimeslot   = [[8,20]]
+  //answer                  = 8 (1200-1859, 2000-2059)
+  let studentptr = studentTimeSlot[0][0]
+  let tutorptr = tutorTimeSlot[0][0]
   return 1
 }
 

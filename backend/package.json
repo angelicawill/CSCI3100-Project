@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test-db": "mocha ./database/test/dbCreationTest.js",
+    "test-db-all": "mocha ./database/test/*.js",
     "dixon-authentication": "npx tsc -p ./test/tsconfig/tsconfig.dixon-authentication.json",
     "dixon-chatroom": "npx tsc -p ./test/tsconfig/tsconfig.dixon-chatroom.json",
     "dixon-case": "npx tsc -p ./test/tsconfig/tsconfig.dixon-case.json"
-
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,9 @@
     "typescript": "^4.2.3"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.3.2",
     "nodemon": "^2.0.7"
   }
 }

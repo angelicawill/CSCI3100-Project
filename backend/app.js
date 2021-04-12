@@ -23,7 +23,7 @@ MongoClient.connect('mongodb://localhost', (err, client) => {
   if (err) {
     throw err;
   }
-
+  //connected to user database
   const db = client.db('account-app');
   const users = db.collection('users');
   app.locals.users = users;
