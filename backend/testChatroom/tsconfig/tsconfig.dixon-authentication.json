@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "outDir": "../../authentication",
+      // "allowJs": true,
+      "esModuleInterop": true
+      // "noImplicitAny": true,
+      // "removeComments": true,
+      // "preserveConstEnums": true,
+      // "sourceMap": true
+    },
+    "target": "ES5",
+    "include": [
+        "../../authenticationts"
+    ]
+}
