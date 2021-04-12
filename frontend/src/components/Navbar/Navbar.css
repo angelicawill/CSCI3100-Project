@@ -1,0 +1,140 @@
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 100;
+    width: 100%;
+    height: 80px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  }
+  
+  .header__icon {
+    object-fit: contain;
+    height: 45px;
+    margin-left: 7vw;
+    fill: #000;
+  }
+  .header__icon .cls-2{
+    fill: #000;
+    stroke: #000;
+  }
+  
+  .header__center {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-evenly;
+    max-width: fit-content;
+    
+  }
+
+  .searchForTutor:hover{
+    box-shadow: 0 8px 6px -6px rgb(228, 228, 228);
+    cursor: pointer;
+    transform: scale(1.005);
+
+ }
+
+  .search-link {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+
+  .searchForTutor {
+    border: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 1vw;
+    padding-left: 1.5vw;
+    font-size: 13px;
+    border-radius: 42px;
+    display: inline-flex;
+    align-items: center; 
+    vertical-align:middle;
+    background-color: #ffffff;
+    border: 1px solid lightgray;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .searchForTutor > p {
+    margin-right: 1.5vw;
+    cursor: pointer;
+  }
+
+  .searchForTutor > button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding-top: 0.5vw;
+    padding-bottom: 0.2vw;
+    padding-left: 0.6vw;
+    padding-right: 0.5vw;
+    background-color: #2EC5CE;
+    border-radius: 300px;
+  }
+
+  
+  
+  .header__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 20vw;
+    margin-right: 7vw;
+  } 
+
+  .chatroom {
+    margin-left: 4vw;
+  }
+  
+  .postACase {
+    border: none;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-right: 1.5vw;
+    padding-left: 1.5vw;
+    font-size: 13px;
+    border-radius: 42px;
+    background-color: #f3f3f3;
+    
+    
+  }
+
+  .postACase:hover{
+    background-color: #E9E9E9;
+    cursor: pointer;
+  }
+    
+
+  .profile {
+    display: inline-flex;
+    align-items: center;
+    color: #3B3B3B;
+    margin-left: 1vw;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    outline: none;
+    border: 1px solid lightgray;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    background-color: white;
+    height: fit-content;
+    border-radius: 42px;
+  }
+
+  .profile:hover{
+    transform: scale(1.02);
+ }
+
+  .profilepic {
+    margin-right: 8px;
+  }
