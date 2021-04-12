@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-db": "mocha ./database/test/dbCreationTest.js",
     "test-db-all": "mocha ./database/test/*.js",
-    "dixon-authentication": "npx tsc -p ./test/tsconfig/tsconfig.dixon-authentication.json",
-    "dixon-chatroom": "npx tsc -p ./test/tsconfig/tsconfig.dixon-chatroom.json",
-    "dixon-case": "npx tsc -p ./test/tsconfig/tsconfig.dixon-case.json"
+    "dixon-authentication": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-authentication.json",
+    "dixon-chatroom": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-chatroom.json",
+    "dixon-case": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-case.json"
   },
   "keywords": [],
   "author": "",

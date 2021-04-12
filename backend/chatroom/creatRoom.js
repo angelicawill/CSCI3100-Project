@@ -10,7 +10,7 @@ exports["default"] = (function (_a) {
         var returnObject = {
             // usernameValid: false,
             // canFindUsers: false,
-            room: null,
+            roomid: null,
             success: false,
             serverError: true
         };
@@ -65,7 +65,7 @@ exports["default"] = (function (_a) {
                 (_a = usernameSocket.find((function (obj) { return obj.username === username; }))) === null || _a === void 0 ? void 0 : _a.userSocket.join(newRoomId);
                 //     users.find((user => user.userid === id)).roomids.unshift(newRoom.id);
                 // })
-                returnObject.room = newRoomId;
+                returnObject.roomid = newRoomId;
                 returnObject.success = true;
                 // }
             })();
@@ -78,7 +78,7 @@ exports["default"] = (function (_a) {
         finally {
             socket.emit(roomname, returnObject);
             if (returnObject.success) {
-                socket.broadcast.to(returnObject.room).emit(roomname, returnObject);
+                socket.broadcast.to(returnObject.roomid).emit(roomname, returnObject);
             }
         }
         // console.log(util.inspect(users, { showHidden: false, depth: null }))

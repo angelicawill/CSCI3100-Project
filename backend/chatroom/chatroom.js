@@ -14,10 +14,9 @@ exports.__esModule = true;
 // /***********   create room   ***********/
 // used on client: e.g. 
 // socket.emit('create room', {
-//     "userids": [2, 3] // (A list of user IDs that want to include in the new room)
-// });
+//     "username": "user" // username of another user want to add to room
 // return {
-//     room: null, // (return the room object which the users are added to)
+//     roomid: null, // (return the room id which the users are added to)
 //     success: false,
 //     serverError: true
 // };
@@ -28,8 +27,8 @@ exports.__esModule = true;
 //     "value": "hi" // (The value of the message that want to send)
 // });
 // return {
-//     room: null
-//     value: null // (Return the room that have added new message)
+//     roomid: null // (return the room id which the message is sent to)
+//     value: null // (return the message that have been sent)
 //     success: false,
 //     serverError: true, 
 // }

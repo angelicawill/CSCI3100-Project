@@ -8,7 +8,7 @@ exports["default"] = (function (_a) {
         var roomid = _a.roomid, //
         value = _a.value;
         var returnObject = {
-            room: null,
+            roomid: null,
             value: null,
             success: false,
             serverError: true
@@ -77,7 +77,7 @@ exports["default"] = (function (_a) {
             //   duser.roomids.unshift(duser.roomids.splice(roomIdIndex, 1)[0]);
             // });
             // returnObject.room = room;
-            returnObject.room = roomid;
+            returnObject.roomid = roomid;
             returnObject.value = value;
             returnObject.success = true;
             // }
