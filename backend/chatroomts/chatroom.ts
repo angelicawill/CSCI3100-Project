@@ -15,9 +15,9 @@
 // socket.emit('create room', {
 //     "username": "user" // username of another user want to add to room
 // return {
-//     roomid: null, // (return the room id which the users are added to)
-//     success: false,
-//     serverError: true
+//     roomid: number, // (return the room id which the users are added to)
+//     success: boolean,
+//     serverError: boolean
 // };
 // /***********   send message   ***********/
 // used on client: e.g. 
@@ -26,10 +26,10 @@
 //     "value": "hi" // (The value of the message that want to send)
 // });
 // return {
-//     roomid: null // (return the room id which the message is sent to)
-//     value: null // (return the message that have been sent)
-//     success: false,
-//     serverError: true, 
+//     roomid: number // (return the room id which the message is sent to)
+//     value: string // (return the message that have been sent)
+//     success: boolean,
+//     serverError: boolean, 
 // }
 function initializeChatRoom({io, sessionMiddleware, passport}) {
     let namespace = "/chatroom";
