@@ -16,29 +16,26 @@ const Student = require("../../model/student.model")
 
 
 const initDB = async (addUserCount) => {
-    // there's error when inserting the first user, explicitly add one instead <- fixed
-    /*
-    const firstUser = {
-      "realname": "K Hans",
-      "username": "K137",
-      "password": "abcdE12345",
-      "phonenumber": 83134320,
-      "email": "K304@gmail.com",
-      "role": "tutor"
-    }
-    await userFunction.addUser(firstUser)
-    */
+ 
     const fakeUsers = fakeData.table.slice(0,addUserCount) 
     for (let oneuser of fakeUsers){
       await userFunction.addUser(oneuser)
     }
 }
 
-const initFakeStudentData = async()=>{
-
+const initFakeStudentData = async(addUserCount)=>{
+  const fakeUsers = fakeData.table.slice(0,addUserCount) 
+  for (let oneuser of fakeUsers){
+    if (oneuser["role"] === "student"){
+      //write to json for insert
+    }
+  }
 }
-const initFakeTutorData = async()=>{
-
+const initFakeTutorData = async(addUserCount)=>{
+  const fakeUsers = fakeData.table.slice(0,addUserCount) 
+  if (oneuser["role"] === "tutor"){
+    //write to json for insert
+  }
 }
 
 /**
