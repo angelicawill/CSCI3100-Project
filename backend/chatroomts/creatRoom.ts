@@ -20,7 +20,7 @@ export default ({
     };
 
     try {
-      (() => {
+    //   (() => {
         // if (!currentUser) {
         //     return;
         // } else {
@@ -75,8 +75,10 @@ export default ({
         // userids.forEach((id) => {
         let newRoomId = Date.now();
         socket.join(newRoomId);
-        usernameSocket.find(((obj) => obj.username === username))?.userSocket
-          .join(newRoomId);
+        console.log(usernameSocket);
+        let user = usernameSocket.find((obj) => obj.username === username);
+        console.log(user)
+        user?.userSocket.join(newRoomId);
 
         //     users.find((user => user.userid === id)).roomids.unshift(newRoom.id);
         // })
@@ -84,7 +86,7 @@ export default ({
         returnObject.success = true;
     
         // }
-      })();
+    //   })();
 
       returnObject.serverError = false;
     } catch (error) {

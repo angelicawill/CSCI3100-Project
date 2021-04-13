@@ -48,12 +48,9 @@ function initializePassport(passport) {
         var user;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    console.log(email);
-                    return [4 /*yield*/, getUserBasicInfo({ email: email })];
+                case 0: return [4 /*yield*/, getUserBasicInfo({ email: email })];
                 case 1:
                     user = _a.sent();
-                    console.log(user);
                     if (user === null) {
                         console.log("no user with that username");
                         return [2 /*return*/, done(null, false, { message: "no user with that username" })];

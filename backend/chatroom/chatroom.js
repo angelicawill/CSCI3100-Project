@@ -63,16 +63,14 @@ function initializeChatRoom(_a) {
     var usernameSocket = [];
     io.of(namespace).on('connection', function (socket) {
         var currentUser = socket.request.user;
-        // currentUser.roomids.forEach((id) => {
-        //     socket.join(id);
-        // });
-        // console.log(currentUser.userid);
+        console.log('client connected');
         if (!usernameSocket.find(function (a) { return a.username == currentUser.username; })) {
             usernameSocket.push({
                 username: currentUser.username,
                 userSocket: socket
             });
         }
+        console.log(usernameSocket);
         var reference = {
             socket: socket,
             currentUser: currentUser,

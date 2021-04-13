@@ -8,9 +8,7 @@ function initializePassport(passport) {
   passport.use(new LocalStrategy({
     usernameField: 'email'
   }, async (email, password, done)=> {
-    console.log(email);
     const user = await getUserBasicInfo({email: email});
-    console.log(user);
     if (user === null) {
       console.log("no user with that username");
       return done(null, false, { message: "no user with that username" });

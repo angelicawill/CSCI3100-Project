@@ -15,60 +15,62 @@ exports["default"] = (function (_a) {
             serverError: true
         };
         try {
-            (function () {
-                // if (!currentUser) {
-                //     return;
-                // } else {
-                //     /***********   Check syntax valid   ***********/
-                var _a;
-                //     // if (Array.isArray(userids) && userids.length && userids.every(id => typeof id === "number" && Number.isInteger(id))) {
-                //     //     returnObject.useridsValid = true;
-                //     // }
-                // }
-                // if (!returnObject.useridsValid) {
-                //     return;
-                // } else {
-                //     /***********   Check data exist   ***********/
-                //     // Find corresponding users in database
-                //     let canFindUsers = true
-                //     // userids.forEach(id => {
-                //     //     if (!users.find((user => user.userid === id))) {
-                //     //         canFindUsers = false;
-                //     //     }
-                //     // })
-                //     // if (canFindUsers) {
-                //     //     returnObject.canFindUsers = true;
-                //     // }
-                // }
-                // if (!returnObject.canFindUsers) {
-                //     return;
-                // } else {
-                /***********   Create room   ***********/
-                // let successUpdate = true;
-                // if (!userids.find(id => id === currentUser.userid)) {
-                //     userids.push(currentUser.userid)
-                // }
-                // let newRoom = {
-                //     id: Date.now(),
-                //     users: userids.map((id) => {
-                //         return {
-                //             userid: id,
-                //             readedIndex: -1
-                //         }
-                //     }),
-                //     msg: []
-                // }
-                // chats.push(newRoom)
-                // userids.forEach((id) => {
-                var newRoomId = Date.now();
-                socket.join(newRoomId);
-                (_a = usernameSocket.find((function (obj) { return obj.username === username; }))) === null || _a === void 0 ? void 0 : _a.userSocket.join(newRoomId);
-                //     users.find((user => user.userid === id)).roomids.unshift(newRoom.id);
-                // })
-                returnObject.roomid = newRoomId;
-                returnObject.success = true;
-                // }
-            })();
+            //   (() => {
+            // if (!currentUser) {
+            //     return;
+            // } else {
+            //     /***********   Check syntax valid   ***********/
+            //     // if (Array.isArray(userids) && userids.length && userids.every(id => typeof id === "number" && Number.isInteger(id))) {
+            //     //     returnObject.useridsValid = true;
+            //     // }
+            // }
+            // if (!returnObject.useridsValid) {
+            //     return;
+            // } else {
+            //     /***********   Check data exist   ***********/
+            //     // Find corresponding users in database
+            //     let canFindUsers = true
+            //     // userids.forEach(id => {
+            //     //     if (!users.find((user => user.userid === id))) {
+            //     //         canFindUsers = false;
+            //     //     }
+            //     // })
+            //     // if (canFindUsers) {
+            //     //     returnObject.canFindUsers = true;
+            //     // }
+            // }
+            // if (!returnObject.canFindUsers) {
+            //     return;
+            // } else {
+            /***********   Create room   ***********/
+            // let successUpdate = true;
+            // if (!userids.find(id => id === currentUser.userid)) {
+            //     userids.push(currentUser.userid)
+            // }
+            // let newRoom = {
+            //     id: Date.now(),
+            //     users: userids.map((id) => {
+            //         return {
+            //             userid: id,
+            //             readedIndex: -1
+            //         }
+            //     }),
+            //     msg: []
+            // }
+            // chats.push(newRoom)
+            // userids.forEach((id) => {
+            var newRoomId = Date.now();
+            socket.join(newRoomId);
+            console.log(usernameSocket);
+            var user = usernameSocket.find(function (obj) { return obj.username === username; });
+            console.log(user);
+            user === null || user === void 0 ? void 0 : user.userSocket.join(newRoomId);
+            //     users.find((user => user.userid === id)).roomids.unshift(newRoom.id);
+            // })
+            returnObject.roomid = newRoomId;
+            returnObject.success = true;
+            // }
+            //   })();
             returnObject.serverError = false;
         }
         catch (error) {

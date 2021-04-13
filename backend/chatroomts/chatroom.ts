@@ -67,10 +67,7 @@ function initializeChatRoom({io, sessionMiddleware, passport}) {
     io.of(namespace).on('connection', (socket) => {
         let currentUser = socket.request.user;
 
-        // currentUser.roomids.forEach((id) => {
-        //     socket.join(id);
-        // });
-        // console.log(currentUser.userid);
+        console.log('client connected');
         if (!usernameSocket.find((a) => a.username == currentUser.username)) {
             usernameSocket.push({
                 username: currentUser.username,
@@ -79,6 +76,7 @@ function initializeChatRoom({io, sessionMiddleware, passport}) {
 
         }
         
+        console.log(usernameSocket);
 
         let reference = {
             socket,

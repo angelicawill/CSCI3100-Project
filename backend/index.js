@@ -54,7 +54,6 @@ app.post('/login', function (req, res, next) {
     user: null
   }
   passport.authenticate('local', function (err, user, info) {
-    console.log(user);
     if (err) {
       returnObject.err = err;
       return res.send(returnObject);
