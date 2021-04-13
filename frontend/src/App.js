@@ -6,11 +6,9 @@ import LandingPage from './components/pages/LandingPage/LandingPage';
 import Login from './components/pages/LogIn/LogIn';
 import FindTutorPage from "./components/pages/FindTutorPage/FindTutorPage";
 import Chatroom from './components/pages/Chatroom/Chatroom';
-
 import Register from './components/pages/Register/Register';
-
+import TutorProfilePage from "./components/pages/TutorProfilePage/TutorProfilePage";
 import SubjectSelecton from './components/pages/FindTutorPage/components/Subject';
-import { Subject } from '@material-ui/icons';
 
 
 function App() {
@@ -22,9 +20,9 @@ function App() {
       <Route path='/register' exact component={Register} />    
       <Route path='/login' exact component={Login} />   
       <Route path='/find-tutor' exact component={FindTutorPage} />    
-      <Route path='/chat' exact component={Chatroom} /> 
-
-      <Route path='/subject' exact component={SubjectSelecton} />
+      <Route path='/chat' exact component={Chatroom} />
+          <Route path='/tutor-profile-page' exact component={TutorProfilePage} />
+          <Route path='/subject' exact component={SubjectSelecton} />
       </Switch>      
     </Router>
   );

@@ -15,13 +15,13 @@
 }
 
 .col {
-    margin-top: -150px;
     margin-bottom: 1000px;
     padding-right: 15px;
     padding-left: 15px;
-    flex: 1;
+    flex: 1 1;
     max-width: 100%;
     flex-basis: 50%;
+    place-items: center;
 }
 
 .heading {
@@ -31,6 +31,7 @@
     line-height: 1;
     font-weight: bold;
     color: #f7f8fa;
+    padding-bottom: 3vw;
 }
 
 .sub-heading {
@@ -50,8 +51,7 @@
 }
 
 .search-box {
-    margin-top: 50px;
-    height: 667px;
+    height: 58vw;
     border: 1px solid;
     background-color: #ffffff;
     border-radius: 50px;
@@ -59,64 +59,94 @@
     flex-wrap: wrap;
     align-content: center;
     box-shadow: 0px 4px 20px 1px #e7e7e7;
+    width: 90vw;
+    place-content: center;
+    margin-left: 4vw;
+}
+
+.subject-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0vw 2vw 2vw 14vw;
+    height: 2vw;
+    width: 100%;
+}
+
+.subject-text{
+    max-width: 100%;
+    font-size: 1.3vw;
+    line-height: 1;
+    font-weight: lighter;
+    padding: 0vw 21vw 0vw 0vw;
+}
+
+.avaliable-time-text {
+    max-width: 100%;
+    font-size: 1.3vw;
+    line-height: 1;
+    font-weight: lighter;
+    padding: 0vw 20.5vw 0vw 0vw;
+}
+
+.time-box {
+    display: flex;
+    padding: 3vw 2vw 2vw 14vw;
+    height: 2vw;
+    width: 100%;
+}
+
+.mode-box {
+    display: flex;
+    padding: 3vw 2vw 2vw 14vw;
+    height: 2vw;
+    width: 100%;
+}
+
+.grade-box {
+    display: flex;
+    padding: 3vw 2vw 2vw 14vw;
+    height: 2vw;
+    width: 100%;
+}
+
+.grade {
+    padding-right: 38vw;
+}
+
+.cost-per-hour {
+    padding-right: 32vw;
 }
 
 .subject, .avaliable-time, .grade, .teaching-mode, .cost-per-hour {
-    font-size: 18px;
+    font-size: 2vw;
     color: #2C2C2C;
     font-weight: bold;
 }
 
-.subject {
-    position: absolute;
-    top: 272px;
-    left: 305px;
+.find-tutor-button-wrapper {
+    padding-top: 3vw;
 }
 
-.avaliable-time {
-    position: absolute;
-    top: 473px;
-    left: 305px;
-}
-
-.teaching-mode {
-    position: absolute;
-    top: 605px;
-    left: 305px;
-}
-
-.cost-per-hour {
-    position: absolute;
-    top: 653px;
-    left: 850px;
-}
-
-.grade {
-    position: absolute;
-    top: 473px;
-    left: 850px;
-}
-
-.button-wrapper {
-    margin-left: 500px;
-    margin-top: 538px;
-}
-
-
-@media screen and (max-width: 991px) {
-    .container {
-        padding-right: 30px;
-        padding-left: 30px;
+@media screen and (max-width: 1315px) {
+    .subject-box {
+        padding: 4vw 2vw 2vw 14vw;
+    }
+    .find-tutor-button-wrapper {
+        padding-top: 1vw;
+    }
+    .search-box {
+        height: 78vw;
     }
 }
+
+@media screen and (max-width: 1015px) {
+
+}
+
 
 @media screen and (max-width: 768px) {
     .col {
         max-width: 100%;
         flex-basis: 100%;
     }
-}
-
-.subjectobj{
-    margin-left: 10px;
 }

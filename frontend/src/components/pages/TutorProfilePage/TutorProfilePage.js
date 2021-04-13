@@ -8,19 +8,10 @@ import RatingBox from './components/ratingbox';
 import Rating from '@material-ui/lab/Rating';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import { Button } from "../../Button";
 
 
 
-const searchingForm = {
-    lightBg: true,
-    lightText: false,
-    lightTextDesc: false,
-    headline: `Who are you looking for?`,
-};
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     label: {
         fontSize: "larger",
         width: '4vw',
