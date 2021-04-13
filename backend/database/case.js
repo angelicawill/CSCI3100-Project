@@ -1,0 +1,5 @@
+/*
+The collection of functions allows to retrieve information of a case
+You should ensure all input parameters are correct in format and content
+
+*/

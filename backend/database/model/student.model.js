@@ -1,8 +1,8 @@
 /*
 as stated in the initial report, not all fields are required, except the studentid
 updated:
-Time is calculated by weekofday * 24 + hour, for sunday: weekofday = 0                             sun10-3  sun4-8  wed12-8
-freeTime:  set to sunday 10am - 3pm and 4pm to 8pm and wednesday 12pm - 8pm, this will be store as [[10,15],[16,20], [84,92]]
+Time is calculated by weekofday * 24 + hour, for sunday: weekofday = 0                                   sun10-3    sun4-8    wed12-8
+freeTime:  set to sunday 10am - 3:59pm and 4pm to 8:59pm and wednesday 12pm - 8:59git pm, this will be store as [[10,15],[16,20], [84,92]]
 */
 
 const mongoose = require("mongoose")

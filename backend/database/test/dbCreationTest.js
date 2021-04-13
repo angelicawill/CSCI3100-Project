@@ -43,29 +43,29 @@ describe ("testing addUser()",()=>{
 
   describe("test add duplicate user", ()=>{
     const sameUserName = {
-      "realname": "Kurt Caiden",
-      "username": "Kurt75157",
+      "realname": "Valentine Kennedy",
+      "username": "Valentine55950",
       "password": "abcdE12345",
-      "phonenumber": 53041112531,
-      "email": "Kurt30211129@gmail.com",
-      "role": "tutor"
+      "phonenumber": 608212195920,
+      "email": "Valenfdsfdstine16647@gmail.com",
+      "role": "student"
   }
     const samePhone = {
-      "realname": "Kurt Caiden",
-      "username": "Ku111rt75157",
+      "realname": "Valentine Kennedy",
+      "username": "Vafdsfdsflentine55950",
       "password": "abcdE12345",
-      "phonenumber": 53042531,
-      "email": "Kur222t30229@gmail.com",
-      "role": "tutor"
+      "phonenumber": 1111160895920,
+      "email": "Valentine16647@gmail.com",
+      "role": "student"
   }
 
     const sameEmail = {
-      "realname": "Kurt Caiden",
-      "username": "Kurtdfds75157",
+      "realname": "Valentine Kennedy",
+      "username": "Valefdsfsdntine55950",
       "password": "abcdE12345",
-      "phonenumber": 530454342531,
-      "email": "Kurt30229@gmail.com",
-      "role": "tutor"
+      "phonenumber": 232360895920,
+      "email": "Valentine16647@gmail.com",
+      "role": "student"
   }
     const allDifferent =  {
       "realname": "Kurt Caiden",

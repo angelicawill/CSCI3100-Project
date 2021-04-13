@@ -9,6 +9,7 @@ requestStudent()      to start/ cancel a request to a student
 startCase()           start an empty case
 inviteToCase()        invite student(s) to a case
 finishCase()          set the status of case (isClosed) to true
+getReceivedRequest()  return the array of request
 */
 const User = require("./model/user.model")
 const Case = require("./model/case.model")
@@ -123,6 +124,10 @@ const finishCase = async (tutorid, caseid) => {
   }
 }
 
+const getReceivedRequest = async(tutorid) => {
+  
+}
+
 const dropDB = async () => {
   await Tutor.collection.drop()
 }
@@ -133,5 +138,6 @@ module.exports = {
   startCase:startCase,
   inviteToCase:inviteToCase,
   finishCase:finishCase,
-  dropDB:dropDB
+  dropDB:dropDB,
+  getReceivedRequest:getReceivedRequest
 }
