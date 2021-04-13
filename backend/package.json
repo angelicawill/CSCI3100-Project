@@ -8,9 +8,9 @@
     "insert-mock-db-data":"node ./database/test/db_init/writeToDb.js",
     "test-db": "mocha ./database/test/dbCreationTest.js",
     "test-db-all": "mocha ./database/test/*.js",
-    "dixon-authentication": "npx tsc -p ./test/tsconfig/tsconfig.dixon-authentication.json",
-    "dixon-chatroom": "npx tsc -p ./test/tsconfig/tsconfig.dixon-chatroom.json",
-    "dixon-case": "npx tsc -p ./test/tsconfig/tsconfig.dixon-case.json"
+    "dixon-authentication": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-authentication.json",
+    "dixon-chatroom": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-chatroom.json",
+    "dixon-case": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-case.json"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +21,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "mongoose": "^5.12.0",
+    "mongoose": "^5.12.3",
     "nodemailer": "^6.5.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",

@@ -1,8 +1,7 @@
-"use strict";
 // import util from 'util'
 // const passport = require('passport');
 // const globalObject: any = global;
-exports.__esModule = true;
+
 // Used by client:
 // socket = io('/chatroom');
 // Receive error on client side: 
@@ -32,24 +31,25 @@ exports.__esModule = true;
 //     success: boolean,
 //     serverError: boolean, 
 // }
-function initializeChatRoom(_a) {
-    var io = _a.io, sessionMiddleware = _a.sessionMiddleware, passport = _a.passport;
-    var namespace = "/chatroom";
-    var wrap = function (middleware) { return function (socket, next) { return middleware(socket.request, {}, next); }; };
+function initializeChatRoom({io, sessionMiddleware, passport}) {
+    let namespace = "/chatroom";
+    const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
     io.of(namespace).use(wrap(sessionMiddleware));
     io.of(namespace).use(wrap(passport.initialize()));
     io.of(namespace).use(wrap(passport.session()));
+
     // Check user have logged in
-    io.of(namespace).use(function (socket, next) {
+    io.of(namespace).use((socket, next) => {
         if (socket.request.isAuthenticated()) {
             next();
-        }
-        else {
-            var err = new Error("not authorized");
+        } else {
+            const err: any = new Error("not authorized");
             err.data = { content: "not authorized" };
             next(err);
+
         }
     });
+
     // // Check user have verified
     // io.of(namespace).use((socket, next) => {
     //     if (socket.request.user.isVerified) {
@@ -58,37 +58,48 @@ function initializeChatRoom(_a) {
     //         const err: any = new Error("not verified");
     //         err.data = { content: "not verified" };
     //         next(err);
+
     //     }
     // });
-    var usernameSocket = [];
-    io.of(namespace).on('connection', function (socket) {
-        var currentUser = socket.request.user;
+
+    let usernameSocket = [];
+
+    io.of(namespace).on('connection', (socket) => {
+        let currentUser = socket.request.user;
+
         console.log('client connected');
-        if (!usernameSocket.find(function (a) { return a.username == currentUser.username; })) {
+        if (!usernameSocket.find((a) => a.username == currentUser.username)) {
             usernameSocket.push({
                 username: currentUser.username,
                 userSocket: socket
-            });
+            })
+
         }
+        
         console.log(usernameSocket);
-        var reference = {
-            socket: socket,
-            currentUser: currentUser,
-            usernameSocket: usernameSocket,
-            io: io
-        };
+
+        let reference = {
+            socket,
+            currentUser,
+            usernameSocket,
+            io,
+        }
+
         // require('./addToRoom').default(reference);
-        require('./creatRoom')["default"](reference);
-        require('./sendMessage')["default"](reference);
+        require('./creatRoom').default(reference);
+        require('./sendMessage').default(reference);
         // require('./getRoom').default(reference);
         // require('./readMessage').default(reference);
-        socket.on("disconnect", function (reason) {
+
+        socket.on("disconnect", (reason) => {
             console.log("client disconnected from chatroom");
-            usernameSocket.splice(usernameSocket.findIndex(function (idsocket) { return idsocket.username === currentUser.username; }), 1);
+            usernameSocket.splice(usernameSocket.findIndex((idsocket) => idsocket.username === currentUser.username), 1);
             console.log(usernameSocket);
         });
-    });
+    })
+
 }
+
 // Initialize:
 // const session = require('express-session');
 // const sessionMiddleware = session({ secret: "changeit", resave: false, saveUninitialized: false });
@@ -98,3 +109,4 @@ function initializeChatRoom(_a) {
 //     console.log("server running on port: " + port);
 // });
 exports.initializeChatRoom = initializeChatRoom;
+export {};

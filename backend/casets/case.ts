@@ -1,4 +1,3 @@
-"use strict";
 // ▀█▀ █░█ ▀█▀ █▀█ █▀█
 // ░█░ █▄█ ░█░ █▄█ █▀▄
 // /***********   /case/tutor/startcase   ***********/
@@ -29,10 +28,18 @@
 //     success: false,
 //     serverError: true
 // }
-exports.__esModule = true;
-var express = require('express');
-var router = express.Router();
-router.use('/tutor', require('./tutor/tutor')["default"]);
+
+
+
+
+
+
+const express = require('express')
+const router = express.Router()
+
+router.use('/tutor', require('./tutor/tutor').default);
 // router.use('/student', require('./student/student').default);
 // router.use('/admin', require('./admin/admin').default);
-exports["default"] = router;
+
+
+export default router;

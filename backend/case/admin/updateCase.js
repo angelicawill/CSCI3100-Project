@@ -22,9 +22,9 @@ exports["default"] = (function (req, res) {
         (function () {
             var casee;
             /***********   Check have access right   ***********/
-            if (user.role === "admin") {
-                returnObject.userRoleMatch = true;
-            }
+            // if (user.role === "admin") {
+            //   returnObject.userRoleMatch = true;
+            // }
             if (!returnObject.userRoleMatch) {
                 return;
             }

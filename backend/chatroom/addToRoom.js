@@ -1,9 +1,10 @@
 "use strict";
-// const util = require('util')
 exports.__esModule = true;
+// const util = require('util')
+var users, chats;
 exports["default"] = (function (_a) {
-    var socket = _a.socket, currentUser = _a.currentUser, useridSocket = _a.useridSocket, io = _a.io, users = _a.users, chats = _a.chats;
-    var roomname = 'add to room';
+    var socket = _a.socket, currentUser = _a.currentUser, useridSocket = _a.useridSocket, io = _a.io;
+    var roomname = "add to room";
     socket.on(roomname, function (_a) {
         var roomid = _a.roomid, userids = _a.userids;
         var returnObject = {
@@ -27,7 +28,9 @@ exports["default"] = (function (_a) {
                     if (typeof roomid === "number" && Number.isInteger(roomid)) {
                         returnObject.roomIdValid = true;
                     }
-                    if (Array.isArray(userids) && userids.length && userids.every(function (id) { return typeof id === "number" && Number.isInteger(id); })) {
+                    if (Array.isArray(userids) && userids.length && userids.every(function (id) {
+                        return typeof id === "number" && Number.isInteger(id);
+                    })) {
                         returnObject.useridsValid = true;
                     }
                 }
@@ -56,7 +59,8 @@ exports["default"] = (function (_a) {
                         returnObject.canFindUsers = true;
                     }
                 }
-                if (!returnObject.canFindRoom || !returnObject.userIsInRoom || !returnObject.canFindUsers) {
+                if (!returnObject.canFindRoom || !returnObject.userIsInRoom ||
+                    !returnObject.canFindUsers) {
                     return;
                 }
                 else {
@@ -70,7 +74,7 @@ exports["default"] = (function (_a) {
                                 userid: id,
                                 readedIndex: -1
                             });
-                            // Update users 
+                            // Update users
                             (_a = useridSocket.find((function (obj) { return obj.userid === id; }))) === null || _a === void 0 ? void 0 : _a.userSocket.join(roomid);
                             users.find((function (user) { return user.userid === id; })).roomids.unshift(roomid);
                         }
