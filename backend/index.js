@@ -7,8 +7,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const initializePassport = require('./authentication/authentication').initializePassport;
 const initializeChatRoom = require('./chatroom/chatroom').initializeChatRoom;
-const { addUser, getUserid } = require('./database/user');
-const LocalStrategy = require("passport-local").Strategy;
+
 
 const app = express();
 var router = express.Router();
@@ -38,19 +37,42 @@ const io = socketio(server);
 initializeChatRoom({ io, sessionMiddleware, passport });
 
 // app.use('/case', require('./case/case'));
+
+
+
+// body: {
+//   email: string, 
+//   password: string
+// }
+// return: {
+//   err: null,
+//   user: null
+// }
 app.post('/login', function (req, res, next) {
-  console.log("login")
+  let returnObject = {
+    err: null,
+    user: null
+  }
   passport.authenticate('local', function (err, user, info) {
     console.log(user);
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
+    if (err) {
+      returnObject.err = err;
+      return res.send(returnObject);
+    }
+    if (!user) { return res.send(returnObject); }
     req.logIn(user, function (err) {
-      if (err) { return next(err); }
+      if (err) {
+        returnObject.err = err;
+        return res.send(returnObject);
+      }
       console.log('send');
-      res.send("success login");
+      returnObject.user = user;
+      res.send(returnObject);
     });
   })(req, res, next);
 })
+
+
 app.get('/testchatroom', (req, res) => {
   console.log("testing")
   res.sendFile(path.join(__dirname, 'testChatroom', 'index.html'));

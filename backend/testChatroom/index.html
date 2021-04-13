@@ -16,47 +16,29 @@
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <title>Document</title>
+    <style>
+        .btn {
+            background-color: rgb(230, 255, 197)
+
+        }
+
+        .btn:hover{
+            background-color: rgb(247, 255, 236)
+        }
+
+        .hidebefore{
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            background-color: aqua;
+        }
+    </style>
 </head>
 
 <body>
     <div id="root"></div>
-    <!-- <h1 id="loginH1">Not yet login</h1>
-    <button id="loginName1Button">login name 1</button>
-    <button id="loginName2Button">login name 2</button>
-    <button id="loginName3Button">login name 3</button>
-
-    <button id="startcaseButton">startcaseButton</button>
-    <button id="invitetocaseButton">invitetocaseButton</button>
-    <button id="finishcaseButton">finishcaseButton</button>
-    <button id="acceptcaseButton">acceptcaseButton</button>
-
-
-    <hr>
-    <h1>Chat Room</h1>
-    <input id="addtoroomInput">
-    <p id="addtoroomText"></p>
-    <button id="addtoroombutton">addtoroombutton</button>
-    <br>
-    <input id="createroomInput">
-    <p id="createroomText"></p>
-    <button id="createroombutton">createroombutton</button>
-    <br>
-    <input id="sendmessageInput">
-    <p id="sendmessageText"></p>
-    <button id="sendmessagebutton">sendmessagebutton</button>
-    <br>
-    <input id="getroomsInput">
-    <p id="getroomsText"></p>
-    <button id="getroomsbutton">getroomsbutton</button>
-    <br> -->
-
-
-
-    <!-- JavaScript Bundle with Popper -->
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script type="text/babel" src="./chat.js"></script>
-    <script type="text/babel" src="./loginandcase.js"></script>
+    <script type="text/babel" src="./globalFunction.jsx"></script>
+    <script type="text/babel" src="./App.jsx"></script>
 </body>
 
 </html>
