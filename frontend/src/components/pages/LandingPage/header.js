@@ -16,7 +16,7 @@ export const Header = (props) => {
                 </h1>
                 <p>We help you connect and arrange meetings with the best tutors in Hong Kong to learn a variety of different subjects and skills.</p>
                 <a
-                  href='/sign-up'
+                  href='/register'
                   className='btn btn-custom btn-lg page-scroll'
                 >
                   Get Started

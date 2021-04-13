@@ -10,7 +10,7 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     container: {
         width: 400,
-        position: "absolute",
+        position: "relative",
         top: 262,
         left: 676
     },

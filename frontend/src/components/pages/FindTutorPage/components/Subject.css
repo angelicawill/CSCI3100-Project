@@ -104,7 +104,7 @@
 
 .img {
     max-width: 70%;
-    alignment: center;
+    align-items: center;
     padding-right: 0;
 }
 
