@@ -6,7 +6,8 @@ const userFunction = require("../../user")
 const studentFunction = require("../../student")
 const tutorFunction = require("../../tutor")
 const fakeData = require("../test_data/fakeuser_new.json")
-
+const fakeStudent = require("../test_data/fakeStudent.json")
+const fakeTutor = require("../test_data/fakeTutor.json")
 
 //models
 const User = require("../../model/user.model")
@@ -21,21 +22,44 @@ const initDB = async (addUserCount) => {
     for (let oneuser of fakeUsers){
       await userFunction.addUser(oneuser)
     }
+
+    console.log("inserted init data")
 }
 
-const initFakeStudentData = async(addUserCount)=>{
+const initFakeStudentData = (addUserCount)=>{
   const fakeUsers = fakeData.table.slice(0,addUserCount) 
-  for (let oneuser of fakeUsers){
-    if (oneuser["role"] === "student"){
-      //write to json for insert
+  fakeStudent.table.forEach((student)=>{
+    //insert to db
+    const toInsert = {grade:student.grade,
+                      subjectsNeedHelp:student.subjects,
+                      freeTime:student.time,
+                      preferredFee:student.fee,
+                      preferredTeachingMode:student.preferredTeachingMode}
+
+    if(student.studentid <= addUserCount){
+      studentFunction.setStudentData(student.studentid,toInsert)
     }
-  }
+    
+    }
+
+   
+  )
 }
-const initFakeTutorData = async(addUserCount)=>{
+const initFakeTutorData = (addUserCount)=>{
   const fakeUsers = fakeData.table.slice(0,addUserCount) 
-  if (oneuser["role"] === "tutor"){
-    //write to json for insert
-  }
+  fakeTutor.table.forEach((tutor)=>{
+    const toInsert = {subjectsTeach:tutor.subjects,
+                      freeTime:tutor.time,
+                      isGroupTeachingAllowed:tutor.isGroupTeachingAllowed,
+                      isMultiCaseAllowed:tutor.isMultiCaseAllowed
+
+    }
+    if(tutor.tutorid <= addUserCount){
+      tutorFunction.setTutorData(tutor.tutorid,toInsert)
+    }
+    
+
+  })
 }
 
 /**
@@ -73,7 +97,8 @@ const startMultipleRequestToTutor = (sid,tids)=>{
   .catch(()=>{return false})
 }
 
-module.exports = {initDB:initDB,
+module.exports = {
+  initDB:initDB,
   dropAll:dropAll,
   deleteAllDoc:deleteAllDoc,
   initFakeStudentData:initFakeStudentData,

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "insert-mock-db-data":"node ./database/test/db_init/writeToDb.js",
     "test-db": "mocha ./database/test/dbCreationTest.js",
     "test-db-all": "mocha ./database/test/*.js",
     "dixon-authentication": "npx tsc -p ./test/tsconfig/tsconfig.dixon-authentication.json",

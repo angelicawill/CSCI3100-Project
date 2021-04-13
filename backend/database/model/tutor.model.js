@@ -10,16 +10,18 @@ const mongoose = require("mongoose")
 const tutorSchema = mongoose.Schema({
   tutorid:{type:Number,unique:true}, // act as foreign key, should be able to refer back to the user's collection
   subjectsTeach: [String],
-  freeTime: [Number],
+  freeTime: [[Number]],
   preferredLocation: [String],
-  isGroupTeachingAllowed: Boolean,
-  isMultiCaseAllowed: Boolean,    //if false, only one case can be handled
+  isGroupTeachingAllowed:{type: Boolean, default: false},
+  isMultiCaseAllowed: {type: Boolean, default: false},    //if false, only one case can be handled
+
   totalTutorScore: {type:Number, default:0},  // the sum of score of all the rating
+  cases: [Number],  //size should be restrited to 1 is isMultiCaseAllowed is False
   numberCaseFinished: {type:Number, default:0},
   tutorRating: {type:Number, default:0}, // calculate by totalTutorScore / numberCaseFinished
   studentRequest: [Number],
-  receivedStudentRequest: [Number], 
-  cases: [Number]  //size should be restrited to 1 is isMultiCaseAllowed is False
+  receivedStudentRequest: [Number]
+  
 })
 
 module.exports = mongoose.model("Tutor",tutorSchema)

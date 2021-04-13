@@ -4,6 +4,7 @@ You should ensure all input parameters are correct in format and content
 
 functions
 getTutorData() return the document with a given tutor ID
+setTutorData()
 findStudents(tutorid) return a list of students according to tutor's preference
 requestStudent()      to start/ cancel a request to a student
 startCase()           start an empty case
@@ -22,6 +23,19 @@ const getTutorData = async (tutorid) => {
   return await Tutor.findOne({tutorid:tutorid}).exec()
 }
 
+const setTutorData = async (tutorid,datas) => {
+  const setOfKey = ["subjectsTeach","freeTime","preferredLocation","isGroupTeachingAllowed","isMultiCaseAllowed"]
+  for (idx in Object.keys(datas)){
+    if (! setOfKey.includes(Object.keys(datas)[idx])){
+      throw new Error("it contains fields can't be alter")
+    }
+  }
+  const res = await Tutor.findOneAndUpdate({tutorid:tutorid},{$set:datas})
+  if (res != null){
+    return true
+  }
+  return false
+}
 /**
  * This function correspond to 'search for a student'
  * @param {Number} tutorid 
@@ -134,6 +148,7 @@ const dropDB = async () => {
 
 module.exports = {
   getTutorData:getTutorData,
+  setTutorData:setTutorData,
   requestStudent:requestStudent,
   startCase:startCase,
   inviteToCase:inviteToCase,
