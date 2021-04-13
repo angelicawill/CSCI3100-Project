@@ -1,6 +1,6 @@
 const globalObject: any = global;
 let { users, chats, cases } = globalObject.dixontest;
-import * as Types from "../../test/tsconfig/custom";
+import * as Types from "../../testChatroom/tsconfig/custom";
 
 export default (req, res) => {
   let returnObject: {

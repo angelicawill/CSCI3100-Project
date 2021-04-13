@@ -57,7 +57,7 @@ function Chatroom() {
         roomname="create room"
         state={createroomText}
         textAreaValue={{
-          username: "teacher",
+          username: "tutor",
         }}
         so={socket}
       />

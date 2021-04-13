@@ -16,7 +16,7 @@ export default async (req, res) => {
   };
   let status = 500;
 
-  let { studentidList} = req.body;
+  let { studentidList, caseid} = req.body;
   let user = req.user;
 
   try {
@@ -94,11 +94,7 @@ export default async (req, res) => {
     //   } else {
     //     haveAccessRight = true;
     /***********   Invite student to case   ***********/
-    returnObject.success = await requestStudent(
-      studentidList,
-      user.userid,
-      true,
-    );
+    returnObject.success = await inviteToCase(studentidList, user.userid, caseid);
 
     //   }
     // })();

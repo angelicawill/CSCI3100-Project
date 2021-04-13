@@ -1,6 +1,6 @@
 const globalObject: any = global;
 let { users, chats, cases } = globalObject.dixontest;
-import * as Types from "../../test/tsconfig/custom";
+import * as Types from "../../testChatroom/tsconfig/custom";
 
 export default (req, res) => {
   let returnObject: {
@@ -31,9 +31,9 @@ export default (req, res) => {
     (() => {
       let casee: Types.Case;
       /***********   Check have access right   ***********/
-      if (user.role === "admin") {
-        returnObject.userRoleMatch = true;
-      }
+      // if (user.role === "admin") {
+      //   returnObject.userRoleMatch = true;
+      // }
 
       if (!returnObject.userRoleMatch) {
         return;

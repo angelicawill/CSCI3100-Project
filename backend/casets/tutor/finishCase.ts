@@ -1,13 +1,12 @@
-const globalObject: any = global;
-let { users, chats, cases } = globalObject.dixontest;
-import * as Types from "../../test/tsconfig/custom";
+import { finishCase } from "../../database/tutor";
+import * as Types from "../../testChatroom/tsconfig/custom";
 
-export default (req, res) => {
+export default async (req, res) => {
   let returnObject = {
-    caseidValid: false,
-    caseExist: false,
-    userRoleMatch: false,
-    userInCase: false,
+    // caseidValid: false,
+    // caseExist: false,
+    // userRoleMatch: false,
+    // userInCase: false,
     success: false,
     serverError: true,
   };
@@ -21,59 +20,58 @@ export default (req, res) => {
     let dataExist = false;
     let haveAccessRight = false;
 
-    (() => {
-      let casee: Types.Case;
-      if (!user) {
-        return;
-      } else {
-        /***********   Check syntax valid   ***********/
-        if (typeof caseid === "number" && Number.isInteger(caseid)) {
-          returnObject.caseidValid = true;
-        }
-      }
+    // (() => {
+    // let casee: Types.Case;
+    // if (!user) {
+    //   return;
+    // } else {
+    //   /***********   Check syntax valid   ***********/
+    //   if (typeof caseid === "number" && Number.isInteger(caseid)) {
+    //     returnObject.caseidValid = true;
+    //   }
+    // }
 
-      if (!returnObject.caseidValid) {
-        return;
-      } else {
-        dataSyntaxValid = true;
-        /***********   Check data exist   ***********/
+    // if (!returnObject.caseidValid) {
+    //   return;
+    // } else {
+    //   dataSyntaxValid = true;
+    //   /***********   Check data exist   ***********/
 
-        // Find case
-        if (cases.find((casee) => casee.caseid === caseid)) {
-          returnObject.caseExist = true;
-        }
-      }
+    //   // Find case
+    //   if (cases.find((casee) => casee.caseid === caseid)) {
+    //     returnObject.caseExist = true;
+    //   }
+    // }
 
-      if (!returnObject.caseExist) {
-        return;
-      } else {
-        dataExist = true;
-        /***********   Check have access right   ***********/
+    // if (!returnObject.caseExist) {
+    //   return;
+    // } else {
+    //   dataExist = true;
+    //   /***********   Check have access right   ***********/
 
-        // check user's role is tutor
-        if (user.role === "tutor") {
-          returnObject.userRoleMatch = true;
-        }
+    //   // check user's role is tutor
+    //   if (user.role === "tutor") {
+    //     returnObject.userRoleMatch = true;
+    //   }
 
-        // check user is in the case
-        casee = cases.find((casee) => casee.caseid === caseid);
-        if (casee.tutorid === user.userid) {
-          returnObject.userInCase = true;
-        }
-      }
+    //   // check user is in the case
+    //   casee = cases.find((casee) => casee.caseid === caseid);
+    //   if (casee.tutorid === user.userid) {
+    //     returnObject.userInCase = true;
+    //   }
+    // }
 
-      if (!returnObject.userInCase || !returnObject.userRoleMatch) {
-        return;
-      } else {
-        haveAccessRight = true;
-        /***********   finish case   ***********/
-        casee.isClosed = true;
+    // if (!returnObject.userInCase || !returnObject.userRoleMatch) {
+    //   return;
+    // } else {
+    // haveAccessRight = true;
+    /***********   finish case   ***********/
 
-        // change in student and tutor database too
+    // change in student and tutor database too
 
-        returnObject.success = true;
-      }
-    })();
+    returnObject.success = await finishCase(user.userid, caseid);
+    // }
+    // })();
 
     if (!dataSyntaxValid) {
       status = 400;

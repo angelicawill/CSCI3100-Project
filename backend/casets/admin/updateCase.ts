@@ -1,5 +1,5 @@
 const globalObject: any = global;
-import * as Types from "../../test/tsconfig/custom";
+import * as Types from "../../testChatroom/tsconfig/custom";
 let { users, chats, cases }: {
   users: Types.Users;
   chats: Types.Chats;
@@ -51,9 +51,9 @@ export default (req, res) => {
     (() => {
       let casee: Types.Case;
       /***********   Check have access right   ***********/
-      if (user.role === "admin") {
-        returnObject.userRoleMatch = true;
-      }
+      // if (user.role === "admin") {
+      //   returnObject.userRoleMatch = true;
+      // }
 
       if (!returnObject.userRoleMatch) {
         return;

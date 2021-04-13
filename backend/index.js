@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const initializePassport = require('./authentication/authentication').initializePassport;
 const initializeChatRoom = require('./chatroom/chatroom').initializeChatRoom;
-
+const {addUser} = require('./database/user');
 
 const app = express();
 var router = express.Router();
@@ -31,23 +31,32 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.connection.once('open', () => {
   console.log("ok");
+  
+  // addUser({
+  //   realname: "student",
+  //   username: "student",
+  //   password: "student",
+  //   phonenumber: 1,
+  //   email: "student",
+  //   role: "student"
+  // })
+  // addUser({
+  //   realname: "tutor",
+  //   username: "tutor",
+  //   password: "tutor",
+  //   phonenumber: 2,
+  //   email: "tutor",
+  //   role: "tutor"
+  // })
+
 })
 
 const io = socketio(server);
 initializeChatRoom({ io, sessionMiddleware, passport });
 
-// app.use('/case', require('./case/case'));
 
 
 
-// body: {
-//   email: string, 
-//   password: string
-// }
-// return: {
-//   err: null,
-//   user: null
-// }
 app.post('/login', function (req, res, next) {
   let returnObject = {
     err: null,
@@ -71,6 +80,16 @@ app.post('/login', function (req, res, next) {
   })(req, res, next);
 })
 
+app.use((req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.send({
+      msg: "not authenticated"
+    })
+  }
+  next();
+})
+
+app.use('/case', require('./case/case')["default"]);
 
 app.get('/testchatroom', (req, res) => {
   console.log("testing")
