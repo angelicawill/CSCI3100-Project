@@ -4,11 +4,13 @@ You should ensure all input parameters are correct in format and content
 
 functions
 getTutorData() return the document with a given tutor ID
+setTutorData()
 findStudents(tutorid) return a list of students according to tutor's preference
 requestStudent()      to start/ cancel a request to a student
 startCase()           start an empty case
 inviteToCase()        invite student(s) to a case
 finishCase()          set the status of case (isClosed) to true
+getReceivedRequest()  return the array of request
 */
 const User = require("./model/user.model")
 const Case = require("./model/case.model")
@@ -21,6 +23,19 @@ const getTutorData = async (tutorid) => {
   return await Tutor.findOne({tutorid:tutorid}).exec()
 }
 
+const setTutorData = async (tutorid,datas) => {
+  const setOfKey = ["subjectsTeach","freeTime","preferredLocation","isGroupTeachingAllowed","isMultiCaseAllowed"]
+  for (idx in Object.keys(datas)){
+    if (! setOfKey.includes(Object.keys(datas)[idx])){
+      throw new Error("it contains fields can't be alter")
+    }
+  }
+  const res = await Tutor.findOneAndUpdate({tutorid:tutorid},{$set:datas})
+  if (res != null){
+    return true
+  }
+  return false
+}
 /**
  * This function correspond to 'search for a student'
  * @param {Number} tutorid 
@@ -123,15 +138,21 @@ const finishCase = async (tutorid, caseid) => {
   }
 }
 
+const getReceivedRequest = async(tutorid) => {
+  
+}
+
 const dropDB = async () => {
   await Tutor.collection.drop()
 }
 
 module.exports = {
   getTutorData:getTutorData,
+  setTutorData:setTutorData,
   requestStudent:requestStudent,
   startCase:startCase,
   inviteToCase:inviteToCase,
   finishCase:finishCase,
-  dropDB:dropDB
+  dropDB:dropDB,
+  getReceivedRequest:getReceivedRequest
 }

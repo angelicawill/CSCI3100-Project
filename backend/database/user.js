@@ -13,9 +13,9 @@ addUser()
 getUserid()
 getUserInfo()
 getUserBasicInfo()
-changeUserInfo()
+setUserInfo()
 setVerified()
-
+isVerified()
 should not use in production:
 dropDB()
 getDocCount()
@@ -106,7 +106,7 @@ const getUserBasicInfo = async (query)=>{
 }
 
 /**
- * return student/tutor's information by inputing the user's id/username/email
+ * return student/tutor's detailed information(not the basics) by inputing the user's id/username/email
  * @param {Object}  query, key: unique identifier
  * @returns {Promise} resolve: advanced informations, null if no matched user, or rejected with invalid input
  */
@@ -134,15 +134,18 @@ const getUserInfo = async (query) => {
  * @param {Object} changedContent the fields going to change, group as object
  * @returns {Boolean} True is success change, False with not
  */
-const changeUserInfo = async (userid,changedContent) => {
+const setUserInfo = async (userid,changedContent) => {
   //should check field exist, now assumed all fields exists
   try{
-    await User.findOneAndUpdate({userid:userid},
+    const res = await User.findOneAndUpdate({userid:userid},
       {$set:changedContent})
+    if (res == null){
+      throw new Error("some error")
+    }
     return true
   }
   catch(err){
-    console.error(err)
+    //console.error(err)
     return false
   }
   
@@ -154,10 +157,30 @@ const changeUserInfo = async (userid,changedContent) => {
  */
 const setVerified = async (query) => {
   try{
-    await User.findOneAndUpdate(query,{$set:{"isVerified":true}})
+    const res = await User.findOneAndUpdate(query,{$set:{"isVerified":true}})
+    if (res == null){return false}
+    return true
   }
   catch(err){
     console.error(err)
+    return false
+  }
+}
+
+/**
+ * 
+ * @param {Object} query the unique identfier of an user
+ * @returns {Boolean} true if verfied, error raised if user not found
+ */
+const isVerified = async (query)=>{
+  const res = await User.findOne(query)
+  if (res === null){
+    throw new Error("no user found")
+  }
+  else{
+    if (res["isVerified"]){
+      return true
+    }
     return false
   }
 }
@@ -182,8 +205,9 @@ module.exports = {
   getUserid:getUserid,
   getUserInfo:getUserInfo,
   getUserBasicInfo:getUserBasicInfo,
-  changeUserInfo:changeUserInfo,
+  setUserInfo:setUserInfo,
   setVerified:setVerified,
+  isVerified:isVerified,
   dropDB:dropDB,
   getDocCount:getDocCount
 }

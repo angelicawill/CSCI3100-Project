@@ -5,10 +5,13 @@ const getAvailableHours = (studentTimeSlot,tutorTimeSlot) => {
   //answer                  = 8 (1200-1859, 2000-2059)
   let studentptr = studentTimeSlot[0][0]
   let tutorptr = tutorTimeSlot[0][0]
+
+  //hardcode, all things are not calculated
   return 1
 }
 
 const sortedByObjKey = (arr,key,isAscending) => {
+  //hardcode, all things are not sorted
   return arr
 }
 

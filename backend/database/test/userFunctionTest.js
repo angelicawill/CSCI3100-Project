@@ -5,22 +5,25 @@ const {initDB,dropAll, deleteAllDoc} = require("./db_init/dbHandler");
 const dbUri = config.dburiLocal;
 //testing with chai
 const chai = require('chai');
-chai.use(require('chai-as-promised'));
-
+chai.use(require('chai-as-promised'))
 const assert = require('chai').assert
 const expect = require("chai").expect
 
 
-
+const fakeData = require("./test_data/fakeuser_new.json")
 //function to test
 const user = require("../user")
-const student = require("../student")
-const tutor = require("../tutor")
 
-const fakeData = require("./test_data/fakeuser_new.json")
+//gloaal testing variables
+const firstUser = fakeData.table[0]
+const firstStudentIndex = 0
+const firstTutorIndex = 2
+const firstStudent = fakeData.table[firstStudentIndex]
+const firstTutor = fakeData.table[firstTutorIndex]
 
 
-describe("Testing get user names function",()=>{
+describe("Testing get user info functions",()=>{
+
   before("connnect to db and add test data ",async ()=>{
     //connect to mongodb
     await mongoose.connect(dbUri,{ useNewUrlParser: true, useUnifiedTopology: true })
@@ -37,13 +40,15 @@ describe("Testing get user names function",()=>{
 
 
   describe("testing getUserid()", ()=>{
+    
+
     const setofTest = async()=>{
       it ("should get back id with valid input",async()=>{
-        assert.equal(await user.getUserid({username:"Kurt75157"}),2)
-        assert.equal(await user.getUserid({phonenumber:53042531}),2)
+        assert.equal(await user.getUserid({username:firstUser.username}),1)
+        assert.equal(await user.getUserid({phonenumber:firstUser.phonenumber}),1)
       })
       it ("should get back none with not exist user",async()=>{
-        assert.equal(await user.getUserid({username:"Kurt751f57"}),null)
+        assert.equal(await user.getUserid({username:"fdsfsd"}),null)
       })
       it ("should throw error with field not an unique identfier",async()=>{
         await expect(user.getUserid({role:"tutor"}) ).to.eventually.be.rejectedWith(Error);
@@ -54,11 +59,13 @@ describe("Testing get user names function",()=>{
 
   describe("testing getUserInfo()",()=>{
     const setofTest = async()=>{
-      it ("should get a student with valid input",async()=>{
-        const t1 = await user.getUserInfo({username:"Kurt75157"})
-        assert.equal(t1["tutorid"],2)
+      it ("should get a student/tutor with valid input",async()=>{
+        //student
+        const t1 = await user.getUserInfo({username:firstStudent.username})
+        assert.equal(t1["studentid"],firstStudentIndex + 1)
 
-        assert.equal((await user.getUserInfo({email:"Mohamed9021@gmail.com"}))["studentid"],4)
+        //tutor
+        assert.equal((await user.getUserInfo({email:firstTutor.email}))["tutorid"],firstTutorIndex + 1)
       })
       it ("should get nothing with not exist user",async()=>{
 
@@ -71,9 +78,9 @@ describe("Testing get user names function",()=>{
   describe("testing getUserBasicInfo()",()=>{
     const setofTest = async()=>{
       it ("should get with exist user",async()=>{
-        assert.equal((await user.getUserBasicInfo({"username": "Mohamed85401"}))["userid"],4)
-        assert.equal((await user.getUserBasicInfo({"phonenumber": 78203341}))["userid"],5)
-        assert.equal((await user.getUserBasicInfo({"email": "Barack47721@gmail.com"}))["userid"],6)
+        assert.equal((await user.getUserBasicInfo({"username": firstUser.username}))["userid"],1)
+        assert.equal((await user.getUserBasicInfo({"phonenumber": firstUser.phonenumber}))["userid"],1)
+        assert.equal((await user.getUserBasicInfo({"email": firstUser.email}))["userid"],1)
       })
       it ("should get nothing with not exist user",async()=>{
         assert.equal((await user.getUserBasicInfo({"username": "Noexistname1"})),null)
@@ -87,6 +94,20 @@ describe("Testing get user names function",()=>{
     }
    setofTest()
 
+  })
+
+  describe("Testing isVerified()",()=>{
+    it("should return true for verified user",async()=>{
+      await user.setVerified({userid:3})
+      assert.equal(await user.isVerified({userid:3}),true)
+    })
+    it("should return false fo not verified user",async()=>{
+      //should not use 3 again as the collection user is not rewritten
+      assert.equal(await user.isVerified({userid:13}),false)
+    })
+    it("should return throw error for not found user",async()=>{
+      await expect(user.isVerified({userid:300})).to.eventually.be.rejectedWith(Error);
+    })
   })
 
 })
@@ -112,20 +133,28 @@ describe("Testing altering user collections",()=>{
   await deleteAllDoc()
   })
 
-  describe("test changeUserInfo()",async()=>{
+  describe("test setUserInfo()",async()=>{
     it("should change with valid input",async()=>{
-      await user.changeUserInfo(2,{phonenumber:12345678})
-      assert.equal((await user.getUserBasicInfo({userid:2}))["phonenumber"],12345678)
+      await user.setUserInfo(1,{phonenumber:12345678})
+      assert.equal((await user.getUserBasicInfo({userid:1}))["phonenumber"],12345678)
     })
     it("should not change with invalid input",async()=>{
-      await user.changeUserInfo(2,{phonenumber:"fdsfsd"})
-      assert.equal((await user.getUserBasicInfo({userid:2}))["phonenumber"],53042531)
+      await user.setUserInfo(1,{phonenumber:"fdsfsd"})
+      assert.equal((await user.getUserBasicInfo({userid:1}))["phonenumber"],firstUser.phonenumber)
     })
     it("should return false with invalid input",async()=>{
-      assert.equal(await user.changeUserInfo(2,{phonenumber:"fdsfsd"}),false)
+      assert.equal(await user.setUserInfo(1,{phonenumber:"fdsfsd"}),false)
     })
-    it("should raise error in invalid parameter",async()=>{
-      await expect(user.changeUserInfo(2,{notExistField:"not existing value"})).to.eventually.be.rejectedWith(Error);
+    it("should raise error if not existuser",async()=>{
+      assert.equal(await user.setUserInfo(200,{phonenumber:12345678}),false)
+      //await user.setUserInfo(200,{phonenumber:12345678})
+    })
+  })
+
+  describe("test setVerified()",()=>{
+    it("should be verfied with valid input",async()=>{
+      await user.setVerified({userid:2})
+      assert.equal((await user.getUserBasicInfo({userid:2}))["isVerified"],true)
     })
   })
 
