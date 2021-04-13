@@ -1,0 +1,104 @@
+body, html {
+    font-family: 'Manrope', sans-serif;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    color: black;
+    font-weight: 400;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.teaching-details-container {
+
+}
+
+.title {
+    color: #42505C;
+    font-size: 1vw;
+    margin-bottom: 1vw;
+}
+
+.sub-math, .sub-bio {
+    padding: 1.3vw;
+    background-color: #2EC5CE;
+    color: #ffffff;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.grade-pri, .grade-sec {
+    padding: 1.3vw;
+    background-color: #249ca3;
+    color: #ffffff;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.teach-mode1, .teach-mode2 {
+    padding: 1.3vw;
+    background-color: #1a6e72;
+    color: #ffffff;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.sub-math {
+    width: 9vw;
+    height: 3vw;
+    margin-bottom: 3vw;
+}
+
+.sub-bio {
+    width: 6.4vw;
+    height: 3vw;
+    float: right;
+    margin: -6vw -3vw;
+}
+
+.grade-pri {
+    width: 6.5vw;
+    height: 3vw;
+    margin-bottom: 3vw;
+}
+
+.grade-sec {
+    width: 7.6vw;
+    height: 3vw;
+    float: right;
+    margin: -6vw -2vw;
+}
+
+.teach-mode1 {
+    height: 3vw;
+}
+
+.teach-mode2 {
+    width: 10vw;
+    height: 3vw;
+    margin-top: 1vw;
+}
+
+.text-inside {
+    font-size: 1vw;
+}
+
+@media screen and (max-width: 1000px) {
+    .img {
+        margin: 0vw 0vw 0vw 10vw;
+        width: 19%;
+        float: left;
+    }
+    .teacher-name, .teacher-address {
+        margin: 2vw 0vw 0vw 28vw
+    }
+    .divider {
+        width: 55vw;
+        margin: 7vw 1vw 4vw 4vw !important;
+    }
+}
