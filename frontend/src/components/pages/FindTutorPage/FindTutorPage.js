@@ -38,32 +38,31 @@ function FindTutorPage() {
                         </h1>
                         <div className="search-box">
                             <div className="subject-box">
-                            <h2 className="subject-text">
-                                {searchingForm.subject}
-                            </h2></div>
-
+                                <h2 className="subject-text">
+                                    {searchingForm.subject}
+                                </h2>
+                            </div>
                             <><Subject /></>
                             <div className="time-box">
-                            <h2 className="subject-text">
-                                {searchingForm.time}
-                            </h2>
+                                <h2 className="subject-text">
+                                    {searchingForm.time}
+                                </h2>
                                 <h2 className="subject-text">
                                     {searchingForm.grade}
                                 </h2>
                             </div>
                             <><TimeSelect /></>
                             <div className="mode-box">
-                            <h2 className="avaliable-time-text">
-                                {searchingForm.mode}
-                            </h2>
+                                <h2 className="avaliable-time-text">
+                                    {searchingForm.mode}
+                                </h2>
                                 <h2 className="avaliable-time-text">
                                     {searchingForm.cost}
                                 </h2>
                             </div>
                             <><TeachingModeSelect /></>
-
                             <div className="find-tutor-button-wrapper">
-                                <Link to='/find-tutor-result'>
+                                <Link to='/result'>
                                     <Button buttonSize='btn--medium' buttonColor='blue'>
                                         Find Tutor
                                     </Button>
@@ -71,6 +70,7 @@ function FindTutorPage() {
                             </div>
                         </div>
                         <div className='col'>
+
                         </div>
                     </div>
                 </div>

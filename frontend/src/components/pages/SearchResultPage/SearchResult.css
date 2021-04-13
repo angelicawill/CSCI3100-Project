@@ -16,59 +16,27 @@
     width: 100%;
 }
 
-.profile-col {
-    margin-top: -150px;
-    margin-bottom: 1000px;
-    padding-right: 15px;
-    padding-left: 15px;
-    flex: 1;
-    max-width: 100%;
-    flex-basis: 50%;
-}
-
-.container {
-
-}
-
-.heading {
+.result-heading {
     max-width: 100%;
     font-size: 30px;
-    text-align: center;
     line-height: 1;
     font-weight: bold;
-    color: #f7f8fa;
-}
-
-.sub-heading {
-    max-width: 100%;
-    font-size: 18px;
-    line-height: 1;
-    font-weight: lighter;
-    color: #f7f8fa;
+    color: #071B2A;
+    padding: 0vw 0vw 0vw 19vw;
 }
 
 .dark {
     color: #071B2A;
 }
 
-.darkBg {
-    background-color: #071B2A;
-}
-
-
-.button-wrapper {
-    margin-left: 617px;
-    margin-top: 538px;
-}
-
-.intro-box-wrapper {
+.teacher-intro-box-wrapper {
     float: left;
     height: 20vw;
     width: 40vw;
     margin: 0vw 0vw 4vw 6vw;
 }
 
-.intro-box {
+.teacher-intro-box {
     height: 320px;
     background-color: #ffffff;
     border-radius: 50px;
@@ -77,165 +45,24 @@
     align-content: center;
     box-shadow: 0px 4px 20px 1px #e7e7e7;
     width: 30vw;
-    margin: 4vw 10vw;
+    margin: 4vw 0vw 0vw 10vw;
 }
 
-.rating-display-box-wrapper {
+.teacher-rating-display-box-wrapper {
     float: right;
 }
 
-.rating-display-box {
+.teacher-rating-display-box {
     height: 320px;
     background-color: #ffffff;
     border-radius: 50px;
-    display: flex;
     flex-wrap: wrap;
     align-content: center;
     box-shadow: 0px 4px 20px 1px #e7e7e7;
-    width: 30vw;
-    margin: 4vw 18vw 0vw 0vw;
-}
-
-.rating-box-wrapper {
-    float: right;
-}
-
-.rating-box {
-    height: 260px;
-    background-color: #ffffff;
-    border-radius: 50px;
-    display: flex;
-    flex-wrap: wrap;
-    box-shadow: 0px 4px 50px 5px #e7e7e7;
-    width: 30vw;
-    margin: 2vw 18vw 0vw 0vw;
-}
-
-.rating-control {
-    margin: 2vw 0vw 0vw 0vw;
-    padding-left: 3vw;
-}
-
-.contact-box-wrapper {
-    float: left;
-}
-
-.contact-box {
-    height: 260px;
-    background-color: #ffffff;
-    border-radius: 50px;
-    display: flex;
-    box-shadow: 0px 4px 50px 5px #e7e7e7;
     width: 60vw;
-    margin: 4vw 0vw 0vw 17vw;
+    margin: 4vw 0vw 0vw 16vw;
 }
 
-.review-box-wrapper {
-    float: right;
-}
-
-.review-box {
-    height: 340px;
-    background-color: #ffffff;
-    border-radius: 50px;
+.teacher-profile {
     display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    box-shadow: 0px 4px 50px 5px #e7e7e7;
-    width: 30vw;
-    margin: 2vw 18vw 0vw 0vw;
-}
-
-.rating-box-info {
-    margin: auto;
-}
-
-.review-title {
-    color: #42505C;
-    font-size: 1vw;
-}
-
-.review-input-box {
-    margin-top: 1vw;
-}
-
-.teaching-details-wrapper {
-    float: left;
-}
-
-.teaching-details {
-    display: flex;
-    width: 27vw;
-    margin: 31vw 0vw 0vw -26vw;
-}
-
-@media screen and (max-width: 1325px) {
-    .teaching-details {
-        display: flex;
-        width: 27vw;
-        margin: 41vw 0vw 0vw -26vw;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .intro-box {
-        width: 70vw;
-    }
-    .rating-display-box {
-        width: 70vw;
-        margin: 15vw 11vw 0vw 0vw;
-    }
-    .rating-box {
-        width: 70vw;
-        margin: 35vw 0vw 0vw 15vw;
-    }
-    .review-box {
-        width: 70vw;
-        margin: 7vw 0vw 0vw 16vw;
-    }
-    .rating-box-wrapper {
-        margin: auto;
-        float: left;
-        margin-top: -32vw;
-    }
-    .review-box-wrapper {
-        margin: auto;
-        float: left;
-        margin-top: -4vw;
-    }
-    .rating-box-info {
-        margin: auto;
-    }
-    .review-title {
-        margin: 5vw 36vw 0vw 8vw;
-        height: 3vw;
-    }
-    .rating-control {
-        height: 6vw;
-        margin: -4vw 0vw 0vw 25vw;
-    }
-    .review-input-box {
-        margin: 3vw 0vw 0vw 15vw;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .rating-box-info {
-        margin: auto;
-    }
-    .review-title {
-        margin: 0vw 0vw 13vw 8vw;
-        height: 3vw;
-    }
-    .rating-control {
-        height: 6vw;
-        margin: -6vw 0vw 0vw 5vw;
-    }
-    .review-input-box {
-        margin: 5vw 0vw 0vw 7vw;
-    }
-}
-
-. subjectobj{
-    margin-left: 10px;
 }

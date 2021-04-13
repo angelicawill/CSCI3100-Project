@@ -34,14 +34,6 @@
     padding-bottom: 3vw;
 }
 
-.sub-heading {
-    max-width: 100%;
-    font-size: 18px;
-    line-height: 1;
-    font-weight: lighter;
-    color: #f7f8fa;
-}
-
 .dark {
     color: #071B2A;
 }
@@ -102,13 +94,6 @@
     width: 100%;
 }
 
-.grade-box {
-    display: flex;
-    padding: 3vw 2vw 2vw 14vw;
-    height: 2vw;
-    width: 100%;
-}
-
 .grade {
     padding-right: 38vw;
 }
@@ -137,10 +122,6 @@
     .search-box {
         height: 78vw;
     }
-}
-
-@media screen and (max-width: 1015px) {
-
 }
 
 
