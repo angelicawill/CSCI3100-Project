@@ -11,6 +11,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 
+const searchingForm = {
+    lightBg: true,
+    lightText: false,
+    lightTextDesc: false,
+};
+
 const useStyles = makeStyles(() => ({
     label: {
         fontSize: "larger",

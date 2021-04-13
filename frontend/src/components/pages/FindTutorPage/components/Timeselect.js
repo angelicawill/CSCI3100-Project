@@ -1,13 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import './FindTutorPageStyle.css';
+import Grade from '../components/Grade';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     container: {
-        width: 300,
-        position: "absolute",
-        top: 505,
-        left: 316,
+
     },
     textField: {
         width: 240,
@@ -19,6 +18,7 @@ function DateAndTimePickers() {
     const classes = useStyles();
 
     return (
+        <div className="time-select-wrapper">
         <form className={classes.container} noValidate>
             <TextField
                 id="datetime-local"
@@ -31,6 +31,8 @@ function DateAndTimePickers() {
                 }}
             />
         </form>
+            <><Grade /></>
+        </div>
     );
 }
 

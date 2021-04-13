@@ -1,15 +1,14 @@
 import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import { orange } from '@material-ui/core/colors';
+import './FindTutorPageStyle.css';
 
 const useStyles = makeStyles({
     root: {
-        width: 312,
-        position:"absolute",
-        top: 718,
-        left: 863,
+        width: "40%",
+        display: "flex",
+        padding: "5vw 0vw 0vw 9vw"
     },
 });
 
@@ -31,7 +30,7 @@ export default function RangeSlider() {
     return (
         <div className={classes.root}>
             <div className={classes.margin} />
-            <Typography gutterBottom></Typography>
+
             <SalarySlider value={value}
                           onChange={handleChange}
                           valueLabelDisplay="on"
