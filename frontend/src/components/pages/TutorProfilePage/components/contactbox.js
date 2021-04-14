@@ -1,9 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import './contactbox.css';
-import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import mathImgNotSelected from "../../FindTutorPage/images/Math-not-selected.png";
 import {Link} from "react-router-dom";
 import {Button} from "../../../Button";
 

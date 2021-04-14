@@ -8,6 +8,7 @@ import RatingBox from './components/ratingbox';
 import Rating from '@material-ui/lab/Rating';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from "react-router-dom";
 
 
 
@@ -37,6 +38,13 @@ function FindTutorPage() {
             <div
                 className={searchingForm.lightBg ? 'home' : 'home darkBg'}
             >
+                <div className="back-to-result-wrapper">
+                    <Link to='/result'>
+                        <p className="back-to-result">
+                            &#60;&#60; Back to result...
+                        </p>
+                    </Link>
+                </div>
                 <div className="intro-box-wrapper">
                     <div className="intro-box">
                         <><Infobox /></>

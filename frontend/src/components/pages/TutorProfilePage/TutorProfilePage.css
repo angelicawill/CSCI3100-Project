@@ -26,8 +26,12 @@
     flex-basis: 50%;
 }
 
-.container {
+.back-to-result-wrapper {
+    margin: 0vw 0vw 0vw 17vw;
+}
 
+.back-to-result {
+    color: #42505C;
 }
 
 .heading {
@@ -77,7 +81,7 @@
     align-content: center;
     box-shadow: 0px 4px 20px 1px #e7e7e7;
     width: 30vw;
-    margin: 4vw 10vw;
+    margin: 2vw 0vw 0vw 10vw;
 }
 
 .rating-display-box-wrapper {
@@ -93,7 +97,7 @@
     align-content: center;
     box-shadow: 0px 4px 20px 1px #e7e7e7;
     width: 30vw;
-    margin: 4vw 18vw 0vw 0vw;
+    margin: 2vw 18vw 0vw 0vw;
 }
 
 .rating-box-wrapper {
@@ -234,8 +238,4 @@
     .review-input-box {
         margin: 5vw 0vw 0vw 7vw;
     }
-}
-
-. subjectobj{
-    margin-left: 10px;
 }
