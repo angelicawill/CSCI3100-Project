@@ -1,0 +1,38 @@
+<h2>Edit your profile</h2>
+<form action="/users" method="POST">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" name="name" id="name" value="{{ name }}">
+  </div>
+  <div class="form-group">
+    <label for="grade">Grade:</label>
+    <input type="text" class="form-control" name="grade" id="grade" value="{{ grade }}">
+  </div>
+  <div class="form-group">
+    <label for="name">Preferred Subject:</label>
+    <input type="text" class="form-control" name="subject" id="subject" value="{{ subject }}">
+  </div>
+  <div class="form-group">
+    <label for="name">Preferred Time:</label>
+    <input type="text" class="form-control" name="time" id="time" value="{{ time }}">
+  </div>
+  <div class="form-group">
+    <label for="name">Preferred Teaching Mode:</label>
+    <input type="text" class="form-control" name="teachMode" id="teachMode" value="{{ teachMode }}">
+  </div>
+  <div class="form-group">
+    <label for="name">Preferred Tutor Fee:</label>
+    <input type="text" class="form-control" name="fee" id="fee" value="{{ fee }}">
+  </div>
+  <div class="form-group">
+    <label for="name">Preferred Location:</label>
+    <input type="text" class="form-control" name="location" id="location" value="{{ location }}">
+  </div>
+  <div class="form-group">
+    <label for="name">Self Introduction:</label>
+    <input type="text" class="form-control" name="introduction" id="introduction" value="{{ introduction }}">
+  </div>
+  <button class="btn btn-primary">Update</button>
+</form>
+
+<p><a href="/users/{{username}}" target="_blank">View your profile</a></p>
