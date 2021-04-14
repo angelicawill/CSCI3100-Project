@@ -40,7 +40,6 @@ var LocalStrategy = require("passport-local").Strategy;
 var globalObject = global;
 var getUserBasicInfo = require("../database/user").getUserBasicInfo;
 var hashPassword = require("../hashPassword").hashPassword;
-// const { users, chats, cases } = globalObject.dixontest;
 function initializePassport(passport) {
     var _this = this;
     passport.use(new LocalStrategy({
@@ -49,7 +48,9 @@ function initializePassport(passport) {
         var user;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, getUserBasicInfo({ username: username })];
+                case 0:
+                    console.log(username);
+                    return [4 /*yield*/, getUserBasicInfo({ username: username })];
                 case 1:
                     user = _a.sent();
                     if (user === null) {
@@ -110,5 +111,5 @@ function initializePassport(passport) {
 // app.use(sessionMiddleware);
 // app.use(passport.initialize());
 // app.use(passport.session());
-// initializePassport{app}});
+// initializePassport(passport));
 exports.initializePassport = initializePassport;

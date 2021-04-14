@@ -1,7 +1,3 @@
-// import util from 'util'
-// const passport = require('passport');
-// const globalObject: any = global;
-
 // Used by client:
 // socket = io('/chatroom');
 // Receive error on client side: 
@@ -104,7 +100,7 @@ function initializeChatRoom({io, sessionMiddleware, passport}) {
 // const session = require('express-session');
 // const sessionMiddleware = session({ secret: "changeit", resave: false, saveUninitialized: false });
 // const io = socketio(server);
-// initializeChatRoom({io, sessionMiddleware, app});
+// initializeChatRoom({io, sessionMiddleware, passport});
 // server.listen(port, () => {
 //     console.log("server running on port: " + port);
 // });

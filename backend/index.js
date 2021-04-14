@@ -59,9 +59,10 @@ app.use(express.json());
 app.use(express.text());
 app.use(multer().none())
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'testChatroom')))
 
 // Route for testing
+app.use(express.static(path.join(__dirname, 'testChatroom')))
+
 app.all('*', (req, res, next) => {
   console.log('getted request');
   next();

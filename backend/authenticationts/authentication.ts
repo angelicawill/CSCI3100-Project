@@ -3,13 +3,12 @@ const globalObject: any = global;
 const { getUserBasicInfo } = require("../database/user");
 const { hashPassword } = require("../hashPassword");
 
-// const { users, chats, cases } = globalObject.dixontest;
-
 function initializePassport(passport) {
   passport.use(
     new LocalStrategy({
       usernameField: "username",
     }, async (username, password, done) => {
+      console.log(username)
       const user = await getUserBasicInfo({ username: username });
       if (user === null) {
         console.log("no user with that username");
@@ -64,7 +63,7 @@ function initializePassport(passport) {
 // app.use(sessionMiddleware);
 // app.use(passport.initialize());
 // app.use(passport.session());
-// initializePassport{app}});
+// initializePassport(passport));
 exports.initializePassport = initializePassport;
 // Login:
 // app.post('/login', function(req, res, next) {

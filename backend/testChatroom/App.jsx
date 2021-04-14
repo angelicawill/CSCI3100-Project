@@ -10,7 +10,7 @@ function App() {
           url="/login"
           method="POST"
           textAreaValue={{
-            email: "student",
+            username: "student",
             password: "student",
           }}
         />
