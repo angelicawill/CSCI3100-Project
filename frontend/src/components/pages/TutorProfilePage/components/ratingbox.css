@@ -1,0 +1,87 @@
+body, html {
+    font-family: 'Manrope', sans-serif;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    color: black;
+    font-weight: 400;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.title-box {
+    margin-left: 10vw;
+    height: 15vw;
+    width: 29vw;
+    margin-bottom: -7vw;
+}
+
+.teacher-mark {
+    color: #42505C;
+    font-weight: bold;
+    font-size: 2.4vw;
+}
+
+.num-of-reviews {
+    color: #1E9097;
+    font-weight: lighter;
+    font-size: 1vw;
+}
+
+
+.img {
+    margin: 1vw 3vw 0vw 0vw;
+    width: 25%;
+    float: left;
+}
+
+.divider {
+    width: 25vw;
+    margin: 3vw 1vw 2vw -2vw !important;
+}
+
+.interval {
+    width: 10vw;
+    margin: -1vw 0vw 0vw 9vw !important;
+}
+
+.reviews-received {
+    float: right;
+    margin: -0.8vw -5vw 0vw 0vw;
+    font-size: 1vw;
+    color: #1E9097;
+    font-weight: lighter;
+}
+
+.introduction-box {
+    margin: 1vw 3vw 0vw 3vw;
+    text-align: left;
+}
+
+.introduction-title {
+    margin-top: 0.4vw;
+    color: #42505C;
+    font-weight: lighter;
+    font-size: 0.5vw;
+}
+
+.introduction {
+    margin-top: 0.4vw;
+    color: #42505C;
+    font-weight: lighter;
+    font-size: 0.5vw;
+}
+
+@media screen and (max-width: 1000px) {
+    .img {
+        margin: 0vw 0vw 0vw 10vw;
+        width: 19%;
+        float: left;
+    }
+    .teacher-name, .teacher-address {
+        margin: 2vw 0vw 0vw 28vw
+    }
+    .divider {
+        width: 55vw;
+        margin: 7vw 1vw 4vw 4vw !important;
+    }
+}

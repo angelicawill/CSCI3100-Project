@@ -5,6 +5,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { createMuiTheme } from '@material-ui/core/styles'
+import './FindTutorPageStyle.css';
+import Cost from '../components/Costperhour';
 
 
 const Checkboxgroup = withStyles({
@@ -25,13 +27,9 @@ const theme = createMuiTheme({
     }
 })
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     container: {
-        width: 400,
-        height: 100,
-        position:"absolute",
-        top: 640,
-        left: 320
+        width: "25vw"
     },
 }));
 
@@ -52,6 +50,7 @@ function Teachingmodeselect() {
 
 
     return (
+        <div className="mode-select-wrapper">
         <FormGroup row className={classes.container}>
             <ThemeProvider theme={theme}>
                 <FormControlLabel className="one-to-one"
@@ -72,6 +71,8 @@ function Teachingmodeselect() {
                 />
             </ThemeProvider>
         </FormGroup>
+            <><Cost /></>
+        </div>
     );
 }
 

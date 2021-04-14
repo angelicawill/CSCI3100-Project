@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import './Subject.css';
+import React, { useState } from 'react';
+import './FindTutorPageStyle.css';
 import mathImgSelected from '../images/Math-selected.png';
 import mathImgNotSelected from '../images/Math-not-selected.png';
 import bioImgSelected from '../images/Biology-selected.png';
@@ -105,30 +105,35 @@ function SubjectSelecton() {
 
     return (
         <>
-            <button className="img-wrapper math">
-                <img src={mathImgNotSelected} alt="mathImgNotSelected" className="img" onClick={MathhandleClick}/>
-            </button>
-            <h2 className="math-title">Mathematics</h2>
-            <button className="img-wrapper phy">
-                <img src={phyImgNotSelected} alt="phyImgNotSelected" className="img" onClick={PhyhandleClick}/>
-            </button>
-            <h2 className="phy-title">Physics</h2>
-            <button className="img-wrapper chem">
-                <img src={chemImgNotSelected} alt="chemImgNotSelected" className="img" onClick={ChemhandleClick}/>
-            </button>
-            <h2 className="chem-title">Chemistry</h2>
-            <button className="img-wrapper bio">
-                <img src={bioImgNotSelected} alt="bioImgNotSelected" className="img" onClick={BiohandleClick}/>
-            </button>
-            <h2 className="bio-title">Biology</h2>
-            <button className="img-wrapper eng">
-                <img src={engImgNotSelected} alt="engImgNotSelected" className="img" onClick={EnghandleClick}/>
-            </button>
-            <h2 className="eng-title">English</h2>
-            <button className="img-wrapper chin">
-                <img src={chinImgNotSelected} alt="chinImgNotSelected" className="img" onClick={ChinhandleClick}/>
-            </button>
-            <h2 className="chin-title">Chinese</h2>
+            <div className="images-wrapper">
+                <button className="img-wrapper math">
+                    <img src={mathImgNotSelected} alt="mathImgNotSelected" className="btn-img" onClick={MathhandleClick}/>
+                    <h2 className="btn-subject-title">Mathematics</h2>
+                </button>
+                <button className="img-wrapper phy">
+                    <img src={phyImgNotSelected} alt="phyImgNotSelected" className="btn-img" onClick={PhyhandleClick}/>
+                    <h2 className="btn-subject-title">Physics</h2>
+                </button>
+                <button className="img-wrapper chem">
+                    <img src={chemImgNotSelected} alt="chemImgNotSelected" className="btn-img" onClick={ChemhandleClick}/>
+                    <h2 className="btn-subject-title">Chemistry</h2>
+                </button>
+
+                <button className="img-wrapper bio">
+                    <img src={bioImgNotSelected} alt="bioImgNotSelected" className="btn-img" onClick={BiohandleClick}/>
+                    <h2 className="btn-subject-title">Biology</h2>
+                </button>
+
+                <button className="img-wrapper eng">
+                    <img src={engImgNotSelected} alt="engImgNotSelected" className="btn-img" onClick={EnghandleClick}/>
+                    <h2 className="btn-subject-title">English</h2>
+                </button>
+
+                <button className="img-wrapper chin">
+                    <img src={chinImgNotSelected} alt="chinImgNotSelected" className="btn-img" onClick={ChinhandleClick}/>
+                    <h2 className="btn-subject-title">Chinese</h2>
+                </button>
+            </div>
         </>
     );
 
