@@ -83,22 +83,35 @@ const useStyles = makeStyles((theme) => ({
 /* For select button */
 
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
-  });
-
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
+  
+  let state = {
+    // role: "",
+    realname: "",
+    phonenumber: "",
+    email: "",
+    username: "",
+    password: ""
   };
+
+  const submit = () => {
+    props.signUp(
+      state.role,
+      state.realname,
+      state.phonenumber,
+      state.email,
+      state.username,
+      state.password
+    );
+  };
+
+  const onChange = (event) => {
+    console.log(event.target.value);
+  };
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -123,10 +136,10 @@ export default function SignUp() {
                 <Select
                   native
                   value={state.role}
-                  onChange={handleChange}
+                  onChange={onChange}
                   label="I'm a..."
                   inputProps={{
-                    name: "role",
+                    name: 'role',
                   }}
                 >
                   <option value={"student"}>Student</option>
@@ -137,6 +150,7 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
               /* backend implementation */
+                onChange={event => (state.realname = event.target.value)}
                 type="name"
                 name="realname" //identifier
                 id="name"                
@@ -151,6 +165,7 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
               /* backend implementation */
+              onChange={event => (state.phonenumber = event.target.value)}
                 type="tel"
                 name="phonenumber" //identifier
                 id="phonenumber"                
@@ -179,6 +194,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               <TextField
               /* backend implementation */
+                onChange={event => (state.username = event.target.value)}
                 type="text"
                 name="username" //identifier
                 id="username"                
@@ -193,6 +209,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               <TextField
               /* backend implementation */
+                onChange={event => (state.password = event.target.value)}
                 type="password"
                 name="password" //identifier
                 id="password"                
@@ -208,6 +225,8 @@ export default function SignUp() {
             <Button
               id="id1" //for backend
               type="submit" //for backend
+              onClick={submit}
+              onSubmit={submit}
               fullWidth
               variant="contained"
               label="sign-up-button"
