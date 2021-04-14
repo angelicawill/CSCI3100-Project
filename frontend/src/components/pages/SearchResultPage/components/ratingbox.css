@@ -1,0 +1,93 @@
+body, html {
+    font-family: 'Manrope', sans-serif;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    color: black;
+    font-weight: 400;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.teacher-mark {
+    color: #42505C;
+    font-weight: bold;
+    font-size: 2.4vw;
+}
+
+.num-of-reviews {
+    color: #1E9097;
+    font-weight: lighter;
+    font-size: 1vw;
+}
+
+.teacher-rating-box-wrapper {
+    text-align: left;
+    padding: 2vw 0vw 0vw 30vw;
+}
+
+.teacher-rating-box {
+    margin: 1vw 3vw 0vw 3vw;
+    text-align: left;
+}
+
+.teacher-mark-wrapper {
+    padding: 0vw 0vw 0vw 12vw;
+}
+
+.subject-wrapper {
+    margin: -7vw 0vw 0vw 0vw;
+}
+
+.teacher-subject {
+    height: 2vw;
+    background-color: #2EC5CE;
+    border-radius: 30px;
+}
+
+.math-obj {
+    width: 7vw;
+}
+
+.bio-obj {
+    width: 5vw;
+    margin-top: 1vw;
+}
+
+.inside-word {
+    text-align: center;
+    font-size: 0.5vw;
+    font-weight: lighter;
+    color: white;
+    height: 2vw;
+    padding-top: 0.5vw;
+}
+
+.teacher-rating-title {
+    color: #636363;
+    padding: 0vw 0vw 0.5vw 0.2vw;
+    font-size: 1vw;
+}
+
+.teacher-grade-wrapper {
+    margin-top: 2vw;
+}
+
+.teacher-grade {
+    height: 2vw;
+    background-color: #1f858b;
+    border-radius: 30px;
+}
+
+.sec {
+    width: 6vw;
+}
+
+.pri {
+    width: 5vw;
+    margin: -2vw 0vw 0vw 8vw;
+}
+
+.more-button-wrapper {
+    padding: 0vw 0vw 0vw 15vw;
+    margin-top: -1vw;
+}

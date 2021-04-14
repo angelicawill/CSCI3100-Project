@@ -1,0 +1,68 @@
+body, html {
+    font-family: 'Manrope', sans-serif;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    color: black;
+    font-weight: 400;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.teacher-name {
+    color: #42505C;
+    font-weight: bold;
+    font-size: 1.4vw;
+    margin-top: 1.5vw;
+}
+
+.teacher-address {
+    color: #42505C;
+    font-weight: lighter;
+    font-size: 1vw;
+    margin-top: 0.5vw;
+}
+
+.img {
+    margin: 1vw 3vw 0vw 0vw;
+    width: 25%;
+    float: left;
+}
+
+.divider {
+    width: 25vw;
+    margin: 3vw 1vw 2vw -2vw !important;
+}
+
+.teacher-introduction-box {
+    margin: 1vw 3vw 0vw 3vw;
+    text-align: left;
+}
+
+.teacher-introduction-title {
+    margin-top: 0.4vw;
+    color: #42505C;
+    font-weight: lighter;
+    font-size: 0.5vw;
+}
+
+.teacher-introduction {
+    margin-top: 0.4vw;
+    color: #42505C;
+    font-weight: lighter;
+    font-size: 0.5vw;
+}
+
+@media screen and (max-width: 1000px) {
+    .img {
+        margin: 0vw 0vw 0vw 10vw;
+        width: 19%;
+        float: left;
+    }
+    .teacher-name, .teacher-address {
+        margin: 2vw 0vw 0vw 28vw
+    }
+    .divider {
+        width: 55vw;
+        margin: 7vw 1vw 4vw 4vw !important;
+    }
+}

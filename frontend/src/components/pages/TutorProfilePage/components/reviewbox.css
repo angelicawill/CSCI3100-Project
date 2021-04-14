@@ -1,0 +1,73 @@
+body, html {
+    font-family: 'Manrope', sans-serif;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    color: black;
+    font-weight: 400;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.title-box {
+    margin-left: 10vw;
+    height: 15vw;
+    width: 29vw;
+    margin-bottom: -7vw;
+}
+
+.user-name {
+    color: #1E9097;
+    font-weight: bold;
+    font-size: 1vw;
+}
+
+.user-time {
+    color: #C4C4C4;
+    font-weight: lighter;
+    font-size: 0.5vw;
+    margin-top: -1.2vw;
+}
+
+.user-img {
+    margin-right: 2vw;
+    margin-bottom: 2.8vw;
+    width: 13%;
+    float: left;
+}
+
+.divider-review {
+    width: 25vw;
+    margin: 1vw 0vw 1.5vw -1vw !important;
+}
+
+.user-review-box {
+    margin-top: -0.7vw;
+    padding-left: 5vw;
+}
+
+.user-review {
+    margin-top: 0.4vw;
+    color: #42505C;
+    font-weight: lighter;
+    font-size: 0.5vw;
+
+}
+
+.review-present-box {
+    margin: 2vw 3vw 0vw 3vw;
+}
+
+@media screen and (max-width: 1000px) {
+    .review-present-box {
+        margin: 0vw 3vw 0vw 3vw;
+    }
+    .user-img {
+        width: 10%;
+    }
+    .divider-review {
+        width: 65vw;
+    }
+    .user-review-box {
+        padding-left: 8vw;
+    }
+}

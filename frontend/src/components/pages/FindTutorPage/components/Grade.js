@@ -3,16 +3,13 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import {makeStyles} from "@material-ui/core/styles";
+import './FindTutorPageStyle.css';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     container: {
-        width: 400,
-        position: "relative",
-        top: 262,
-        left: 676
+
     },
 }));
 
@@ -26,8 +23,8 @@ export default function RadioButtonsGroup() {
     const classes = useStyles();
 
     return (
+        <div className="grade-wrapper">
         <FormControl component="fieldset">
-            <FormLabel component="legend"></FormLabel>
             <RadioGroup
                 aria-label="grade"
                 name="grade"
@@ -44,5 +41,6 @@ export default function RadioButtonsGroup() {
                 <FormControlLabel value="others" control={<Radio color="default" />} label="Others" />
             </RadioGroup>
         </FormControl>
+        </div>
     );
 }

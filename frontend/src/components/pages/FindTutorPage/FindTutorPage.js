@@ -3,7 +3,7 @@ import TeachingModeSelect from './components/Teachingmodeselect';
 import TimeSelect from './components/Timeselect';
 import Subject from './components/Subject';
 import Grade from './components/Grade';
-import Cost from './components/Costperhour';
+
 import './FindTutorPage.css';
 import { Link } from 'react-router-dom';
 import { Button } from "../../Button";
@@ -37,28 +37,32 @@ function FindTutorPage() {
                             {searchingForm.headline}
                         </h1>
                         <div className="search-box">
-                            <h2 className={searchingForm.lightText ? 'sub-heading subject' : 'sub-heading dark subject'}>
-                                {searchingForm.subject}
-                            </h2>
+                            <div className="subject-box">
+                                <h2 className="subject-text">
+                                    {searchingForm.subject}
+                                </h2>
+                            </div>
                             <><Subject /></>
-                            <h2 className={searchingForm.lightText ? 'sub-heading avaliable-time' : 'sub-heading dark avaliable-time'}>
-                                {searchingForm.time}
-                            </h2>
+                            <div className="time-box">
+                                <h2 className="subject-text">
+                                    {searchingForm.time}
+                                </h2>
+                                <h2 className="subject-text">
+                                    {searchingForm.grade}
+                                </h2>
+                            </div>
                             <><TimeSelect /></>
-                            <h2 className={searchingForm.lightText ? 'sub-heading teaching-mode' : 'sub-heading dark teaching-mode'}>
-                                {searchingForm.mode}
-                            </h2>
+                            <div className="mode-box">
+                                <h2 className="avaliable-time-text">
+                                    {searchingForm.mode}
+                                </h2>
+                                <h2 className="avaliable-time-text">
+                                    {searchingForm.cost}
+                                </h2>
+                            </div>
                             <><TeachingModeSelect /></>
-                            <h2 className={searchingForm.lightText ? 'sub-heading grade' : 'sub-heading dark grade'}>
-                                {searchingForm.grade}
-                            </h2>
-                            <><Grade /></>
-                            <h2 className={searchingForm.lightText ? 'sub-heading cost-per-hour' : 'sub-heading dark cost-per-hour'}>
-                                {searchingForm.cost}
-                            </h2>
-                            <><Cost /></>
-                            <div className="button-wrapper">
-                                <Link to='/find-tutor-result'>
+                            <div className="find-tutor-button-wrapper">
+                                <Link to='/result'>
                                     <Button buttonSize='btn--medium' buttonColor='blue'>
                                         Find Tutor
                                     </Button>
@@ -66,6 +70,7 @@ function FindTutorPage() {
                             </div>
                         </div>
                         <div className='col'>
+
                         </div>
                     </div>
                 </div>
