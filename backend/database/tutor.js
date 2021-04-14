@@ -2,10 +2,10 @@
 The collection of functions allows a tutor to get access to various resource in the database
 You should ensure all input parameters are correct in format and content
 
-functions
+functions: you should looked into the functions definition and the docstring to see what are the parameters
 getTutorData() return the document with a given tutor ID
 setTutorData()
-findStudents(tutorid) return a list of students according to tutor's preference
+findStudents() return a list of students according to tutor's preference
 requestStudent()      to start/ cancel a request to a student
 startCase()           start an empty case
 inviteToCase()        invite student(s) to a case
@@ -185,9 +185,8 @@ const finishCase = async (tutorid, caseid) => {
   }
 }
 
-const getReceivedRequest = async(tutorid) => {
-  
-}
+
+//important: should not use
 
 const dropDB = async () => {
   await Tutor.collection.drop()
@@ -196,10 +195,10 @@ const dropDB = async () => {
 module.exports = {
   getTutorData:getTutorData,
   setTutorData:setTutorData,
+  findStudents:findStudents,
   requestStudent:requestStudent,
   startCase:startCase,
   inviteToCase:inviteToCase,
   finishCase:finishCase,
-  dropDB:dropDB,
-  getReceivedRequest:getReceivedRequest
+  dropDB:dropDB
 }
