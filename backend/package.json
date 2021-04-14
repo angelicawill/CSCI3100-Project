@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "insert-mock-db-data":"node ./database/test/db_init/writeToDb.js",
+    "insert-mock-db-data": "node ./database/test/db_init/writeToDb.js",
     "test-db": "mocha ./database/test/dbCreationTest.js",
     "test-db-all": "mocha ./database/test/*.js",
     "dixon-authentication": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-authentication.json",
@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mongoose": "^5.12.3",
+    "multer": "^1.4.2",
     "nodemailer": "^6.5.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
