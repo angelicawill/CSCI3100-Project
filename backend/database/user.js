@@ -9,6 +9,7 @@ e.g. update student's subject to help should not call this module as this featur
 unique identifiers of a user: username, email, email address
 
 functions:
+loginAttempt()
 addUser()
 getUserid()
 getUserInfo()
@@ -29,6 +30,22 @@ const studentFunctions = require("./student")
 const tutorFunctions = require("./tutor")
 const {getAvailableHours,sortedByObjKey} = require("./helperFunction")
 
+/**
+ * 
+ * @param {Object} query 
+ * @param {String} hashedPassword 
+ * @returns {Boolean} true if login successfully
+ */
+const loginAttempt = async(query,hashedPassword)=> {
+  const uid = await getUserid(query)
+  const foundedUser = await User.findOne({userid:uid})
+  if (foundedUser["password"] === hashedPassword){
+    return true
+  }
+  else{
+    return false
+  }
+}
 /**
  * return the status of successfully add user or not, assume all the field are correct in format/content
  * , but not need to verify existing user or not
@@ -201,6 +218,7 @@ const dropDB = async () => {
 }
 
 module.exports = {
+  loginAttempt:loginAttempt,
   addUser:addUser,
   getUserid:getUserid,
   getUserInfo:getUserInfo,

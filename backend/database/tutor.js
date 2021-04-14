@@ -39,18 +39,38 @@ const setTutorData = async (tutorid,datas) => {
 /**
  * This function correspond to 'search for a student'
  * @param {Number} tutorid 
+ * @param {String} sorted by a valid string: preferredFee,preferredTeachingMode, subjectCount
  * @returns {Object} student with informations
  * @returns{[Object]} list of student with informations, sort by hourly rate
  */
- const findStudents = async (tutorid) => {
+ const findStudents = async (tutorid,sortedBy) => {
   //find a student that match subject and time
-  const {subjectsTeach:tutorSubject,freeTime:tutorTimeSlot} = await Tutor.findOne({tutorid:tutorid}).exec()
-  //find student match subject
-  const matchedStudent = await Student.find({subjectsNeedHelp:{$all:tutorSubject}}).exec()
-  //find student match timeslot
-  matchedStudent.filter((ele)=>{getAvailableHours(tutorTimeSlot,ele.freeTime) > 0})
-  //sort return list of student by descending order of hourly rate
-  return sortedByObjKey(matchedStudent,"tutorRating",False)
+  const tutor = await getTutorData(tutorid)
+  const subj = tutor["subjectsTeach"]
+  const freeTime = tutor["freeTime"]
+  const matched = await Student.aggregate([
+    //return all students such that a tutor can help with him with at least one subject
+    {"$match":{
+      "$expr":{
+        "$gt":[{"$size":{"$setIntersection":[subj,"$subjectsNeedHelp"]}},0
+        ]
+      }
+    }},
+    {"$project":{
+      "_id":0,
+      "grade":1,
+      "studentid":1,
+      "freeTime":1,
+      "preferredFee":1,
+      "preferredTeachingMode":1,
+      "subjects":{"$setIntersection":[subj,"$subjectsNeedHelp"]},
+      "subjectCount":{"$size":{"$setIntersection":[subj,"$subjectsNeedHelp"]}}
+    }}
+  ])
+  //right now still keep tutor with no time match
+  matched.filter((tutor)=>{getAvailableHours(freeTime,tutor.freeTime)>0})
+
+  return sortedByObjKey(matched,sortedBy,true)
 }
 /**
  * 
@@ -61,22 +81,49 @@ const setTutorData = async (tutorid,datas) => {
  */
 const requestStudent = async (studentid, tutorid, isAddedTo) => {
   try{
+    if (await getStudentData(studentid) === null || await getTutorData(tutorid) === null){
+      throw new Error("no valid user found")
+    }
+
     if (isAddedTo){
+      /*
       await Promise.all([
         Student.findOneAndUpdate({studentid:studentid},{$push:{receivedTutorRequest:tutorid}}),
         Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{studentRequest:studentid}})
       ])
+      */
+      resTutor = await Tutor.findOneAndUpdate({tutorid:tutorid,studentRequest:{"$ne":studentid}},
+        {$push:{studentRequest:studentid}}).exec()
+      resStudent = await Student.findOneAndUpdate({studentid:studentid,receivedTutorRequest:{"$ne":tutorid}},
+        {$push:{receivedTutorRequest:tutorid}}).exec()
+
+      if(resStudent === null || resTutor === null){
+        return false
+      }
     }
     else{
+      /*
       await Promise.all([
         Student.findOneAndUpdate({studentid:studentid},{$pull:{receivedTutorRequest:tutorid}}),
         Tutor.findOneAndUpdate({tutorid:tutorid},{$pull:{studentRequest:studentid}})
       ])
+      */
+      resTutor = await Tutor.findOneAndUpdate({tutorid:tutorid,studentRequest:{"$elemMatch":{"$eq":studentid}}},
+      {$pull:{studentRequest:studentid}}).exec()
+      if(!resTutor){ //short circult and stop the next operation
+        return false
+      }
+      resStudent = await Student.findOneAndUpdate({studentid:studentid,receivedTutorRequest:{"$elemMatch":{"$eq":tutorid}}},
+      {$pull:{receivedTutorRequest:tutorid}}).exec()
+    if(!resTutor){
+      //push back again to the tutorid db
+      await Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{studentRequest:studentid}}).exec()
+      return false
+    }
     }
     return true
   }
   catch(err){
-    console.error(err)
     return false
   }
 }

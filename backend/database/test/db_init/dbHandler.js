@@ -22,13 +22,12 @@ const initDB = async (addUserCount) => {
     for (let oneuser of fakeUsers){
       await userFunction.addUser(oneuser)
     }
-
-    console.log("inserted init data")
 }
 
-const initFakeStudentData = (addUserCount)=>{
-  const fakeUsers = fakeData.table.slice(0,addUserCount) 
-  fakeStudent.table.forEach((student)=>{
+const initFakeStudentData =  async (addUserCount)=>{
+  const fakeS = fakeStudent.table.slice(0,addUserCount) 
+  /*
+  fakeStudent.table.forEach( (student)=>{
     //insert to db
     const toInsert = {grade:student.grade,
                       subjectsNeedHelp:student.subjects,
@@ -38,16 +37,24 @@ const initFakeStudentData = (addUserCount)=>{
 
     if(student.studentid <= addUserCount){
       studentFunction.setStudentData(student.studentid,toInsert)
-    }
-    
-    }
+    }  
+    })
+  */
+    for (let student of fakeS){
+      const toInsert = {grade:student.grade,
+        subjectsNeedHelp:student.subjects,
+        freeTime:student.time,
+        preferredFee:student.fee,
+        preferredTeachingMode:student.preferredTeachingMode}
 
-   
-  )
+      await studentFunction.setStudentData(student.studentid,toInsert)
+    }
+  
 }
-const initFakeTutorData = (addUserCount)=>{
-  const fakeUsers = fakeData.table.slice(0,addUserCount) 
-  fakeTutor.table.forEach((tutor)=>{
+const initFakeTutorData =  async (addUserCount)=>{
+  const fakeT = fakeTutor.table.slice(0,addUserCount) 
+  /*
+  fakeTutor.table.forEach( (tutor)=>{
     const toInsert = {subjectsTeach:tutor.subjects,
                       freeTime:tutor.time,
                       isGroupTeachingAllowed:tutor.isGroupTeachingAllowed,
@@ -57,9 +64,18 @@ const initFakeTutorData = (addUserCount)=>{
     if(tutor.tutorid <= addUserCount){
       tutorFunction.setTutorData(tutor.tutorid,toInsert)
     }
-    
+    })
+  */
+  for (let tutor of fakeT){
+  const toInsert = {subjectsTeach:tutor.subjects,
+    freeTime:tutor.time,
+    isGroupTeachingAllowed:tutor.isGroupTeachingAllowed,
+    isMultiCaseAllowed:tutor.isMultiCaseAllowed
 
-  })
+  }
+  await tutorFunction.setTutorData(tutor.tutorid,toInsert)
+ }
+  
 }
 
 /**
@@ -84,6 +100,10 @@ const deleteAllDoc = async ()=>{
   await Tutor.collection.deleteMany({});
 }
 
+const deleteMock = async ()=>{
+  await Student.collection.deleteMany({});
+  await Tutor.collection.deleteMany({});
+}
 
 //internal use only
 const start = async () => {
@@ -101,6 +121,7 @@ module.exports = {
   initDB:initDB,
   dropAll:dropAll,
   deleteAllDoc:deleteAllDoc,
+  deleteMock:deleteMock,
   initFakeStudentData:initFakeStudentData,
   initFakeTutorData:initFakeTutorData,
   startMultipleRequestToTutor:startMultipleRequestToTutor

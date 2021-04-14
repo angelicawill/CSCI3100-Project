@@ -3,6 +3,8 @@ The collection of functions allows a student to get access to various resource i
 You should ensure all input parameters are correct in format and content
 
 functions
+
+
 getStudentData() return the document with a given student ID
 setStudentData()
 findTutors()   return a list of tutors according to stuendts's preference
@@ -51,20 +53,52 @@ const setStudentData = async(studentid,datas) => {
 /** 
  * correspond to action 'search for tutor' and 'recommend tutor'
  * return list of tutors with his/her personal info
- * @param {Number} studentid 
+ * @param {Number} studentid
+ * @param {sortedBy}  keys valid keys are: subjectCount, time, isGroupTeachingAllowed,isMultiCaseAllowed
  * @returns {[Object]} tutors with information, sort by rating
  */
- const findTutors = async (studentid) => {
+ const findTutors = async (studentid,sortedBy) => {
   //assume that the tutor return depends on 2 criteria: subject and time
   // the recommended tutor can also use this function, the recommendation system works only if the student fill in additional info
-  const {subjectsNeedHelp:studentSubject,timeslot:studentTimeSlot} = await Student.findOne({studentid:studentid}).exec()
-  //first find tutor match the subject
-  const matchedTutors = await Tutor.find({subjectsTeach:{$all:studentSubject}}).exec()
-  //then find tutor match the timeslot
-  matchedTutors.filter((ele)=>{getAvailableHours(studentTimeSlot,ele.freeTime) > 0})
-  //sort according to rating, return all result
-  return sortedByObjKey(matchedTutors,"tutorRating",False)
+
+  //should use aggregation pipeline with set intersection, also counting number of subject match
+  const student = await getStudentData(studentid)
+  const subj = student["subjectsNeedHelp"]
+  const freeTime = student["freeTime"]
+  
+  const matched = await Tutor.aggregate([
+    //returns all tutors such that a tutor can help the student with >= 1 subject
+    {"$match":{
+      "$expr":{
+        //finds all tutor with at least 1 match subject
+        "$gt":[{"$size":{"$setIntersection":[subj,"$subjectsTeach"]}},0
+        ]
+      }
+    }},
+    {"$project":{
+      //mostly identcial to the tutor schema
+      "_id":0,
+      "tutorid":1,
+      "freeTime":1,
+      "preferredLocation":1,
+      "isGroupTeachingAllowed":1,
+      "isMultiCaseAllowed":1,
+      "tutorRating":1,
+      //set the return common subject and count it
+      "subjects":{"$setIntersection":[subj,"$subjectsTeach"]},
+      "subjectCount":{"$size":{"$setIntersection":[subj,"$subjectsTeach"]}}
+    }} 
+  ])
+
+  //right now still keep tutor with no time match
+  matched.filter((tutor)=>{getAvailableHours(freeTime,tutor.freeTime)>0})
+  
+ return sortedByObjKey(matched,sortedBy,true)
+
+  
+
 }
+
 /**
  * This function correspond to the action 'request a tutor',
  * it will add/remove the student id in 'receivedStudentRequest' field of a tutor document
@@ -119,6 +153,7 @@ const requestTutor = async(studentid, tutorid, isAddedTo) => {
       if(!resTutor){
         //push back again to the student db
         await Student.findOneAndUpdate({studentid:studentid},{$push:{tutorRequest:tutorid}}).exec()
+        return false
       }
     }
     return true

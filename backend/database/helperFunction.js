@@ -1,3 +1,4 @@
+const u = require("underscore")
 const getAvailableHours = (studentTimeSlot,tutorTimeSlot) => {
   //find overlapping free hours between 2 timeslot
   //example studentTimeSlot = [[12,18],[20,22]]
@@ -10,9 +11,31 @@ const getAvailableHours = (studentTimeSlot,tutorTimeSlot) => {
   return 1
 }
 
+/**
+ * 
+ * @param {[Object]} arr 
+ * @param {String} key valids keys are: subjectCount, time, isGroupTeachingAllowed,isMultiCaseAllowed
+ * @param {Boolean} isAscending arrange in ascending order if true
+ * @returns 
+ */
 const sortedByObjKey = (arr,key,isAscending) => {
   //hardcode, all things are not sorted
-  return arr
+  let newArr
+  if (key !== "preferredFee"){
+    newArr = u.sortBy(arr,key)
+  }
+  else{
+    //take the upper bound of preferred fee to sort
+    arr.map((ele)=>{
+      ele["preferredFee"] = ele["preferredFee"][1]
+    })
+    newArr = u.sortBy(arr,key)
+  }
+  if(! isAscending){
+    newArr.reverse()
+  }
+  //console.log(newArr)
+  return newArr
 }
 
 module.exports = {getAvailableHours,sortedByObjKey}

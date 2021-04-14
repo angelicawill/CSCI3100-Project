@@ -19,7 +19,8 @@ const tutor = require("../tutor")
 
 const fakeData = require("./test_data/fakeuser_new.json")
 
-const {initDB,dropAll, deleteAllDoc,startMultipleRequestToTutor} = require("./db_init/dbHandler");
+const {initDB,dropAll, deleteAllDoc,deleteMock,startMultipleRequestToTutor,
+  initFakeStudentData,initFakeTutorData} = require("./db_init/dbHandler");
 
 describe("Testing student db CRUD",()=>{
   before("connnect to db and add test data ",async ()=>{
@@ -72,7 +73,18 @@ describe("Testing student db CRUD",()=>{
   })
 
   describe("test findTutors()",async()=>{
-
+    beforeEach("add fake tutor/student data",async ()=>{
+      await initDB(30)
+      await initFakeStudentData(30)
+      await initFakeTutorData(30)
+    })
+    afterEach("remove fake tutor/student data",async()=>{
+      await deleteAllDoc()
+    })
+    it("should return tutor that matched subject",async()=>{
+      //8 tutors matched in test case
+      assert.equal((await student.findTutors(1,"subjectCount")).length,8)
+    })
   })
 
   describe("test requestTutor()",()=>{
