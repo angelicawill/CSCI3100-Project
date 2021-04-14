@@ -39,23 +39,25 @@ exports.__esModule = true;
 var LocalStrategy = require("passport-local").Strategy;
 var globalObject = global;
 var getUserBasicInfo = require("../database/user").getUserBasicInfo;
+var hashPassword = require("../hashPassword").hashPassword;
 // const { users, chats, cases } = globalObject.dixontest;
 function initializePassport(passport) {
     var _this = this;
     passport.use(new LocalStrategy({
-        usernameField: 'email'
-    }, function (email, password, done) { return __awaiter(_this, void 0, void 0, function () {
+        usernameField: "username"
+    }, function (username, password, done) { return __awaiter(_this, void 0, void 0, function () {
         var user;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, getUserBasicInfo({ email: email })];
+                case 0: return [4 /*yield*/, getUserBasicInfo({ username: username })];
                 case 1:
                     user = _a.sent();
                     if (user === null) {
                         console.log("no user with that username");
                         return [2 /*return*/, done(null, false, { message: "no user with that username" })];
                     }
-                    if (password === user.password) {
+                    console.log(user);
+                    if (hashPassword(password) === user.password) {
                         return [2 /*return*/, done(null, user)];
                     }
                     else {

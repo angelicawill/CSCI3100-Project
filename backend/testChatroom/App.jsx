@@ -14,6 +14,18 @@ function App() {
             password: "student",
           }}
         />
+        <RequestResponse
+          url="/registration/register"
+          method="POST"
+          textAreaValue={{
+            realname: "realname",
+            username: "username",
+            password: "password",
+            phonenumber: 123456,
+            email: "email",
+            role: "student"
+          }}
+        />
         <Chatroom />
         <h1>Case</h1>
         <RequestResponse
