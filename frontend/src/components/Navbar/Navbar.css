@@ -1,5 +1,3 @@
-
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -16,7 +14,7 @@
   .header__icon {
     object-fit: contain;
     height: 45px;
-    margin-left: 7vw;
+    margin-left: 3vw;
     fill: #000;
   }
   .header__icon .cls-2{

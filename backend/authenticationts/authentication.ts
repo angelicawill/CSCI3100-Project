@@ -1,35 +1,37 @@
 const LocalStrategy = require("passport-local").Strategy;
 const globalObject: any = global;
 const { getUserBasicInfo } = require("../database/user");
+const { hashPassword } = require("../hashPassword");
 
 // const { users, chats, cases } = globalObject.dixontest;
 
 function initializePassport(passport) {
-  passport.use(new LocalStrategy({
-    usernameField: 'email'
-  }, async (email, password, done)=> {
-    const user = await getUserBasicInfo({email: email});
-    if (user === null) {
-      console.log("no user with that username");
-      return done(null, false, { message: "no user with that username" });
-    }
-
-    if (password === user.password) {
-      return done(null, user);
-    } else {
-      return done(null, false, { message: "password incorrect" });
-    }
-  }));
+  passport.use(
+    new LocalStrategy({
+      usernameField: "username",
+    }, async (username, password, done) => {
+      const user = await getUserBasicInfo({ username: username });
+      if (user === null) {
+        console.log("no user with that username");
+        return done(null, false, { message: "no user with that username" });
+      }
+      console.log(user)
+      if (hashPassword(password) === user.password) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: "password incorrect" });
+      }
+    }),
+  );
 
   passport.serializeUser((user, done) => {
     done(null, user.username);
   });
 
   passport.deserializeUser(async (username, done) => {
-    let user = await getUserBasicInfo({username: username})
+    let user = await getUserBasicInfo({ username: username });
     return done(null, user);
   });
-
 
   // Access user from database using email
   // function getUserByEmail(email) {
