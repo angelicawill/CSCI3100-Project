@@ -83,23 +83,29 @@ const useStyles = makeStyles((theme) => ({
 /* For select button */
 
 
-export default function SignUp() {
+export default function LogIn(props) {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
-  });
-
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
+  let state = {
+    username: "",
+    password: ""
   };
 
+  const submit = () => {
+    props.LogIn(state.username, state.password);
+  };
+  
+  //   fetch('http://localhost:5000/login' , {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-type': 'application/json'
+  //     },
+  //     body: JSON.stringify(this.state)
+  //   })
+  //   .then((result) => result.json())
+  //   .then((info) => { console.log(info); })
+  // };
+  
   return (
     <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
@@ -110,7 +116,18 @@ export default function SignUp() {
             Welcome back!
         </h3>  
         <p>Please fill in your login details to proceed</p>        
-        <form className={classes.form} noValidate>
+        <form className={classes.form} 
+        onSubmit={(event) => {
+          event.preventDefault();
+          fetch('/login', {
+            method: "POST",
+            body: new FormData(event.target)
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data)
+            })
+        }} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -158,7 +175,7 @@ export default function SignUp() {
             </Button>
           
           <Grid id='redirect' container>
-              <a href="/login">
+              <a href="/register">
                 Don’t have an account yet? Register
               </a>
           </Grid>
