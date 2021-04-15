@@ -2,7 +2,7 @@
 // import util from 'util'
 exports.__esModule = true;
 exports["default"] = (function (_a) {
-    var socket = _a.socket, currentUser = _a.currentUser, usernameSocket = _a.usernameSocket, io = _a.io;
+    var socket = _a.socket, currentUser = _a.currentUser, usernameSocket = _a.usernameSocket, io = _a.io, rooms = _a.rooms;
     var roomname = "send message";
     socket.on(roomname, function (_a) {
         var roomid = _a.roomid, //
@@ -10,6 +10,8 @@ exports["default"] = (function (_a) {
         var returnObject = {
             roomid: null,
             value: null,
+            sender: null,
+            allContents: [],
             success: false,
             serverError: true
         };
@@ -77,8 +79,12 @@ exports["default"] = (function (_a) {
             //   duser.roomids.unshift(duser.roomids.splice(roomIdIndex, 1)[0]);
             // });
             // returnObject.room = room;
+            var room = rooms.find(function (room) { return room.roomid == roomid; });
+            room.contents.push({ sender: currentUser.username, value: value });
             returnObject.roomid = roomid;
             returnObject.value = value;
+            returnObject.sender = currentUser.username;
+            returnObject.allContents = room.contents;
             returnObject.success = true;
             // }
             // })();

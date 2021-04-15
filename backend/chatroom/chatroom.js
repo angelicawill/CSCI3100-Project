@@ -1,7 +1,4 @@
 "use strict";
-// import util from 'util'
-// const passport = require('passport');
-// const globalObject: any = global;
 exports.__esModule = true;
 // Used by client:
 // socket = io('/chatroom');
@@ -28,6 +25,7 @@ exports.__esModule = true;
 // });
 // return {
 //     roomid: number // (return the room id which the message is sent to)
+//     sender: string
 //     value: string // (return the message that have been sent)
 //     success: boolean,
 //     serverError: boolean, 
@@ -60,7 +58,14 @@ function initializeChatRoom(_a) {
     //         next(err);
     //     }
     // });
+    var allUserRoomId = -1;
     var usernameSocket = [];
+    var rooms = [
+        {
+            roomid: allUserRoomId,
+            contents: []
+        }
+    ];
     io.of(namespace).on('connection', function (socket) {
         var currentUser = socket.request.user;
         console.log('client connected');
@@ -69,13 +74,15 @@ function initializeChatRoom(_a) {
                 username: currentUser.username,
                 userSocket: socket
             });
+            socket.join(allUserRoomId);
         }
         console.log(usernameSocket);
         var reference = {
             socket: socket,
             currentUser: currentUser,
             usernameSocket: usernameSocket,
-            io: io
+            io: io,
+            rooms: rooms
         };
         // require('./addToRoom').default(reference);
         require('./creatRoom')["default"](reference);
@@ -93,7 +100,7 @@ function initializeChatRoom(_a) {
 // const session = require('express-session');
 // const sessionMiddleware = session({ secret: "changeit", resave: false, saveUninitialized: false });
 // const io = socketio(server);
-// initializeChatRoom({io, sessionMiddleware, app});
+// initializeChatRoom({io, sessionMiddleware, passport});
 // server.listen(port, () => {
 //     console.log("server running on port: " + port);
 // });

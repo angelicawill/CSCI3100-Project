@@ -2,7 +2,7 @@
 // import util from 'util'
 exports.__esModule = true;
 exports["default"] = (function (_a) {
-    var socket = _a.socket, currentUser = _a.currentUser, usernameSocket = _a.usernameSocket, io = _a.io;
+    var socket = _a.socket, currentUser = _a.currentUser, usernameSocket = _a.usernameSocket, io = _a.io, rooms = _a.rooms;
     var roomname = "create room";
     socket.on(roomname, function (_a) {
         var username = _a.username;
@@ -65,6 +65,10 @@ exports["default"] = (function (_a) {
             var user = usernameSocket.find(function (obj) { return obj.username === username; });
             console.log(user);
             user === null || user === void 0 ? void 0 : user.userSocket.join(newRoomId);
+            rooms.push({
+                roomid: newRoomId,
+                contents: []
+            });
             //     users.find((user => user.userid === id)).roomids.unshift(newRoom.id);
             // })
             returnObject.roomid = newRoomId;
