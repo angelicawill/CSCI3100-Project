@@ -1,0 +1,36 @@
+.form {
+  flex : 1;
+    display: flex;
+    margin: 15px;
+    gap: 20px 15px;
+}
+
+.input {
+  flex : 1;
+    outline-width: 0;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
+    box-shadow: 0px 12.8781px 25.7561px rgba(41, 41, 42, 0.07);
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+.sendButton {
+  background-color: #2EC5CE;
+  color: #ffffff;
+  border: 1px solid #2EC5CE;
+  padding: 8px 20px;
+  font-size: 12px;
+  border-radius: 42px;
+  margin-left: auto;
+  outline: none;
+  cursor: pointer;
+}
+
+button :hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}

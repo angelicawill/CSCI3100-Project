@@ -8,8 +8,8 @@ function SidebarChat(){
     return <div className="sidebarChat">
         <Avatar />
         <div className="sidebarChat__info">
-            <h2>Tutor name</h2>
-            <p>This is the last message</p>
+            <h2>Jessica</h2>
+            <p>...</p>
         </div>
     </div>;
 }
