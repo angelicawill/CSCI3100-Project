@@ -123,7 +123,17 @@ export default function SignUp(props) {
             Register
         </h3>  
         <p>Create a new student / tutor account for free</p>        
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={(event) => {
+          event.preventDefault();
+          fetch('registration/register', {
+            method: "POST",
+            body: new FormData(event.target)
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data)
+            })
+        }} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormControl 
@@ -225,8 +235,8 @@ export default function SignUp(props) {
             <Button
               id="id1" //for backend
               type="submit" //for backend
-              onClick={submit}
-              onSubmit={submit}
+              // onClick={submit}
+              // onSubmit={submit}
               fullWidth
               variant="contained"
               label="sign-up-button"
@@ -246,11 +256,7 @@ export default function SignUp(props) {
               </a>
           </Grid>
         </form>
-      </div>    
-      
-
-      
-      
+      </div>       
       
     </Container>
 
