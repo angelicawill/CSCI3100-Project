@@ -11,6 +11,7 @@ exports["default"] = (function (_a) {
             roomid: null,
             value: null,
             sender: null,
+            time: null,
             allContents: [],
             success: false,
             serverError: true
@@ -80,11 +81,12 @@ exports["default"] = (function (_a) {
             // });
             // returnObject.room = room;
             var room = rooms.find(function (room) { return room.roomid == roomid; });
-            room.contents.push({ sender: currentUser.username, value: value });
+            returnObject.time = Date.now();
             returnObject.roomid = roomid;
             returnObject.value = value;
             returnObject.sender = currentUser.username;
             returnObject.allContents = room.contents;
+            room.contents.push({ sender: returnObject.sender, value: returnObject.value, time: returnObject.time });
             returnObject.success = true;
             // }
             // })();
