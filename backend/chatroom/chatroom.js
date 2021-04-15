@@ -87,6 +87,7 @@ function initializeChatRoom(_a) {
         // require('./addToRoom').default(reference);
         require('./creatRoom')["default"](reference);
         require('./sendMessage')["default"](reference);
+        require('./getMessage')["default"](reference);
         // require('./getRoom').default(reference);
         // require('./readMessage').default(reference);
         socket.on("disconnect", function (reason) {
