@@ -4,14 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "insert-mock-db-data": "node ./database/test/db_init/writeToDb.js",
     "test-db": "mocha ./database/test/dbCreationTest.js",
-    "test-db-all": "mocha ./database/test/*.js",
-    "dixon-authentication": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-authentication.json",
-    "dixon-chatroom": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-chatroom.json",
-    "dixon-case": "npx tsc -p ./testChatroom/tsconfig/tsconfig.dixon-case.json"
+    "test-db-all": "mocha ./database/test/*.js"
   },
   "keywords": [],
   "author": "",

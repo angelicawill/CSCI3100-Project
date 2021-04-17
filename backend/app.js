@@ -43,16 +43,16 @@ mongoose.set('useCreateIndex', true);
 mongoose.connection.once('open', () => {
   console.log("connected to mongodb");
   // addUser({
-    //   realname: "student",
-    //   username: "student",
+  //   realname: "student",
+  //   username: "student",
   //   password: "student",
   //   phonenumber: 1,
   //   email: "student",
   //   role: "student"
   // })
   // addUser({
-    //   realname: "tutor",
-    //   username: "tutor",
+  //   realname: "tutor",
+  //   username: "tutor",
   //   password: "tutor",
   //   phonenumber: 2,
   //   email: "tutor",
@@ -140,21 +140,21 @@ app.post('/login', function (req, res, next) {
     err: null,
     user: null
   }
-  console.log(req.body);
+
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       returnObject.err = err;
-      return res.send(returnObject);
+      return res.status(500).send(returnObject);
     }
-    if (!user) { return res.send(returnObject); }
+    if (!user) { return res.status(401).send(returnObject); }
     req.logIn(user, function (err) {
       if (err) {
         returnObject.err = err;
-        return res.send(returnObject);
+        return res.status(500).send(returnObject);
       }
-      console.log('send');
+
       returnObject.user = user;
-      res.send(returnObject);
+      res.status(200).send(returnObject);
     });
   })(req, res, next);
 })
@@ -162,7 +162,7 @@ app.use('/registration', require('./registration/cloneRegistration'));
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 // app.use('/auth', authRouter);
-app.use('/case', require('./case/case')["default"]);
+app.use('/case', require('./case/case'));
 
 
 /* Handle error */
