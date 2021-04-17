@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const session = require('express-session');
 const flash = require('connect-flash');
-const cors = require('cors');
 
 const hbs = require('hbs');
 
@@ -104,10 +103,6 @@ app.set('view engine', 'hbs');
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 /* app use middleware */
-app.use(cors({
-  // allowed origin
-  // origin: ['http://localhost:3000/', 'http://127.0.0.1:3000/', "*"],
-}))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(multer().none())
