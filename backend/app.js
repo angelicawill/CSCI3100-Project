@@ -1,24 +1,30 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+require('dotenv').config();
 
-const MongoClient = require('mongodb').MongoClient;
-const { ObjectId } = require('mongodb');
-const mongoose = require('mongoose');
-const passport = require('passport');
+const path = require('path');
+
+const express = require('express');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 const multer = require('multer');
-const hbs = require('hbs');
-const Strategy = require('passport-local').Strategy;
 const session = require('express-session');
 const flash = require('connect-flash');
+const cors = require('cors');
+
+const hbs = require('hbs');
+
+const createError = require('http-errors');
+const passport = require('passport');
 const authUtils = require('./hashPassword');
 const socketio = require('socket.io');
-const initializeChatRoom = require('./chatroom/chatroom').initializeChatRoom;
+
+// const { ObjectId, MongoClient } = require('mongodb');
+const { Strategy } = require('passport-local');
+const mongoose = require('mongoose');
+
+const initializeChatRoom = require('./chatroom/chatroom');
 const { getUserBasicInfo } = require('./database/user');
 
-var app = express();
+const app = express();
 const server = require("http").createServer(app);
 const port = process.env.PORT || 5000;
 const sessionMiddleware = session({
@@ -31,10 +37,6 @@ const sessionMiddleware = session({
 // var usersRouter = require('./routes/users');
 // const authRouter = require('./routes/auth');
 
-app.all('*', (req, res, next) => {
-  console.log('getted request');
-  next();
-})
 /* Connect to Database */
 mongoose.connect("mongodb://localhost:27017/FindTutorDB", { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.set('useNewUrlParser', true);
@@ -59,36 +61,31 @@ mongoose.connection.once('open', () => {
   //   role: "tutor"
   // })
 })
-MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }, (err, client) => {
-  if (err) {
-    throw err;
-  }
-  //connected to user database
-  // const db = client.db('account-app');
-  const db = client.db('FindTutorDB')
-  const users = db.collection('users');
-  app.locals.users = users;
-});
+// MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }, (err, client) => {
+//   if (err) {
+//     throw err;
+//   }
+//   //connected to user database
+//   // const db = client.db('account-app');
+//   const db = client.db('FindTutorDB')
+//   const users = db.collection('users');
+//   app.locals.users = users;
+// });
 
 /* Configure passport */
 passport.use(new Strategy(
-  (username, password, done) => {
-    app.locals.users.findOne({ username }, (err, user) => {
-      console.log(user);
-      if (err) {
-        return done(err);
-      }
+  async (username, password, done) => {
+    let user = await getUserBasicInfo({ username })
 
-      if (!user) {
-        return done(null, false);
-      }
+    if (!user) {
+      return done(null, false);
+    }
 
-      if (user.password != authUtils.hashPassword(password)) {
-        return done(null, false);
-      }
+    if (user.password != authUtils.hashPassword(password)) {
+      return done(null, false);
+    }
 
-      return done(null, user);
-    });
+    return done(null, user);
   }
 ));
 
@@ -96,45 +93,42 @@ passport.serializeUser((user, done) => {
   done(null, user._id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  // done(null, { id });
-  done(null, await app.locals.users.findOne({ _id: ObjectId(id) }))
+passport.deserializeUser(async (_id, done) => {
+  done(null, await getUserBasicInfo({ _id: _id }))
 });
 
+
+/* set views and hbs */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
+/* app use middleware */
+app.use(cors({
+  // allowed origin
+  // origin: ['http://localhost:3000/', 'http://127.0.0.1:3000/', "*"],
+}))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(multer().none())
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-/* Configure session, passport, flash */
-// app.use(session({
-//   secret: 'session secret',
-//   resave: false,
-//   saveUninitialized: false,
-// }));
 app.use(sessionMiddleware);
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 
-// Initialize socketIo
+/* Initialize socketIo */
 const io = socketio(server);
-initializeChatRoom({ io, sessionMiddleware, passport });
+initializeChatRoom(io, sessionMiddleware, passport);
 
-app.use((req, res, next) => {
-  res.locals.loggedIn = req.isAuthenticated();
-  next();
-});
+app.use(express.static(path.join(__dirname, 'testChatroom')))
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'testChatroom', 'index.html'))
+})
 
-/* Add new routes */
+/* Routes for action before log in */
 app.post('/login', function (req, res, next) {
   let returnObject = {
     err: null,
@@ -159,9 +153,30 @@ app.post('/login', function (req, res, next) {
   })(req, res, next);
 })
 app.use('/registration', require('./registration/cloneRegistration'));
+
+/* Cjeck have logged in */
+app.use((req, res, next) => {
+  console.log('request body');
+  console.log(req.body);
+  console.log(req.isAuthenticated())
+  if (!req.isAuthenticated()) {
+    return res.status(401).send({
+      msg: "haven't login"
+    })
+  }
+
+  res.locals.loggedIn = req.isAuthenticated();
+  next();
+});
+
+/* Add new routes */
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 // app.use('/auth', authRouter);
+app.use((req, res, next) => {
+  console.log('passed log in');
+  next();
+})
 app.use('/case', require('./case/case'));
 
 

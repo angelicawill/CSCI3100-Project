@@ -6,6 +6,7 @@
 //     console.log(err.message); // not authorized
 //     console.log(err.data); // { content: "not authorized" }
 // });
+
 // /***********   create room   ***********/
 // used on client: e.g. 
 // socket.emit('create room', {
@@ -16,6 +17,7 @@
 //     success: boolean,
 //     serverError: boolean
 // };
+
 // /***********   send message   ***********/
 // used on client: e.g. 
 // socket.emit('send message', {
@@ -35,6 +37,7 @@
 //     success: boolean
 //     serverError: boolean
 // }
+
 // /***********   get message   ***********/
 // used on client: e.g. 
 // socket.emit('get message', {
@@ -51,7 +54,13 @@
 //     serverError: boolean
 // }
 
-function initializeChatRoom({io, sessionMiddleware, passport}) {
+
+/**
+ * @param {Server} io
+ * @param {session} sessionMiddleware
+ * @param {PassportStatic} passport 
+ */
+function initializeChatRoom(io, sessionMiddleware, passport) {
     let namespace = "/chatroom";
     const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
     io.of(namespace).use(wrap(sessionMiddleware));
@@ -81,6 +90,8 @@ function initializeChatRoom({io, sessionMiddleware, passport}) {
 
     //     }
     // });
+
+    // Initiate variables for chatroom
     let allUserRoomId = -1;
     let usernameSocket = [];
     let rooms = [
@@ -90,10 +101,11 @@ function initializeChatRoom({io, sessionMiddleware, passport}) {
         }
     ];
 
+    // Listen for connection
     io.of(namespace).on('connection', (socket) => {
         let currentUser = socket.request.user;
 
-        console.log('client connected');
+        // Add user to usernameSocket
         if (!usernameSocket.find((a) => a.username == currentUser.username)) {
             usernameSocket.push({
                 username: currentUser.username,
@@ -106,30 +118,26 @@ function initializeChatRoom({io, sessionMiddleware, passport}) {
             socket,
             currentUser,
             usernameSocket,
-            io,
             rooms
         }
 
+        // Listen for different events
         require('./creatRoom')(reference);
         require('./sendMessage')(reference);
         require('./getMessage')(reference);
         
+        // Listen for disconnect
         socket.on("disconnect", (reason) => {
             console.log("client disconnected from chatroom");
             usernameSocket.splice(usernameSocket.findIndex((idsocket) => idsocket.username === currentUser.username), 1);
         });
     })
-
 }
 
 // Initialize:
-// const session = require('express-session');
-// const sessionMiddleware = session({ secret: "changeit", resave: false, saveUninitialized: false });
+// const server = require("http").createServer(require(express)());
+// const sessionMiddleware = require('express-session')();
 // const io = socketio(server);
-// initializeChatRoom({io, sessionMiddleware, passport});
-// server.listen(port, () => {
-//     console.log("server running on port: " + port);
-// });
-module.exports = {
-    initializeChatRoom
-}
+// initializeChatRoom(io, sessionMiddleware, passport);
+// server.listen(port);
+module.exports = initializeChatRoom

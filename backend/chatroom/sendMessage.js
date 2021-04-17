@@ -1,8 +1,6 @@
 module.exports = ({
   socket,
   currentUser,
-  usernameSocket,
-  io,
   rooms,
 }) => {
   let eventName = "send message";

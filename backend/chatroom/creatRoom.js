@@ -1,10 +1,6 @@
-// import util from 'util'
-
 module.exports = ({
   socket,
-  currentUser,
   usernameSocket,
-  io,
   rooms
 }) => {
   let eventName = "create room";
