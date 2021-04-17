@@ -123,11 +123,6 @@ app.use(passport.session());
 const io = socketio(server);
 initializeChatRoom(io, sessionMiddleware, passport);
 
-app.use(express.static(path.join(__dirname, 'testChatroom')))
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'testChatroom', 'index.html'))
-})
-
 /* Routes for action before log in */
 app.post('/login', function (req, res, next) {
   let returnObject = {
