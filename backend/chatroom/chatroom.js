@@ -79,17 +79,17 @@ function initializeChatRoom(io, sessionMiddleware, passport) {
         }
     });
 
-    // // Check user have verified
-    // io.of(namespace).use((socket, next) => {
-    //     if (socket.request.user.isVerified) {
-    //         next();
-    //     } else {
-    //         const err: any = new Error("not verified");
-    //         err.data = { content: "not verified" };
-    //         next(err);
+    // Check user have verified
+    io.of(namespace).use((socket, next) => {
+        if (socket.request.user.isVerified) {
+            next();
+        } else {
+            const err = new Error("not verified");
+            err.data = { content: "not verified" };
+            next(err);
 
-    //     }
-    // });
+        }
+    });
 
     // Initiate variables for chatroom
     let allUserRoomId = -1;
