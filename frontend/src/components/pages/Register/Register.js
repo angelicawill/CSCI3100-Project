@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {ReactComponent as Logo} from './../../logo.svg';
+import { ReactComponent as Logo } from './../../logo.svg';
 import './Register.css';
 import './../../../App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -15,7 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { ThemeProvider } from '@material-ui/styles';
 
-const font = "'Manrope', sans-serif"; 
+const font = "'Manrope', sans-serif";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -26,7 +26,7 @@ const theme = createMuiTheme({
       main: '#FE9A22',
     },
   },
-  
+
   typography: {
     fontFamily: font,
   },
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     height: 48,
     padding: '0 30px',
-  
+
   },
 
   paper: {
@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp(props) {
   const classes = useStyles();
 
-  
+
   let state = {
     // role: "",
     realname: "",
@@ -115,123 +115,125 @@ export default function SignUp(props) {
 
   return (
     <ThemeProvider theme={theme}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div id='register-function' className={classes.paper}>
-        <a href='/'><Logo width='20vw' hasMargin/></a>
-        <h3>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div id='register-function' className={classes.paper}>
+          <a href='/'><Logo width='20vw' hasMargin /></a>
+          <h3>
             Register
-        </h3>  
-        <p>Create a new student / tutor account for free</p>        
-        <form className={classes.form} onSubmit={(event) => {
-          event.preventDefault();
-          fetch('registration/register', {
-            method: "POST",
-            body: new FormData(event.target)
-          })
-            .then(res => res.json())
-            .then(data => {
-              console.log(data)
+        </h3>
+          <p>Create a new student / tutor account for free</p>
+          <form className={classes.form} onSubmit={(event) => {
+            event.preventDefault();
+            fetch('registration/register', {
+              method: "POST",
+              body: new FormData(event.target)
             })
-        }} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <FormControl 
-                required
-                fullWidth 
-                variant="outlined" 
-                className={classes.formControl}
-              >
-                <InputLabel htmlFor="select-role">I'm a...</InputLabel>
-                <Select
-                  native
-                  value={state.role}
-                  onChange={onChange}
-                  label="I'm a..."
-                  inputProps={{
-                    name: 'role',
-                  }}
+              .then(res => res.json())
+              .then(data => {
+                if (data.success) {
+                  window.location.assign("/registersuccess");
+                }
+              })
+          }} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormControl
+                  required
+                  fullWidth
+                  variant="outlined"
+                  className={classes.formControl}
                 >
-                  <option value={"student"}>Student</option>
-                  <option value={"tutor"}>Tutor</option>
-                </Select>
-              </FormControl>
+                  <InputLabel htmlFor="select-role">I'm a...</InputLabel>
+                  <Select
+                    native
+                    value={state.role}
+                    onChange={onChange}
+                    label="I'm a..."
+                    inputProps={{
+                      name: 'role',
+                    }}
+                  >
+                    <option value={"student"}>Student</option>
+                    <option value={"tutor"}>Tutor</option>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  /* backend implementation */
+                  onChange={event => (state.realname = event.target.value)}
+                  type="name"
+                  name="realname" //identifier
+                  id="name"
+                  /* styling */
+                  label="Name"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  /* backend implementation */
+                  onChange={event => (state.phonenumber = event.target.value)}
+                  type="tel"
+                  name="phonenumber" //identifier
+                  id="phonenumber"
+                  /* styling */
+                  label="Phone Number"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  /* backend implementation */
+                  type="email"
+                  name="email" //identifier
+                  id="email"
+                  /* styling */
+                  label="Email"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  /* backend implementation */
+                  onChange={event => (state.username = event.target.value)}
+                  type="text"
+                  name="username" //identifier
+                  id="username"
+                  /* styling */
+                  label="Username"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  /* backend implementation */
+                  onChange={event => (state.password = event.target.value)}
+                  type="password"
+                  name="password" //identifier
+                  id="password"
+                  /* styling */
+                  label="Password"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  autoFocus
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-              /* backend implementation */
-                onChange={event => (state.realname = event.target.value)}
-                type="name"
-                name="realname" //identifier
-                id="name"                
-                /* styling */
-                label="Name"
-                variant="outlined"                
-                required
-                fullWidth           
-                autoFocus
-              />
-            </Grid>            
-            <Grid item xs={12} sm={6}>
-              <TextField
-              /* backend implementation */
-              onChange={event => (state.phonenumber = event.target.value)}
-                type="tel"
-                name="phonenumber" //identifier
-                id="phonenumber"                
-                /* styling */
-                label="Phone Number"
-                variant="outlined"                
-                required
-                fullWidth           
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              /* backend implementation */
-                type="email"
-                name="email" //identifier
-                id="email"                
-                /* styling */
-                label="Email"
-                variant="outlined"                
-                required
-                fullWidth           
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              /* backend implementation */
-                onChange={event => (state.username = event.target.value)}
-                type="text"
-                name="username" //identifier
-                id="username"                
-                /* styling */
-                label="Username"
-                variant="outlined"                
-                required
-                fullWidth           
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              /* backend implementation */
-                onChange={event => (state.password = event.target.value)}
-                type="password"
-                name="password" //identifier
-                id="password"                
-                /* styling */
-                label="Password"
-                variant="outlined"                
-                required
-                fullWidth           
-                autoFocus
-              />
-            </Grid>            
-          </Grid>
             <Button
               id="id1" //for backend
               type="submit" //for backend
@@ -249,22 +251,22 @@ export default function SignUp(props) {
             >
               Sign Up
             </Button>
-          
-          <Grid id='redirect' container>
+
+            <Grid id='redirect' container>
               <a href="/login">
                 Already have an account? Log in
               </a>
-          </Grid>
-        </form>
-      </div>       
-      
-    </Container>
+            </Grid>
+          </form>
+        </div>
 
-    <div id='footer-register'>        
-          <p>
-              &copy; Group C7, CSCI3100 Spring 2021
-          </p>        
-    </div>
+      </Container>
+
+      <div id='footer-register'>
+        <p>
+          &copy; Group C7, CSCI3100 Spring 2021
+          </p>
+      </div>
     </ThemeProvider>
   );
 }
