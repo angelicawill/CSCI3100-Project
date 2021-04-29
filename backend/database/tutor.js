@@ -18,10 +18,17 @@ const Student = require("./model/student.model")
 const Tutor = require("./model/tutor.model")
 
 const {getAvailableHours,sortedByObjKey} = require("./helperFunction")
+const {getStudentData,getTutorData} = require("./userGetter")
 
+/*
 const getTutorData = async (tutorid) => {
-  return await Tutor.findOne({tutorid:tutorid}).exec()
+  const x = await Tutor.findOne({tutorid:tutorid}).exec()
+  if(x == null){
+    throw new Error("Tutor doesn't exist")
+  }
+  return x
 }
+*/
 
 const setTutorData = async (tutorid,datas) => {
   const setOfKey = ["subjectsTeach","freeTime","preferredLocation","isGroupTeachingAllowed","isMultiCaseAllowed"]
@@ -66,6 +73,7 @@ const setTutorData = async (tutorid,datas) => {
       "subjects":{"$setIntersection":[subj,"$subjectsNeedHelp"]},
       "subjectCount":{"$size":{"$setIntersection":[subj,"$subjectsNeedHelp"]}}
     }}
+    
   ])
   //right now still keep tutor with no time match
   matched.filter((tutor)=>{getAvailableHours(freeTime,tutor.freeTime)>0})
@@ -79,19 +87,12 @@ const setTutorData = async (tutorid,datas) => {
  * @param {Boolean} isAddedTo True: make a reuqest, False: cancel a request
  * @returns {Boolean} success request or not
  */
-const requestStudent = async (studentid, tutorid, isAddedTo) => {
+const requestStudent = async (tutorid, studentid, isAddedTo) => {
   try{
-    if (await getStudentData(studentid) === null || await getTutorData(tutorid) === null){
-      throw new Error("no valid user found")
-    }
+    await getStudentData(studentid)
+    await getTutorData(tutorid)
 
     if (isAddedTo){
-      /*
-      await Promise.all([
-        Student.findOneAndUpdate({studentid:studentid},{$push:{receivedTutorRequest:tutorid}}),
-        Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{studentRequest:studentid}})
-      ])
-      */
       resTutor = await Tutor.findOneAndUpdate({tutorid:tutorid,studentRequest:{"$ne":studentid}},
         {$push:{studentRequest:studentid}}).exec()
       resStudent = await Student.findOneAndUpdate({studentid:studentid,receivedTutorRequest:{"$ne":tutorid}},
@@ -102,12 +103,6 @@ const requestStudent = async (studentid, tutorid, isAddedTo) => {
       }
     }
     else{
-      /*
-      await Promise.all([
-        Student.findOneAndUpdate({studentid:studentid},{$pull:{receivedTutorRequest:tutorid}}),
-        Tutor.findOneAndUpdate({tutorid:tutorid},{$pull:{studentRequest:studentid}})
-      ])
-      */
       resTutor = await Tutor.findOneAndUpdate({tutorid:tutorid,studentRequest:{"$elemMatch":{"$eq":studentid}}},
       {$pull:{studentRequest:studentid}}).exec()
       if(!resTutor){ //short circult and stop the next operation
@@ -115,11 +110,11 @@ const requestStudent = async (studentid, tutorid, isAddedTo) => {
       }
       resStudent = await Student.findOneAndUpdate({studentid:studentid,receivedTutorRequest:{"$elemMatch":{"$eq":tutorid}}},
       {$pull:{receivedTutorRequest:tutorid}}).exec()
-    if(!resTutor){
-      //push back again to the tutorid db
-      await Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{studentRequest:studentid}}).exec()
-      return false
-    }
+      if(!resTutor){
+        //push back again to the tutorid db
+        await Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{studentRequest:studentid}}).exec()
+        return false
+      }
     }
     return true
   }
@@ -131,22 +126,18 @@ const requestStudent = async (studentid, tutorid, isAddedTo) => {
 /**
  * Corresponded to 'start a case', it will add a 'case' document with only tutor(s)
  * @param {[Number]} tutorid 
+ * @returns {Number} caseid
  */
 const startCase = async (tutorid) => {
   // add a document in Case schema, with the tutorid
   const count = await Case.countDocuments()
   const newCase = new Case({caseid:count+1,tutorid:tutorid})
-  try{
-    await Promise.all([newCase.save(),
-      Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{cases:count+1}}).exec()])
-    return true
+  await getTutorData(tutorid)
+  await Promise.all([newCase.save(),
+    Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{cases:count+1}}).exec()])
+  return count+1
     
-  }
-  catch (err) {
-    //if any error, return false
-    console.error(err)
-    return false
-  }
+
   
 }
 /**
@@ -158,14 +149,27 @@ const startCase = async (tutorid) => {
  */
 const inviteToCase = async (studentList, tutorid,caseid) => {
   //add student list to Case's 'studentid' field
-  try{
-    await Case.findOneAndUpdate({caseid:caseid},{tutorid:tutorid,$push:{studentid:studentList}})
-    return true
-  }
-  catch (err){
-    console.error(err)
+
+    
+    /*
+    x = await Case.findOneAndUpdate({caseid:caseid,studentid:{"$ne":2}},
+    {$push:{studentid:2}}).exec()
+    */
+  const x = await Case.findOneAndUpdate({caseid:caseid,studentid:{"$ne":studentList},tutorid:tutorid},
+  [
+    {"$set":{studentid:
+      {"$setUnion":[{"$setDifference":[studentList,"$studentid"]},"$studentid"]}
+      //{"$setDifference":[studentList,"$studentid"]}
+    }}
+    
+  ]
+  ).exec()
+  if(x == null){
     return false
   }
+  return true
+
+
   //failure on invitation: user already in a case, not found user...
 }
 /**
@@ -175,14 +179,12 @@ const inviteToCase = async (studentList, tutorid,caseid) => {
  * @returns {Boolean} success finish case or not
  */
 const finishCase = async (tutorid, caseid) => {
-  try{
-    await Case.findOneAndUpdate({caseid:caseid},{isClosed:true})
-    return true
-  }
-  catch (err){
-    console.error(err)
+  const x = await Case.findOneAndUpdate({caseid:caseid,isClosed:false,tutorid:tutorid},{isClosed:true})
+  if(x == null){
     return false
   }
+  return true
+
 }
 
 
@@ -193,7 +195,7 @@ const dropDB = async () => {
 }
 
 module.exports = {
-  getTutorData:getTutorData,
+  //getTutorData:getTutorData,
   setTutorData:setTutorData,
   findStudents:findStudents,
   requestStudent:requestStudent,

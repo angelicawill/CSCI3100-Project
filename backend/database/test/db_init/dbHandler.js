@@ -13,6 +13,7 @@ const fakeTutor = require("../test_data/fakeTutor.json")
 const User = require("../../model/user.model")
 const Tutor = require("../../model/tutor.model")
 const Student = require("../../model/student.model")
+const Case = require("../../model/case.model")
 
 
 
@@ -98,6 +99,7 @@ const deleteAllDoc = async ()=>{
   await User.collection.deleteMany({});
   await Student.collection.deleteMany({});
   await Tutor.collection.deleteMany({});
+  await Case.collection.deleteMany({});
 }
 
 const deleteMock = async ()=>{

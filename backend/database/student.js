@@ -16,9 +16,8 @@ const Case = require("./model/case.model")
 const Student = require("./model/student.model")
 const Tutor = require("./model/tutor.model")
 
-const {getAvailableHours,sortedByObjKey} = require("./helperFunction")
-const tutorFunction = require("./tutor")
-const { getTutorData } = require("./tutor")
+const {getAvailableHours,sortedByObjKey} = require("./helperFunction");
+const { getTutorData } = require("./userGetter")
 
 /**
  * return the document
@@ -26,7 +25,11 @@ const { getTutorData } = require("./tutor")
  * @returns {Object} object represent a student
  */
 const getStudentData = async (studentid) => {
-  return await Student.findOne({studentid:studentid}).exec()
+  const x = await Student.findOne({studentid:studentid}).exec()
+  if(x == null){
+    throw new Error("Student doesn't exist")
+  }
+  return x
 }
 
 /**
@@ -89,14 +92,10 @@ const setStudentData = async(studentid,datas) => {
       "subjectCount":{"$size":{"$setIntersection":[subj,"$subjectsTeach"]}}
     }} 
   ])
-
   //right now still keep tutor with no time match
   matched.filter((tutor)=>{getAvailableHours(freeTime,tutor.freeTime)>0})
   
- return sortedByObjKey(matched,sortedBy,true)
-
-  
-
+  return sortedByObjKey(matched,sortedBy,true)
 }
 
 /**
@@ -105,16 +104,21 @@ const setStudentData = async(studentid,datas) => {
  * @param {Number} studentid 
  * @param {Number} tutorid 
  * @param {Boolean} isAddedTo True: add a request, False: cancel a request
- * @returns {Boolean} indicate success request or not, error with inexist student/tutor
+ * @returns {Boolean} indicate success request or not, false with inexist student/tutor
  */
 const requestTutor = async(studentid, tutorid, isAddedTo) => {
   //the 3rd parameter determine is it the request to tutor, or cancel a request to tutor
   // should make the operations atomic to avoid error
   try{
     //first check the student or tutor exist or not
+    /*
     if (await getStudentData(studentid) === null || await getTutorData(tutorid) === null){
       throw new Error("no valid user found")
     }
+    */
+    await getStudentData(studentid)
+    await getTutorData(tutorid)
+
     let resStudent
     let resTutor
     //if student and tutor both exist, check they are in the array or not
@@ -133,10 +137,12 @@ const requestTutor = async(studentid, tutorid, isAddedTo) => {
           await Tutor.findOneAndUpdate({tutorid:tutorid},{$pull:{receivedStudentRequest:studentid}}).exec()
           return false
       }
-      */
+      
+      the case of null will be catch by the top 2 call of functions
       if(resStudent === null || resTutor === null){
         return false
       }
+      */
 
     }
     else{
@@ -160,27 +166,40 @@ const requestTutor = async(studentid, tutorid, isAddedTo) => {
   }
   catch (err){
     //error if there's no student or tutor
-    throw(err)
+    return false
   }
 }
 
 /**
  * This function correspond to the action 'rate a tutor',
  * it will calculate the new average score
- * @param {Number} studentid 
  * @param {Number} tutorid 
- * @param {Number} rating 
+ * @param {Number} rating real number between 0-5
  * @returns {Boolean} indicate success or not
  */
 const reviewTutor = async (tutorid, rating) => {
   //update the tutor's rating
   try{
+    const x = await getTutorData(tutorid)
+    if(rating < 0 || rating > 5){
+      return false}
     //it should check whether the case is finish or not
-    await Tutor.findOneAndUpdate({tutorid:tutorid},
-      {$inc:{totalTutorScore:rating,numberCaseFinished:1},$divide:{tutorRating: ['$totalTutorScore' / '$numberCaseFinished']}}).exec()
+ 
+    
+    const y = await Tutor.findOneAndUpdate({tutorid:tutorid},
+      [{"$set":{
+        totalTutorScore:{"$add":["$totalTutorScore",rating]},
+        numberCaseFinished:{"$add":["$numberCaseFinished",1]}
+      }},
+      {"$set":{tutorRating: {"$divide":["$totalTutorScore","$numberCaseFinished"]}}}
+    
+    ]
+      ).exec()
+    return true
   }
+
   catch (err){
-    //console.error(err)
+    console.error(err)
     return false
   }
 
@@ -192,7 +211,7 @@ const dropDB = async () => {
 }
 
 module.exports = {
-  getStudentData:getStudentData,
+  //getStudentData:getStudentData,
   setStudentData:setStudentData,
   findTutors:findTutors,
   requestTutor:requestTutor,

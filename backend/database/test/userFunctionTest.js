@@ -13,7 +13,7 @@ const expect = require("chai").expect
 const fakeData = require("./test_data/fakeuser_new.json")
 //function to test
 const user = require("../user")
-
+const {getStudentData,getTutorData} = require("../userGetter")
 //gloaal testing variables
 const firstUser = fakeData.table[0]
 const firstStudentIndex = 0
@@ -22,7 +22,7 @@ const firstStudent = fakeData.table[firstStudentIndex]
 const firstTutor = fakeData.table[firstTutorIndex]
 
 
-describe("Testing get user info functions",()=>{
+describe("Testing functions in user.js",()=>{
 
   before("connnect to db and add test data ",async ()=>{
     //connect to mongodb

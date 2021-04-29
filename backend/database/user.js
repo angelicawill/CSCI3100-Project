@@ -28,6 +28,7 @@ const Tutor = require("./model/tutor.model")
 
 const studentFunctions = require("./student")
 const tutorFunctions = require("./tutor")
+const {getStudentData,getTutorData} = require("./userGetter")
 const {getAvailableHours,sortedByObjKey} = require("./helperFunction")
 
 /**
@@ -133,11 +134,11 @@ const getUserInfo = async (query) => {
   const res = await getUserBasicInfo(query)
   const uid = res["userid"]
   if(res["role"] === "student"){
-    return await studentFunctions.getStudentData(uid)
+    return await getStudentData(uid)
 
   }
   else if (res["role"] === "tutor"){
-    return await tutorFunctions.getTutorData(uid)
+    return await getTutorData(uid)
 
   }
 }

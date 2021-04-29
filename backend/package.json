@@ -7,7 +7,7 @@
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "insert-mock-db-data": "node ./database/test/db_init/writeToDb.js",
-    "test-db": "mocha ./database/test/dbCreationTest.js",
+    "test-db": "mocha ./database/test/tutorFunctionTest.js",
     "test-db-all": "mocha ./database/test/*.js"
   },
   "keywords": [],
