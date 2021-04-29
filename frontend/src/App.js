@@ -10,12 +10,14 @@ import Register from './components/pages/Register/Register';
 import TutorProfilePage from "./components/pages/TutorProfilePage/TutorProfilePage";
 import SubjectSelecton from './components/pages/FindTutorPage/components/Subject';
 import SearchResult from "./components/pages/SearchResultPage/SearchResult";
+import UserInfo from './components/pages/UserInfo/UserInfo';
+import RegisterSuccess from './components/pages/Register/RegisterSuccess';
 
 
 function App() {
   return (
     <Router>
-      <Navbar />
+      {/* <Navbar /> */}
       <Switch>
       <Route path='/' exact component={LandingPage} />    
       <Route path='/register' exact component={Register} />    
@@ -25,6 +27,8 @@ function App() {
           <Route path='/tutor-profile' exact component={TutorProfilePage} />
           <Route path='/subject' exact component={SubjectSelecton} />
           <Route path='/result' exact component={SearchResult} />
+          <Route path='/registersuccess' exact component={RegisterSuccess} />
+          <Route path='/user-information' exact component={UserInfo} />
       </Switch>      
     </Router>
   );

@@ -8,20 +8,20 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import userProfilePic from './../images/jane-chan-profile-pic.png';
+// import userProfilePic from './../images/jane-chan-profile-pic.png';
 
 
 const userInfo = {
     userName: "Jane Chan",
     userType: "Student",
-    userProfilePic: <img src={userProfilePic} alt="userProfilePic" />,
+    // userProfilePic: <img src={userProfilePic} alt="userProfilePic" />,
 };
 
 
 function Header() {
     return (
         <div className='header'>
-            <Link to='/'>
+            <Link to='/find-tutor'>
                 <Logo
                     className="header__icon"
                     alt=""
@@ -53,7 +53,7 @@ function Header() {
 
                 <Link to="/user-information">
                     <button className='profile'>
-                        <Avatar src={userProfilePic} alt="User Profile Pic" className="userProfilePic"className='profilepic' style={{ height: '30px', width: '30px' }} />  
+                        <Avatar /*src={userProfilePic}*/ alt="User Profile Pic" className="userProfilePic"className='profilepic' style={{ height: '30px', width: '30px' }} />  
                         <MenuIcon fontSize="small" style={{fill: "black"}}/>
                     </button>
                 </Link>

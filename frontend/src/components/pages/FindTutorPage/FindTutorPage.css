@@ -57,8 +57,8 @@
 
 .subject-box {
     display: flex;
-    justify-content: space-between;
-    padding: 0vw 2vw 2vw 14vw;
+    justify-content: flex-start;
+    /* padding: 0vw 2vw 2vw 14vw; */
     height: 2vw;
     width: 100%;
 }
@@ -109,6 +109,7 @@
 
 .find-tutor-button-wrapper {
     padding-top: 3vw;
+    margin-bottom: 3vw;
 }
 
 @media screen and (max-width: 1315px) {
@@ -119,7 +120,7 @@
         padding-top: 1vw;
     }
     .search-box {
-        height: 78vw;
+        height: 55vw;
     }
 }
 

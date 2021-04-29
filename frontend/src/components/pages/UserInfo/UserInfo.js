@@ -6,14 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {ReactComponent as Logo} from './../../logo.svg';
-import './LogIn.css';
+import '../LogIn/LogIn.css';
 import './../../../App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { ThemeProvider } from '@material-ui/styles';
+import Navbar from '../../Navbar/Navbar'
 
 const font = "'Manrope', sans-serif"; 
 const theme = createMuiTheme({
@@ -96,20 +93,10 @@ export default function LogIn(props) {
   const submit = () => {
     props.LogIn(state.username, state.password);
   };
-  
-  //   fetch('http://localhost:5000/login' , {
-  //     method: "POST",
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //     body: JSON.stringify(this.state)
-  //   })
-  //   .then((result) => result.json())
-  //   .then((info) => { console.log(info); })
-  // };
-  
+
   return (
     <ThemeProvider theme={theme}>
+        <Navbar />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div id='login-function'className={classes.paper}>
@@ -134,35 +121,22 @@ export default function LogIn(props) {
         }} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-              /* backend implementation */
-                type="text"
-                name="username" //identifier
-                id="username"                
-                /* styling */
-                label="Username"
-                variant="outlined"                
-                required
-                fullWidth           
-                autoFocus
-              />
+            <TextField 
+                disabled 
+                id="standard-disabled" 
+                label="Username" 
+                defaultValue="Hello World" 
+            />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-              /* backend implementation */
-                type="password"
-                name="password" //identifier
-                id="password"                
-                /* styling */
-                label="Password"
-                variant="outlined"                
-                required
-                fullWidth           
-                autoFocus
-              />
+            <TextField 
+                disabled 
+                id="standard-disabled" 
+                label="Username" 
+                defaultValue="Hello World" />
             </Grid>            
           </Grid>
-            <Button
+            {/* <Button
               id="id2" //for backend
               type="submit" //for backend
               fullWidth
@@ -176,19 +150,15 @@ export default function LogIn(props) {
               color="primary"
             >
               Log In
-            </Button>
+            </Button> */}
           
-          <Grid id='redirect' container>
+          {/* <Grid id='redirect' container>
               <a href="/register">
                 Don’t have an account yet? Register
               </a>
-          </Grid>
+          </Grid> */}
         </form>
       </div>    
-      
-
-      
-      
       
     </Container>
 

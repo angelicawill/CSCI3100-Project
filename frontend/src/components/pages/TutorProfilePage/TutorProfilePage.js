@@ -9,6 +9,7 @@ import Rating from '@material-ui/lab/Rating';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
+import Navbar from '../../Navbar/Navbar'
 
 
 
@@ -35,6 +36,7 @@ function FindTutorPage() {
 
     return (
         <>
+            <Navbar />
             <div
                 className={searchingForm.lightBg ? 'home' : 'home darkBg'}
             >

@@ -6,14 +6,16 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { ReactComponent as Logo } from './../../logo.svg';
-import './Register.css';
+import './SetProfile.css';
 import './../../../App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { ThemeProvider } from '@material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+
 
 const font = "'Manrope', sans-serif";
 const theme = createMuiTheme({
@@ -38,7 +40,6 @@ const theme = createMuiTheme({
     },
   },
 });
-
 
 const useStyles = makeStyles((theme) => ({
 
@@ -82,33 +83,51 @@ const useStyles = makeStyles((theme) => ({
 
 /* For select button */
 
+const marks = [
+  {
+    value: 100,
+    label: 'HKD 100',
+  },
+  {
+    value: 200,
+    label: 'HKD 200',
+  },
+];
 
-export default function SignUp(props) {
+
+export default function SetProfileStudent(props) {
   const classes = useStyles();
 
 
   let state = {
-    // role: "",
-    realname: "",
-    phonenumber: "",
-    email: "",
-    username: "",
-    password: ""
+    grade: "",
+    subjectsNeedHelp: "",
+    freeTime: "",
+    preferredFee: "",
+    preferredTeachingMode: ""
   };
+
+  const setState = React.useState({
+    grade: "",
+    subjectsNeedHelp: "",
+    freeTime: "",
+    preferredFee: "",
+    preferredTeachingMode: ""
+  });
+
+  const handleChange = (event) => {
+    setState(event.target.value);
+  };
+
 
   const submit = () => {
-    props.signUp(
-      state.role,
-      state.realname,
-      state.phonenumber,
-      state.email,
-      state.username,
-      state.password
+    props.SetProfileStudent(
+      state.grade,
+      state.subjectsNeedHelp,
+      state.freeTime,
+      state.preferredFee,
+      state.preferredTeachingMode
     );
-  };
-
-  const onChange = (event) => {
-    console.log(event.target.value);
   };
 
 
@@ -117,12 +136,12 @@ export default function SignUp(props) {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <div id='register-function' className={classes.paper}>
+        <div id='setProfile-function' className={classes.paper}>
           <a href='/'><Logo width='20vw' hasMargin /></a>
           <h3>
-            Register
-        </h3>
-          <p>Create a new student / tutor account for free</p>
+            Set up your student profile
+          </h3>
+          <p>Fill in the form below</p>
           <form className={classes.form} onSubmit={(event) => {
             event.preventDefault();
             fetch('registration/register', {
@@ -132,7 +151,7 @@ export default function SignUp(props) {
               .then(res => res.json())
               .then(data => {
                 if (data.success) {
-                  window.location.assign("/find-tutor");
+                  window.location.assign("/registersuccess");
                 }
               })
           }} noValidate>
@@ -144,94 +163,73 @@ export default function SignUp(props) {
                   variant="outlined"
                   className={classes.formControl}
                 >
-                  <InputLabel htmlFor="select-role">I'm a...</InputLabel>
+                  <InputLabel htmlFor="select-grade">Select Grade</InputLabel>
                   <Select
                     native
-                    value={state.role}
-                    onChange={onChange}
-                    label="I'm a..."
+                    value={state.grade}
+                    onChange={handleChange}
+                    label="Select Grade"
                     inputProps={{
-                      name: 'role',
+                      name: 'grade',
                     }}
                   >
-                    <option value={"student"}>Student</option>
-                    <option value={"tutor"}>Tutor</option>
+                    <option value={"1"}>Kindergarten</option>
+                    <option value={"2"}>Primary</option>
+                    <option value={"3"}>Junior Secondary</option>
+                    <option value={"4"}>Senior Secondary</option>
+                    <option value={"5"}>Undergraduate</option>
+                    <option value={"6"}>Others</option>
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  /* backend implementation */
-                  onChange={event => (state.realname = event.target.value)}
-                  type="name"
-                  name="realname" //identifier
-                  id="name"
-                  /* styling */
-                  label="Name"
-                  variant="outlined"
+              <Grid item xs={12}>
+                <FormControl
                   required
                   fullWidth
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  /* backend implementation */
-                  onChange={event => (state.phonenumber = event.target.value)}
-                  type="tel"
-                  name="phonenumber" //identifier
-                  id="phonenumber"
-                  /* styling */
-                  label="Phone Number"
                   variant="outlined"
-                  required
-                  fullWidth
-                  autoFocus
-                />
+                  className={classes.formControl}
+                >
+                  <InputLabel htmlFor="select-subject">Select Subject</InputLabel>
+                  <Select
+                    native
+                    value={state.subjectsNeedHelp}
+                    onChange={handleChange}
+                    label="Select Subject"
+                    inputProps={{
+                      name: 'subjectsNeedHelp',
+                    }}
+                  >
+                    <option value={"Mathematics"}>Mathematics</option>
+                    <option value={"Physics"}>Physics</option>
+                    <option value={"Chemistry"}>Chemistry</option>
+                    <option value={"Biology"}>Biology</option>
+                    <option value={"English"}>English</option>
+                    <option value={"Chinese"}>Chinese</option>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  /* backend implementation */
-                  type="email"
-                  name="email" //identifier
-                  id="email"
-                  /* styling */
-                  label="Email"
-                  variant="outlined"
+                <FormControl
                   required
                   fullWidth
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  /* backend implementation */
-                  onChange={event => (state.username = event.target.value)}
-                  type="text"
-                  name="username" //identifier
-                  id="username"
-                  /* styling */
-                  label="Username"
                   variant="outlined"
-                  required
-                  fullWidth
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  /* backend implementation */
-                  onChange={event => (state.password = event.target.value)}
-                  type="password"
-                  name="password" //identifier
-                  id="password"
-                  /* styling */
-                  label="Password"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  autoFocus
-                />
+                  className={classes.formControl}
+                >
+                  <InputLabel htmlFor="select-teachingMode">Select Teaching Mode</InputLabel>
+                  <Select
+                    native
+                    value={state.preferredTeachingMode}
+                    onChange={handleChange}
+                    label="Preferred Teaching Mode"
+                    inputProps={{
+                      name: 'preferredTeachingMode',
+                    }}
+                  >
+                    <option value={"single"}>One-on-one Teaching</option>
+                    <option value={"multi"}>Group Teaching</option>
+                    <option value={"both"}>Both</option>
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
             <Button
@@ -241,7 +239,7 @@ export default function SignUp(props) {
               // onSubmit={submit}
               fullWidth
               variant="contained"
-              label="sign-up-button"
+              label="set-profile-button"
               classes={{
                 root: classes.root, // class name, e.g. `classes-nesting-root-x`
                 label: classes.label, // class name, e.g. `classes-nesting-label-x`
@@ -249,20 +247,14 @@ export default function SignUp(props) {
               className={classes.submit}
               color="primary"
             >
-              Sign Up
+              Save Profile
             </Button>
-
-            <Grid id='redirect' container>
-              <a href="/login">
-                Already have an account? Log in
-              </a>
-            </Grid>
           </form>
         </div>
 
       </Container>
 
-      <div id='footer-register'>
+      <div id='footer-setProfile'>
         <p>
           &copy; Group C7, CSCI3100 Spring 2021
           </p>

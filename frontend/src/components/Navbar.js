@@ -6,7 +6,6 @@ import './Navbar.css';
 import { IconContext } from 'react-icons/lib';
 import {ReactComponent as Logo} from './logo.svg';
 
-/*Navbar component should be cleaned up and refactored*/
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -37,7 +36,7 @@ function Navbar() {
       <IconContext.Provider value={{ color: '#fff' }}>
         <nav className='navbar'>
           <div className='navbar-container container'>
-            <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+            <Link to='/find-tutor' className='navbar-logo' onClick={closeMobileMenu}>
               <Logo className='navbar-icon' />           
             </Link>
             {/* <div className='menu-icon' onClick={handleClick}>

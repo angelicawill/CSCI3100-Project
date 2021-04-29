@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap');
+
+#setProfile-function> h3 {
+    margin-top: 4vw;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1E9097;
+}
+#setProfile-function> p {
+    font-size: 14px;
+    margin-top: 1vw;
+    color: #333333;
+}
+#footer-setProfile {
+    margin-top: 4vw;
+    background: #f6f6f6;
+    padding: 20px 0;
+    text-align: center;
+}
+
+
+#redirect > a {
+    text-align: center;
+    margin: 0 auto;
+    color: #7a7a7a;
+}

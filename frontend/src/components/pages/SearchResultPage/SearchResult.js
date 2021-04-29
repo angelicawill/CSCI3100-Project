@@ -4,6 +4,7 @@ import Infobox1 from './components/JessicaTing/infobox';
 import RatingBox1 from './components/JessicaTing/ratingbox';
 import Infobox2 from './components/JohnLam/infobox';
 import RatingBox2 from './components/JohnLam/ratingbox';
+import Navbar from '../../Navbar/Navbar'
 
 
 
@@ -18,6 +19,7 @@ function SearchResult() {
 
     return (
         <>
+        <Navbar />
             <div
                 className={searchingForm.lightBg ? 'home' : 'home darkBg'}
             >

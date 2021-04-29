@@ -3,6 +3,7 @@ import TeachingModeSelect from './components/Teachingmodeselect';
 import TimeSelect from './components/Timeselect';
 import Subject from './components/Subject';
 import Grade from './components/Grade';
+import Navbar from '../../Navbar/Navbar'
 
 import './FindTutorPage.css';
 import { Link } from 'react-router-dom';
@@ -28,6 +29,7 @@ function FindTutorPage() {
 
     return (
         <>
+        <Navbar />
             <div
                 className={searchingForm.lightBg ? 'home' : 'home darkBg'}
             >
