@@ -168,6 +168,7 @@ app.use((req, res, next) => {
   next();
 })
 app.use('/case', require('./case/case'));
+app.use('/users', require('./user profile/users'));
 
 
 /* Handle error */
