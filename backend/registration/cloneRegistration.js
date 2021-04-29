@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addUser, setVerified } = require('../database/user');
+const { addUser, setVerified, getUserBasicInfo } = require('../database/user');
 const { hashPassword } = require('../hashPassword');
 // const authUtils = require('../utils/auth');
 // const passport = require('passport');
@@ -16,7 +16,8 @@ const { hashPassword } = require('../hashPassword');
 router.post('/register', async (req, res, next) => {
     console.log('/registration/register post request');
     let returnObject = {
-        success: false
+        success: false,
+        user: null
     }
     let status = 500;
 
@@ -69,12 +70,22 @@ router.post('/register', async (req, res, next) => {
             email: registerInfo.email,
             role: registerInfo.role
         };
-    
-        if (!await addUser(userInfo)) return;
-        if (!await setVerified({username: userInfo.username})) return;
 
-        status = 200;
-        returnObject.success = true;
+        if (!await addUser(userInfo)) return;
+        if (!await setVerified({ username: userInfo.username })) return;
+
+        let user = await getUserBasicInfo({ username: userInfo.username })
+
+        req.logIn(user, async (err) => {
+            if (err) {
+                return status = 500
+            }
+
+            status = 200;
+            returnObject.success = true;
+            returnObject.user = user;
+        })
+
     } catch (e) {
         console.log(e);
     } finally {
