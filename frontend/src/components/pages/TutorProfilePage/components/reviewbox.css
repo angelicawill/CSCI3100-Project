@@ -22,16 +22,18 @@ body, html {
 }
 
 .user-time {
+
     color: #C4C4C4;
     font-weight: lighter;
-    font-size: 0.5vw;
-    margin-top: -1.2vw;
+    font-size: 0.6vw;
+    margin-top: -1.5vw;
+
 }
 
 .user-img {
     margin-right: 2vw;
     margin-bottom: 2.8vw;
-    width: 13%;
+    width: 17%;
     float: left;
 }
 
@@ -46,10 +48,10 @@ body, html {
 }
 
 .user-review {
-    margin-top: 0.4vw;
+    margin-top: 0.3vw;
     color: #42505C;
     font-weight: lighter;
-    font-size: 0.5vw;
+    font-size: 1vw;
 
 }
 

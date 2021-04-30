@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import './Chatroom.css';
 import Sidebar from './Sidebar';
 import Chat from './Chat';
+import Navbar from '../../Navbar/Navbar'
+
 // import Pusher from 'pusher-js';
 // import axios from "./axios";
 
@@ -36,12 +38,18 @@ function Chatroom() {
 //   },[messages]);
 
   return (
-    <div className="app">
-      <div className="app__body"> 
-        <Sidebar />
-        <Chat /*messages={messages}*//>
+
+    <div>
+      <Navbar />
+      <div className="app">
+        <div className="app__body">
+          <Sidebar />
+          <Chat /*messages={messages}*/ />
+        </div>
       </div>
     </div>
+
+
   );
 }
 

@@ -1,32 +1,19 @@
 import React, { useState } from "react";
 import "./Chat.css";
 import { Avatar,IconButton } from "@material-ui/core";
-// import axios from "./axios";
+import teacherpic from './../TutorProfilePage/images/Jessica-Ting.png';
+
 
 /*This is for chat component, on the right side of the chatroom page*/
 
 function Chat({ messages }){
 
-    // const [input, setInput] = useState("");
-    // const sendMessage = async (e) => {
-    //     e.preventDefault();
 
-       
-    //     await axios.post('/messages/new', {
-            // "message": input,
-            // "name":"DEMO APP",
-            // "timestamp":"Just now !",
-            // "received": false
-    //     });
-
-    //     setInput('');
-    // }
     return(
         <div className="chat">
             <div className="chat__header">
-                <Avatar /> {/*This will contain tutor's profile pic (using src={})*/}
+                <Avatar src={teacherpic} /> 
 
-                {/*This must be refactored later to fetch data from db*/}
                 <div className="chat__headerInfo">
                     <h3>Jessica</h3>
                     <p>Mathematics Tutor</p> 
@@ -49,22 +36,22 @@ function Chat({ messages }){
 
                 <p className="chat__message  chat__receiver"> {/*My message (add chat__receiver)*/}
                     <span className="chat__name">Me</span>
-                    I send this message to tutor
+                    Hello
                     <p className="chat__timestamp">{new Date().toUTCString()}</p>
                 </p>
                 <p className="chat__message"> {/*Tutor's message (without chat__receiver)*/}
                     <span className="chat__name">Tutor</span> 
-                    This is tutor's message. scroll down to see more. this is a very long message hello
+                    Hi! How can I help you?
+                    <p className="chat__timestamp">{new Date().toUTCString()}</p>
+                </p>
+                <p className="chat__message chat__receiver"> 
+                    <span className="chat__name">Me</span> 
+                    I'd like to book a tutoring session for 5 May 10am, is it possible?
                     <p className="chat__timestamp">{new Date().toUTCString()}</p>
                 </p>
                 <p className="chat__message"> {/*Tutor's message*/}
                     <span className="chat__name">Tutor</span> 
-                    This is tutor's message.
-                    <p className="chat__timestamp">{new Date().toUTCString()}</p>
-                </p>
-                <p className="chat__message"> {/*Tutor's message*/}
-                    <span className="chat__name">Tutor</span> 
-                    This is tutor's message. Hello there.
+                    Of course!
                     <p className="chat__timestamp">{new Date().toUTCString()}</p>
                 </p>
                 

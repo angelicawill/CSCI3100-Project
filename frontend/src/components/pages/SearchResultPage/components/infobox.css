@@ -11,7 +11,7 @@ body, html {
 .teacher-name {
     color: #42505C;
     font-weight: bold;
-    font-size: 1.4vw;
+    font-size: 1.8vw;
     margin-top: 1.5vw;
 }
 
@@ -39,17 +39,17 @@ body, html {
 }
 
 .teacher-introduction-title {
-    margin-top: 0.4vw;
+    margin-top: 0.2vw;
     color: #42505C;
     font-weight: lighter;
-    font-size: 0.5vw;
+    font-size: 0.8vw;
 }
 
 .teacher-introduction {
     margin-top: 0.4vw;
     color: #42505C;
     font-weight: lighter;
-    font-size: 0.5vw;
+    font-size: 0.9vw;
 }
 
 @media screen and (max-width: 1000px) {
