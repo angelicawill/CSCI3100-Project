@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 import Navbar from '../../Navbar/Navbar'
 
-
+// this displays the tutor's profile page.
 
 const searchingForm = {
     lightBg: true,

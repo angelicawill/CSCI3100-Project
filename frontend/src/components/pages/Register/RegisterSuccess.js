@@ -9,6 +9,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import {Alert, AlertTitle} from '@material-ui/lab';
 
+// when the user successfully registered this is the display.
+
 const font = "'Manrope', sans-serif"; 
 const theme = createMuiTheme({
   palette: {

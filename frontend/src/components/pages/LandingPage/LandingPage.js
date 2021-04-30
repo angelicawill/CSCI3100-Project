@@ -6,6 +6,7 @@ import { Contact } from './contact'
 import JsonData from './data.json'
 import SmoothScroll from 'smooth-scroll'
 
+// this displays the landing page.
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,

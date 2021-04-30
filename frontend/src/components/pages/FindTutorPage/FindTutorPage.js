@@ -9,7 +9,7 @@ import './FindTutorPage.css';
 import { Link } from 'react-router-dom';
 import { Button } from "../../Button";
 
-
+// this displays the find tutor page
 
 const searchingForm = {
     lightBg: true,

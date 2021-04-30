@@ -14,6 +14,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { ThemeProvider } from '@material-ui/styles';
 
+// this is the register form
+
 const font = "'Manrope', sans-serif";
 const theme = createMuiTheme({
   palette: {

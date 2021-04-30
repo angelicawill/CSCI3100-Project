@@ -6,7 +6,8 @@ import Infobox2 from './components/JohnLam/infobox';
 import RatingBox2 from './components/JohnLam/ratingbox';
 import Navbar from '../../Navbar/Navbar'
 
-
+// this is the main displays the result (list of tutor) after searching database
+// all the content of 'components' folder are displayed here
 
 const searchingForm = {
     lightBg: true,
