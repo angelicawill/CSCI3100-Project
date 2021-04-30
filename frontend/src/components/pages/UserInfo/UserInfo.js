@@ -11,9 +11,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
-
-
 import Navbar from '../../Navbar/Navbar'
+import { useState, useEffect } from 'react'
+import JsonData from "./userData.json"
+// import axios from 'axios'
+
+//this component displays the user profile
 
 const font = "'Manrope', sans-serif"; 
 const theme = createMuiTheme({
@@ -99,6 +102,14 @@ const useStyles = makeStyles((theme, palette) => ({
 
 
 /* For select button */
+const userData = [
+  {
+    "realname": 'Jane',
+    "role": 'Student',
+    "username": "jane123",
+    "email": 'jane@gmail.com'
+  }
+]
 
 export default function UserInfo(props) {
   const styles = useStyles();
@@ -108,6 +119,22 @@ export default function UserInfo(props) {
     height: '50%',
   });
 
+  const [userData, setUserData] = useState({})
+  useEffect(() => {
+    setUserData(JsonData)
+  }, [])
+
+  // useEffect(() => {
+  //   console.log('effect')
+  //   axios
+  //     .get('http://localhost:5000/')
+  //     .then(response => {
+  //       console.log('promise fulfilled')
+  //       setUserData(response.data)
+  //     })
+  // }, [])
+
+  
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
@@ -115,18 +142,18 @@ export default function UserInfo(props) {
       <Card className={cx(styles.card)}>
         <CardContent>
           <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
-          <h2 className={styles.heading}>Jane</h2>
-          <span className={styles.subheader}>Student</span>
+          <h2 className={styles.heading}>{userData.realname}</h2>
+          <span className={styles.subheader}>{userData.role}</span>
         </CardContent>
         <Divider light />
         <Box display={'flex'}>
           <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
             <p className={styles.statLabel}>Username</p>
-            <p className={styles.statValue}>jane123</p>
+            <p className={styles.statValue}>{userData.username}</p>
           </Box>
           <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
             <p className={styles.statLabel}>Email</p>
-            <p className={styles.statValue}>jane@gmail.com</p>
+            <p className={styles.statValue}>{userData.email}</p>
           </Box>
         </Box>
       </Card>
