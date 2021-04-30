@@ -97,6 +97,7 @@ function initializeChatRoom(io, sessionMiddleware, passport) {
     let rooms = [
         {
             roomid: allUserRoomId,
+            usernames: [],
             contents: []
         }
     ];
@@ -112,6 +113,8 @@ function initializeChatRoom(io, sessionMiddleware, passport) {
                 userSocket: socket
             })
             socket.join(allUserRoomId);
+            let index = rooms.find(obj => obj.roomid == allUserRoomId)
+            rooms[index].usernames.push(currentUser.username)
         }
 
         let reference = {
@@ -134,10 +137,4 @@ function initializeChatRoom(io, sessionMiddleware, passport) {
     })
 }
 
-// Initialize:
-// const server = require("http").createServer(require(express)());
-// const sessionMiddleware = require('express-session')();
-// const io = socketio(server);
-// initializeChatRoom(io, sessionMiddleware, passport);
-// server.listen(port);
 module.exports = initializeChatRoom

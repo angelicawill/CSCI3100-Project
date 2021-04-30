@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
     }
 
     returnObject.userRoleMatch = true;
+    returnObject.tutor = await getTutorData(user.userid);
 
     /***********   Start new case   ***********/
     if (!await startCase(user.userid)) return;

@@ -2,18 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { addUser, setVerified, getUserBasicInfo } = require('../database/user');
 const { hashPassword } = require('../hashPassword');
-// const authUtils = require('../utils/auth');
-// const passport = require('passport');
-// const flash = require('connect-flash');
-
-/* Create page */
-// router.get('/register', (req, res, next) => {
-//   const messages = req.flash();
-//   res.render('register', { messages });
-// });
 
 /* Handle register request */
-router.post('/register', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     console.log('/registration/register post request');
     let returnObject = {
         success: false,
@@ -45,7 +36,7 @@ router.post('/register', async (req, res, next) => {
         }
 
         // check phonenumber
-        if (!registerInfo.phonenumber || typeof registerInfo.phonenumber != 'string') {
+        if (!registerInfo.phonenumber || typeof registerInfo.phonenumber != 'string' || !parseInt(registerInfo.phonenumber)) {
             status = 400;
             return;
         }
@@ -91,17 +82,6 @@ router.post('/register', async (req, res, next) => {
     } finally {
         res.status(status).send(returnObject);
     }
-
-    // users.insertOne(userInfo, (err) => {
-    //     if (err) {
-    //         req.flash('error', 'User account already exists.');
-    //     } else {
-    //         req.flash('success', 'User account registered successfully.');
-    //     }
-
-    //     res.redirect('/auth/register');
-    // })
-    // res.redirect('/login')
 });
 
 module.exports = router;

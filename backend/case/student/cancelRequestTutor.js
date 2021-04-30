@@ -17,8 +17,21 @@ module.exports = async (req, res) => {
             status = 403;
             return
         }
-
         returnObject.userRoleMatch = true;
+        returnObject.student = await getStudentData(user.userid);
+
+        /***********   check input syntax valid   ***********/
+        if (typeof tutorid != "number") {
+            status = 400;
+            return;
+        }
+
+        /***********   check tutor in tutorRequest   ***********/
+        if (!returnObject.student.tutorRequest.find(id => id == tutorid)) {
+            status = 404;
+            return;
+        }
+
 
         /***********   request student   ***********/
         if (!await requestTutor(user.userid, tutorid, false)) return;

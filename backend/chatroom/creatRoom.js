@@ -1,34 +1,44 @@
 module.exports = ({
   socket,
   usernameSocket,
+  currentUser,
   rooms
 }) => {
   let eventName = "create room";
   socket.on(eventName, ({
     username,
   }) => {
-    console.log("yeah");
     let returnObject = {
-      usernameValid: false,
-      usernameExist: false,
       roomid: null,
       success: false,
       serverError: true,
     };
 
     try {
+      /***********   check input syntax valid   ***********/
+      if (typeof username != "string") {
+        status = 400;
+        return;
+      }
+
       let newRoomId = Date.now();
-      socket.join(newRoomId);
       let user = usernameSocket.find((obj) => obj.username === username);
-      user?.userSocket.join(newRoomId);
+      /***********   check user have connected to chatroom   ***********/
+      if (!user) {
+        status = 200;
+        return;
+      }
+
+      socket.join(newRoomId);
+      user.userSocket.join(newRoomId);
       rooms.push({
         roomid: newRoomId,
+        usernames: [username, currentUser.username],
         contents: []
       })
 
       returnObject.roomid = newRoomId;
       returnObject.success = true;
-
       returnObject.serverError = false;
     } catch (error) {
       console.log(error);

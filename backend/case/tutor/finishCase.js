@@ -18,8 +18,23 @@ module.exports = async (req, res) => {
       status = 403;
       return
     }
-
     returnObject.userRoleMatch = true;
+    returnObject.tutor = await getTutorData(user.userid);
+
+    /***********   Check input syntax valid  ***********/
+    if (typeof caseid != "number") {
+      status = 400;
+      return
+    }
+    
+
+    /***********   Check tutor is in case   ***********/
+    let tutor = await getTutorData(user.userid);
+    if (!tutor.cases.find(id => id == caseid)) {
+      status = 404;
+      return
+    }
+
 
     /***********   finish case   ***********/
     if (!await finishCase(user.userid, caseid)) return;

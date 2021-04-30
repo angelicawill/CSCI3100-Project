@@ -20,8 +20,22 @@ module.exports = async (req, res) => {
             status = 403;
             return
         }
-
         returnObject.userRoleMatch = true;
+        returnObject.tutor = await getTutorData(user.userid);
+
+        /***********   check input syntax valid   ***********/
+        if (typeof studentid != "number" || typeof caseid != "number") {
+            status = 400;
+            return;
+        }
+
+        let tutor = await getTutorData(user.userid);
+
+        /***********   Check student is in receivedStudentRequest list   ***********/
+        if (!tutor.receivedStudentRequest.find(id => id == caseid)) {
+            status = 404;
+            return
+        }
 
         /***********   accept student request   ***********/
         if (!await requestTutor(studentid, user.userid, false)) return;
