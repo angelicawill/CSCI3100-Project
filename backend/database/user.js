@@ -9,14 +9,14 @@ e.g. update student's subject to help should not call this module as this featur
 unique identifiers of a user: username, email, email address
 
 functions:
-loginAttempt()
-addUser()
-getUserid()
-getUserInfo()
-getUserBasicInfo()
-setUserInfo()
-setVerified()
-isVerified()
+loginAttempt() attempt by checking hashed password and db
+addUser() add a user to the database, for registration
+getUserid() get userid by unique identfier
+getUserInfo() get user info in Student/Tutor collection by unique identfier
+getUserBasicInfo() get user personal info by unique identfier
+setUserInfo() Update a user's personal info
+setVerified() Set the verified status
+isVerified() Check the verified status
 should not use in production:
 dropDB()
 getDocCount()

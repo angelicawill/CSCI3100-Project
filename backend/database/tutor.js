@@ -3,18 +3,16 @@ The collection of functions allows a tutor to get access to various resource in 
 You should ensure all input parameters are correct in format and content
 
 functions: you should looked into the functions definition and the docstring to see what are the parameters
-getTutorData() return the document with a given tutor ID
-setTutorData()
+getTutorData() return the document with a given tutor ID, moved to userGetter.js
+setTutorData() set the status of a tutor availabilty
 findStudents() return a list of students according to tutor's preference
 requestStudent()      to start/ cancel a request to a student
 startCase()           start an empty case
 inviteToCase()        invite student(s) to a case
 finishCase()          set the status of case (isClosed) to true
-getReceivedRequest()  return the array of request
 */
 const u = require("underscore")
 
-const User = require("./model/user.model")
 const Case = require("./model/case.model")
 const Student = require("./model/student.model")
 const Tutor = require("./model/tutor.model")
@@ -23,7 +21,12 @@ const {getAvailableHours,sortedByObjKey} = require("./helperFunction")
 const {getStudentData,getTutorData} = require("./userGetter")
 
 
-
+/**
+ * Update a tutor's availability with exist tutor id and datas
+ * @param {Number} tutorid 
+ * @param {Object} datas 
+ * @returns 
+ */
 const setTutorData = async (tutorid,datas) => {
   const setOfKey = ["subjectsTeach","freeTime","preferredLocation","isGroupTeachingAllowed","isMultiCaseAllowed"]
   for (idx in Object.keys(datas)){
@@ -142,7 +145,7 @@ const startCase = async (tutorid) => {
   
 }
 /**
- * 
+ * This function can invite student(s) to a case
  * @param {Number} studentList 
  * @param {Number} tutorid 
  * @param {Number} caseid 
@@ -172,10 +175,10 @@ const inviteToCase = async (studentList, tutorid,caseid) => {
   return true
 
 
-  //failure on invitation: user already in a case, not found user...
+  
 }
 /**
- * 
+ * To finish a case by specific tutor, given the case is not yet finish
  * @param {Nubmer} tutorid 
  * @param {Number} caseid 
  * @returns {Boolean} success finish case or not
@@ -191,6 +194,7 @@ const finishCase = async (tutorid, caseid) => {
 
 
 //important: should not use
+// for internal test only
 
 const dropDB = async () => {
   await Tutor.collection.drop()

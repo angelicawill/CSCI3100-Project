@@ -2,17 +2,14 @@
 The collection of functions allows a student to get access to various resource in the database
 You should ensure all input parameters are correct in format and content
 
-functions
-
-
-getStudentData() return the document with a given student ID
-setStudentData()
+functions:
+getStudentData() return the document with a given student ID, not used the function in this file, instead should call that one in
+                  userGetter.js to avoid circular dependency
+setStudentData() set the status of a student's availabilty and other infos.
 findTutors()   return a list of tutors according to stuendts's preference
 requestTutor() to start/ cancel a request to a tutor
 reviewTutor()  upon finished a case, student can review the tutor by give him score
 */
-const User = require("./model/user.model")
-const Case = require("./model/case.model")
 const Student = require("./model/student.model")
 const Tutor = require("./model/tutor.model")
 
@@ -20,7 +17,7 @@ const {getAvailableHours,sortedByObjKey} = require("./helperFunction");
 const { getTutorData } = require("./userGetter")
 
 /**
- * return the document
+ * return the document that list a student's locations, subject etc...
  * @param {Number} studentid 
  * @returns {Object} object represent a student
  */
@@ -33,6 +30,7 @@ const getStudentData = async (studentid) => {
 }
 
 /**
+ * Update a students's availability with exist students id and datas
  * The accepting data inputs are:  grade,subjectsNeedHelp,freeTime,preferredFee,preferredTeachingMode
  * @param {Number} studentid 
  * @param {Object} datas 
@@ -111,11 +109,6 @@ const requestTutor = async(studentid, tutorid, isAddedTo) => {
   // should make the operations atomic to avoid error
   try{
     //first check the student or tutor exist or not
-    /*
-    if (await getStudentData(studentid) === null || await getTutorData(tutorid) === null){
-      throw new Error("no valid user found")
-    }
-    */
     await getStudentData(studentid)
     await getTutorData(tutorid)
 
@@ -128,16 +121,6 @@ const requestTutor = async(studentid, tutorid, isAddedTo) => {
         {$push:{tutorRequest:tutorid}}).exec()
        resTutor = await Tutor.findOneAndUpdate({tutorid:tutorid,receivedStudentRequest:{"$ne":studentid}},
         {$push:{receivedStudentRequest:studentid}}).exec()
-
-        /* the above operation will not add duplicate in any case
-        if(resStudent === null || resTutor === null){
-          //student or tutor is already in the list, you can't add it
-          //pop out if necessary
-          await Student.findOneAndUpdate({studentid:studentid},{$pull:{tutorRequest:tutorid}}).exec()
-          await Tutor.findOneAndUpdate({tutorid:tutorid},{$pull:{receivedStudentRequest:studentid}}).exec()
-          return false
-      }
-      */
       
       if(resStudent === null || resTutor === null){
         return false
