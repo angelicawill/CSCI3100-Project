@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
 import LandingPage from './components/pages/LandingPage/LandingPage';
 import Login from './components/pages/LogIn/LogIn';
 import FindTutorPage from "./components/pages/FindTutorPage/FindTutorPage";
@@ -17,7 +16,6 @@ import RegisterSuccess from './components/pages/Register/RegisterSuccess';
 function App() {
   return (
     <Router>
-      {/* <Navbar /> */}
       <Switch>
       <Route path='/' exact component={LandingPage} />    
       <Route path='/register' exact component={Register} />    

@@ -10,7 +10,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
 
 
@@ -104,7 +103,6 @@ const useStyles = makeStyles((theme, palette) => ({
 export default function UserInfo(props) {
   const styles = useStyles();
 
-  const shadowStyles = useFadedShadowStyles();
   const borderedGridStyles = useGutterBorderedGridStyles({
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '50%',

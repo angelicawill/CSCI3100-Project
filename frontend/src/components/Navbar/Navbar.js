@@ -7,15 +7,14 @@ import {ReactComponent as Logo} from "./../logo.svg";
 import MenuIcon from '@material-ui/icons/Menu';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 // import userProfilePic from './../images/jane-chan-profile-pic.png';
 
 
-const userInfo = {
-    userName: "Jane Chan",
-    userType: "Student",
-    // userProfilePic: <img src={userProfilePic} alt="userProfilePic" />,
-};
+// const userInfo = {
+//     userName: "Jane Chan",
+//     userType: "Student",
+//     userProfilePic: <img src={userProfilePic} alt="userProfilePic" />,
+// };
 
 
 function Header() {
