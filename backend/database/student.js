@@ -137,12 +137,12 @@ const requestTutor = async(studentid, tutorid, isAddedTo) => {
           await Tutor.findOneAndUpdate({tutorid:tutorid},{$pull:{receivedStudentRequest:studentid}}).exec()
           return false
       }
+      */
       
-      the case of null will be catch by the top 2 call of functions
       if(resStudent === null || resTutor === null){
         return false
       }
-      */
+      
 
     }
     else{
@@ -199,7 +199,6 @@ const reviewTutor = async (tutorid, rating) => {
   }
 
   catch (err){
-    console.error(err)
     return false
   }
 

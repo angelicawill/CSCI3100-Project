@@ -36,6 +36,7 @@ const addUser = async (content) => {
  * @return {Number} user's id
  */
 const getUserid = async (username) => {
+
   const {userid} = await User.findOne({username:username}).exec()
   return userid
 }
@@ -48,6 +49,8 @@ const getUserid = async (username) => {
 const getUserInfo = async (username) => {
   //if it's student, return the corrsponding student's document
   //otherwise return teacher
+
+
   const {userid,role} =  await User.findOne({username:username}).exec()
   if(role == "student"){
     return await Student.findOne({studentid:userid})
