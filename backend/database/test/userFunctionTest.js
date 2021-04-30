@@ -53,6 +53,9 @@ describe("Testing functions in user.js",()=>{
       it ("should throw error with field not an unique identfier",async()=>{
         await expect(user.getUserid({role:"tutor"}) ).to.eventually.be.rejectedWith(Error);
       })
+      it ("should be error with not exist key",async()=>{
+        await expect(user.getUserid({"key123":"fdsfsd"})).to.eventually.be.rejectedWith(Error);
+      })
     }
    setofTest()
   })
@@ -68,7 +71,15 @@ describe("Testing functions in user.js",()=>{
         assert.equal((await user.getUserInfo({email:firstTutor.email}))["tutorid"],firstTutorIndex + 1)
       })
       it ("should get nothing with not exist user",async()=>{
+        const t = await user.getUserInfo({username:"fdsfs"})
+        assert.equal(t,null)
+      })
 
+      it("should throw error with wrong parameter",async()=>{
+        await expect(user.getUserInfo({role:"tutor"})).to.eventually.be.rejectedWith(Error);
+      })
+      it ("should throw error none with not exist key",async()=>{
+        await expect(user.getUserInfo({"key123":"fdsfsd"})).to.eventually.be.rejectedWith(Error);
       })
     }
    setofTest()
@@ -88,8 +99,8 @@ describe("Testing functions in user.js",()=>{
         assert.equal((await user.getUserBasicInfo({"email": "notexistmail@gmail.com"})),null)
       })
       it ("should throw error with wrong parameter",async()=>{
-        await expect(user.getUserid({role:"tutor"}) ).to.eventually.be.rejectedWith(Error);
-        await expect(user.getUserid({"password": "abcdE12345"}) ).to.eventually.be.rejectedWith(Error);
+        await expect(user.getUserBasicInfo({role:"tutor"}) ).to.eventually.be.rejectedWith(Error);
+        await expect(user.getUserBasicInfo({"password": "abcdE12345"}) ).to.eventually.be.rejectedWith(Error);
       })
     }
    setofTest()

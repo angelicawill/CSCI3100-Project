@@ -12,6 +12,8 @@ inviteToCase()        invite student(s) to a case
 finishCase()          set the status of case (isClosed) to true
 getReceivedRequest()  return the array of request
 */
+const u = require("underscore")
+
 const User = require("./model/user.model")
 const Case = require("./model/case.model")
 const Student = require("./model/student.model")
@@ -20,15 +22,7 @@ const Tutor = require("./model/tutor.model")
 const {getAvailableHours,sortedByObjKey} = require("./helperFunction")
 const {getStudentData,getTutorData} = require("./userGetter")
 
-/*
-const getTutorData = async (tutorid) => {
-  const x = await Tutor.findOne({tutorid:tutorid}).exec()
-  if(x == null){
-    throw new Error("Tutor doesn't exist")
-  }
-  return x
-}
-*/
+
 
 const setTutorData = async (tutorid,datas) => {
   const setOfKey = ["subjectsTeach","freeTime","preferredLocation","isGroupTeachingAllowed","isMultiCaseAllowed"]
@@ -126,16 +120,23 @@ const requestStudent = async (tutorid, studentid, isAddedTo) => {
 /**
  * Corresponded to 'start a case', it will add a 'case' document with only tutor(s)
  * @param {[Number]} tutorid 
- * @returns {Number} caseid
+ * @returns {Number} caseid, or 0 with isMultiCaseAllowed is False
  */
 const startCase = async (tutorid) => {
   // add a document in Case schema, with the tutorid
   const count = await Case.countDocuments()
   const newCase = new Case({caseid:count+1,tutorid:tutorid})
-  await getTutorData(tutorid)
-  await Promise.all([newCase.save(),
-    Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{cases:count+1}}).exec()])
-  return count+1
+  const tutorInCharge = await getTutorData(tutorid)
+  if(tutorInCharge["isMultiCaseAllowed"] || (!tutorInCharge["isMultiCaseAllowed"] && tutorInCharge["cases"].length === 0)){
+    await Promise.all([newCase.save(),
+      Tutor.findOneAndUpdate({tutorid:tutorid},{$push:{cases:count+1}}).exec()])
+    return count+1
+  }
+  else{
+
+    return 0
+  }
+
     
 
   
@@ -150,11 +151,7 @@ const startCase = async (tutorid) => {
 const inviteToCase = async (studentList, tutorid,caseid) => {
   //add student list to Case's 'studentid' field
 
-    
-    /*
-    x = await Case.findOneAndUpdate({caseid:caseid,studentid:{"$ne":2}},
-    {$push:{studentid:2}}).exec()
-    */
+  const prev = (await Case.findOne({caseid:caseid}))["studentid"]
   const x = await Case.findOneAndUpdate({caseid:caseid,studentid:{"$ne":studentList},tutorid:tutorid},
   [
     {"$set":{studentid:
@@ -164,7 +161,12 @@ const inviteToCase = async (studentList, tutorid,caseid) => {
     
   ]
   ).exec()
+  const after = (await Case.findOne({caseid:caseid}))["studentid"]
+
   if(x == null){
+    return false
+  }
+  if (u.isEqual(prev,after)){
     return false
   }
   return true

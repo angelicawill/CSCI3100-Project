@@ -72,7 +72,7 @@ describe("Testing functions in student.js",()=>{
     })
 
     it ("should successfully insert 1 type of info",async()=>{
-      await student.setStudentData(sid,{grade:10})
+      assert.isTrue(await student.setStudentData(sid,{grade:10}))
       assert.equal((await getStudentData(sid))["grade"],10)
     })
 
@@ -117,6 +117,12 @@ describe("Testing functions in student.js",()=>{
       //8 tutors matched in test case
       assert.equal((await student.findTutors(1,"subjectCount")).length,8)
     })
+
+    it("should return nothing that student don't specify their subject",async()=>{
+      //8 tutors matched in test case
+      assert.equal((await student.findTutors(28,"subjectCount")).length,0)
+    })
+
   })
 
   describe("test requestTutor()",()=>{
@@ -143,7 +149,7 @@ describe("Testing functions in student.js",()=>{
   
       it("should successfully start a request to one tutor",async()=>{
         //test the if-part
-        await student.requestTutor(sid,tids[0],true)
+        assert.isTrue(await student.requestTutor(sid,tids[0],true))
         assert.deepEqual( (await getStudentData(sid))["tutorRequest"], [tids[0]] )
         assert.deepEqual( (await getTutorData(tids[0]))["receivedStudentRequest"], [sid] )
       })
@@ -159,7 +165,7 @@ describe("Testing functions in student.js",()=>{
         //test if(resStudent === null || resTutor === null) in the if-blcok
         await student.requestTutor(sid,tids[0],true)
         await student.requestTutor(sid,tids[1],true)
-        await student.requestTutor(sid,tids[1],true)
+        assert.isFalse(await student.requestTutor(sid,tids[1],true))
   
         assert.deepEqual( (await getStudentData(sid))["tutorRequest"], [tids[0],tids[1]] )
         assert.deepEqual( (await getTutorData(tids[0]))["receivedStudentRequest"], [sid] )
@@ -223,7 +229,7 @@ describe("Testing functions in student.js",()=>{
     })
 
     it("should return false on finding non existing tutor",async()=>{
-      //assert.isFalse(await student.reviewTutor(999,1))
+      assert.isFalse(await student.reviewTutor(999,1))
     })
     it("should update the rating successfully on exist tutor",async ()=>{
       assert.isTrue(await student.reviewTutor(tid,3))

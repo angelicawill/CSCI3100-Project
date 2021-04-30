@@ -101,7 +101,7 @@ describe("Testing functions in tutor.js",()=>{
 
     it("should return student that match subject",async()=>{
       tid = 27
-      assert.equal((await tutor.findStudents(tid,"subjectCount")).length,10)
+      assert.equal((await tutor.findStudents(tid,"subjectCount")).length,9)
       tid = 3
     })
   })
@@ -153,6 +153,15 @@ describe("Testing functions in tutor.js",()=>{
     
   })
   describe("Test startCase() ",()=>{
+    beforeEach("add fake tutor/student data",async ()=>{
+      await initDB(30)
+      await initFakeStudentData(30)
+      await initFakeTutorData(30)
+    })
+    afterEach("remove fake tutor/student data",async()=>{
+      await deleteAllDoc()
+    })
+
     it("should error on non existing tutor",async()=>{
       await expect(tutor.startCase(sid)).to.be.eventually.rejectedWith(Error)
     })
@@ -160,8 +169,27 @@ describe("Testing functions in tutor.js",()=>{
       await tutor.startCase(tid)
       assert.equal((await cases.getCases(tid))[0]["caseid"],1)
     })
+    it("shouldstart multiple case if the tutor allow multiple case",async()=>{
+      await tutor.startCase(tid)
+      await tutor.startCase(tid)
+      assert.equal((await cases.getCases(tid)).length, 2)
+    })
+    it("should not start multiple case if the tutor don't want multiple case",async()=>{
+      assert.equal(await tutor.startCase(5),1)
+      assert.equal(await tutor.startCase(5),0)
+      assert.equal((await cases.getCases(5)).length,1)
+    })
   })
   describe("Test inviteToCase() ",async()=>{
+    beforeEach("add fake tutor/student data",async ()=>{
+      await initDB(30)
+      await initFakeStudentData(30)
+      await initFakeTutorData(30)
+    })
+    afterEach("remove fake tutor/student data",async()=>{
+      await deleteAllDoc()
+    })
+
     const toInvited = [1,2,4]
     it("should successfully to invite to a case",async()=>{
       await tutor.startCase(tid)
@@ -171,15 +199,23 @@ describe("Testing functions in tutor.js",()=>{
     it("should not repeated invited to case",async()=>{
       await tutor.startCase(tid)
       await tutor.inviteToCase(toInvited,tid,1)
-      assert.isFalse(await tutor.inviteToCase(toInvited,tid,1))     
+      assert.isFalse(await tutor.inviteToCase([1,1,1],tid,1))     
     })
     it("should not add to case that not belongs to that tutor",async()=>{
       await tutor.startCase(tid)
-      await tutor.startCase(27)
+      await tutor.startCase(22)
       assert.isFalse(await tutor.inviteToCase(toInvited,tid,2))
     })
   })
   describe("Test finishCase()",()=>{
+    beforeEach("add fake tutor/student data",async ()=>{
+      await initDB(30)
+      await initFakeStudentData(30)
+      await initFakeTutorData(30)
+    })
+    afterEach("remove fake tutor/student data",async()=>{
+      await deleteAllDoc()
+    })
     it("should successfully finish a case",async()=>{
       await tutor.startCase(tid)
       assert.isTrue(await tutor.finishCase(tid,1))
@@ -188,6 +224,11 @@ describe("Testing functions in tutor.js",()=>{
       await tutor.startCase(tid)
       await tutor.finishCase(tid,1)
       assert.isFalse(await tutor.finishCase(tid,1))
+    })
+    it("should only let the given tutor to finish the case",async()=>{
+      await tutor.startCase(tid)
+      await tutor.finishCase(tid,1)
+      assert.isFalse(await tutor.finishCase(22,1))
     })
   })
 })

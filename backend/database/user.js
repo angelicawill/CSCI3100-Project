@@ -93,6 +93,12 @@ const loginAttempt = async(query,hashedPassword)=> {
  * @return {Promise} resolved: user's id, null if no matched user, or rejected with invalid input
  */
 const getUserid = async (query) => {
+  const setOfKey = ["userid","username","phonenumber","email"]
+  for (idx in Object.keys(query)){
+    if (! setOfKey.includes(Object.keys(query)[idx])){
+      throw new Error("it contains fields thats not unique")
+    }
+  }
   try{
     const result = await User.find(query).exec()
     if(result.length > 1){
@@ -132,15 +138,20 @@ const getUserInfo = async (query) => {
   //if it's student, return the corrsponding student's document
   //otherwise return teacher
   const res = await getUserBasicInfo(query)
-  const uid = res["userid"]
-  if(res["role"] === "student"){
-    return await getStudentData(uid)
-
+  if(res != null){
+    const uid = res["userid"]
+    if(res["role"] === "student"){
+      return await getStudentData(uid)
+  
+    }
+    else if (res["role"] === "tutor"){
+      return await getTutorData(uid)
+    }
   }
-  else if (res["role"] === "tutor"){
-    return await getTutorData(uid)
-
+  else{
+    return null
   }
+
 }
 
 /**
