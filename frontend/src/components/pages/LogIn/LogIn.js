@@ -178,6 +178,9 @@ export default function LogIn(props) {
               Log In
             </Button>
           
+          <Grid id='forgot' container>
+              <a>Forgot Password?</a>
+          </Grid>
           <Grid id='redirect' container>
               <a href="/register">
                 Don’t have an account yet? Register

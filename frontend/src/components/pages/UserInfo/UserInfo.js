@@ -10,6 +10,16 @@ import '../LogIn/LogIn.css';
 import './../../../App.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import cx from 'clsx';
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
+import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
+
+
 import Navbar from '../../Navbar/Navbar'
 
 const font = "'Manrope', sans-serif"; 
@@ -36,8 +46,42 @@ const theme = createMuiTheme({
   },
 });
 
+const useStyles = makeStyles((theme, palette) => ({
 
-const useStyles = makeStyles((theme) => ({
+  card: {
+    borderRadius: 12,
+    minWidth: 256,
+    textAlign: 'center',
+    margin: 100,
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    margin: 'auto',
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    letterSpacing: '0.5px',
+    marginTop: 8,
+    marginBottom: 0,
+  },
+  subheader: {
+    fontSize: 14,
+    marginBottom: '0.875em',
+  },
+  statLabel: {
+    fontSize: 12,
+    fontWeight: 500,
+    fontFamily:'Manrope',
+    margin: 0,
+  },
+  statValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 4,
+    letterSpacing: '1px',
+  },
 
   root: {
     background: 'primary',
@@ -45,35 +89,8 @@ const useStyles = makeStyles((theme) => ({
     border: 0,
     color: 'white',
     height: 48,
-    padding: '0 30px',
+    padding: '30px 30px',
   
-  },
-
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  InputLabel: {
-    fontFamily: 'Manrope',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  formControl: {
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
   },
 }));
 
@@ -81,86 +98,37 @@ const useStyles = makeStyles((theme) => ({
 
 /* For select button */
 
+export default function UserInfo(props) {
+  const styles = useStyles();
 
-export default function LogIn(props) {
-  const classes = useStyles();
-
-  let state = {
-    username: "",
-    password: ""
-  };
-
-  const submit = () => {
-    props.LogIn(state.username, state.password);
-  };
+  const shadowStyles = useFadedShadowStyles();
+  const borderedGridStyles = useGutterBorderedGridStyles({
+    borderColor: 'rgba(0, 0, 0, 0.08)',
+    height: '50%',
+  });
 
   return (
     <ThemeProvider theme={theme}>
-        <Navbar />
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div id='login-function'className={classes.paper}>
-        <a href='/'><Logo width='20vw' hasMargin/></a>
-        <h3>
-            Welcome back!
-        </h3>  
-        <p>Please fill in your login details to proceed</p>        
-        <form className={classes.form} 
-        onSubmit={(event) => {
-          event.preventDefault();
-          fetch('/login', {
-            method: "POST",
-            body: new FormData(event.target)
-          })
-            .then(res => res.json())
-            .then(data => {
-              if (data.success) {
-                window.location.assign("/find-tutor");
-              }
-            })
-        }} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-            <TextField 
-                disabled 
-                id="standard-disabled" 
-                label="Username" 
-                defaultValue="Hello World" 
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField 
-                disabled 
-                id="standard-disabled" 
-                label="Username" 
-                defaultValue="Hello World" />
-            </Grid>            
-          </Grid>
-            {/* <Button
-              id="id2" //for backend
-              type="submit" //for backend
-              fullWidth
-              variant="contained"
-              label="log-in-button"
-              classes={{
-                root: classes.root, // class name, e.g. `classes-nesting-root-x`
-                label: classes.label, // class name, e.g. `classes-nesting-label-x`
-              }}
-              className={classes.submit}
-              color="primary"
-            >
-              Log In
-            </Button> */}
-          
-          {/* <Grid id='redirect' container>
-              <a href="/register">
-                Don’t have an account yet? Register
-              </a>
-          </Grid> */}
-        </form>
-      </div>    
-      
-    </Container>
+      <Navbar />
+      <h3>Your Profile</h3>
+      <Card className={cx(styles.card)}>
+        <CardContent>
+          <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
+          <h2 className={styles.heading}>Alan Podemski</h2>
+          <span className={styles.subheader}>Poland</span>
+        </CardContent>
+        <Divider light />
+        <Box display={'flex'}>
+          <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
+            <p className={styles.statLabel}>Username</p>
+            <p className={styles.statValue}>6941</p>
+          </Box>
+          <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
+            <p className={styles.statLabel}>Phone Number</p>
+            <p className={styles.statValue}>12</p>
+          </Box>
+        </Box>
+      </Card>
 
     <div id='footer-login'>        
           <p>
